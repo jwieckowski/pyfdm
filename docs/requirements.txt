@@ -1,0 +1,5 @@
+sphinx-autoapi
+nbsphinx
+myst_parser
+numpy
+scipy
