@@ -76,7 +76,7 @@ class Validator():
 
         """
         if weights.ndim == 1:
-            if np.sum(weights) != 1:
+            if np.round(np.sum(weights), 4) != 1:
                 raise ValueError(
                     f'Sum of crisp weights should equal 1, not {np.sum(weights)}')
         else:
