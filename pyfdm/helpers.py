@@ -26,7 +26,10 @@ def rank(x, descending=True):
                 Ranking with given order
 
     """
-    s = [sorted(x, reverse=descending).index(r)+1 for r in x]
+    try:
+        s = [sorted(x, reverse=descending).index(r)+1 for r in x]
+    except:
+        raise ValueError('Error occurred in ranking calculation')
     return np.array([(ss * s.count(ss) + s.count(ss) - 1) / s.count(ss) if s.count(ss) <= 2 else np.sum(list(range(ss, ss+s.count(ss)))) / s.count(ss) for ss in s])
 
 

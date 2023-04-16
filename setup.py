@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="pyfdm",
-    version="1.0.1",
+    version="1.0.2",
     author="Jakub Więckowski",
     author_email="jakub-wieckowski@zut.edu.pl",
     description="Python library for Fuzzy Decision Making",

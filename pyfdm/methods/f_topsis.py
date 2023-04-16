@@ -3,6 +3,7 @@
 from .topsis.fuzzy import fuzzy
 from .fuzzy_sets.tfn.normalizations import linear_normalization
 from .fuzzy_sets.tfn.distances import vertex_distance
+from ..helpers import rank
 
 from .validator import Validator
 
@@ -24,6 +25,7 @@ class fTOPSIS():
 
         self.normalization = normalization
         self.distance = distance
+        self.__descending = True
 
     def __call__(self, matrix, weights, types):
         """
@@ -49,4 +51,21 @@ class fTOPSIS():
         # validate data
         Validator.fuzzy_validation(matrix, weights)
 
-        return fuzzy(matrix, weights, types, self.normalization, self.distance).astype(float)
+        self.preferences = fuzzy(matrix, weights, types, self.normalization, self.distance).astype(float)
+        return self.preferences
+
+    def rank(self):
+        """
+            Calculates the alternatives ranking based on the obtained preferences
+
+            Returns
+            ----------
+                ndarray:
+                    Ranking of alternatives
+        """
+        try:
+            return rank(self.preferences, self.__descending)
+        except AttributeError:
+            raise AttributeError('Cannot calculate ranking before assessment')
+        except:
+            raise ValueError('Error occurred in ranking calculation')

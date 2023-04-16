@@ -32,6 +32,7 @@ def test_fARAS():
     calculated_result = f_aras(matrix, weights, types)
     reference_result = np.array([0.76, 0.73, 0.74, 0.8, 0.81])
     assert (np.round(calculated_result.astype(float), 2) == reference_result).all()
+    assert (f_aras.rank() == [3, 5, 4, 2, 1]).all()
 
 
 def test_fCODAS():
@@ -57,6 +58,7 @@ def test_fCODAS():
     reference_result = np.array([8.65, -4.15, -0.72, -5.06, 1.28])
 
     assert (np.round(calculated_result.astype(float), 2) == reference_result).all()
+    assert (f_codas.rank() == [1, 4, 3, 5, 2]).all()
 
 def test_fCOPRAS():
     """
@@ -81,7 +83,7 @@ def test_fCOPRAS():
     reference_result = np.array([1.014, 0.508, 0.590, 0.470, 0.642])
 
     assert (calculated_result == reference_result).all() or np.sum(calculated_result - reference_result) < 0.15
-
+    assert (f_copras.rank() == [1, 4, 3, 5, 2]).all()
 
 def test_fEDAS():
     """
@@ -139,6 +141,7 @@ def test_fEDAS():
     reference_result = np.array([0.212, 0.514, 0.746])
 
     assert (calculated_result == reference_result).all() or np.sum(calculated_result - reference_result) < 0.3
+    assert (f_edas.rank() == [3, 1, 2]).all()
 
 
 def test_fMABAC():
@@ -171,7 +174,7 @@ def test_fMABAC():
     reference_result = np.array([-0.071, 0.032, 0.113, 0.053, -0.014, 0.029])
 
     assert (np.round(calculated_result, 3) == reference_result).all() or np.sum(np.abs(calculated_result - reference_result)) < 0.05
-
+    assert (f_mabac.rank() == [6, 3, 1, 2, 5, 4]).all()
 
 def test_fMAIRCA():
     """
@@ -199,6 +202,7 @@ def test_fMAIRCA():
     reference_result = np.array([0.0986, 0.1103, 0.1121, 0.1104, 0.0963, 0.0986, 0.1147, 0.1291])
     
     assert (np.round(calculated_result, 4) == reference_result).all() or np.sum(np.abs(calculated_result - reference_result)) < 0.05
+    assert (f_mairca.rank() == [7, 4, 3, 5, 8, 6, 2, 1]).all()
 
 def test_fMOORA():
     """
@@ -224,7 +228,7 @@ def test_fMOORA():
     reference_result = np.array([0.0713, 0.1034, 0.0355, 0.1113])
 
     assert (calculated_result == reference_result).all() or np.sum(np.abs(calculated_result - reference_result)) < 0.05
-
+    assert (f_moora.rank() == [3, 2, 4, 1]).all()
 
 def test_fOCRA():
     """
@@ -254,7 +258,7 @@ def test_fOCRA():
     reference_result = np.array([0.317, 0.181, 0.266, 0, 0.115])
     
     assert (np.round(calculated_result.astype(float), 3) == reference_result).all() or np.sum(np.abs(np.round(calculated_result.astype(float), 3) - reference_result)) < 0.05 
-
+    assert (f_ocra.rank() == [1, 3, 2, 5, 4]).all()
 
 def test_fTOPSIS():
     """
@@ -279,6 +283,7 @@ def test_fTOPSIS():
     reference_result = np.array([0.62, 0.77, 0.71])
 
     assert (np.round(calculated_result.astype(float), 2) == reference_result).all() or np.sum(np.abs(calculated_result - reference_result)) < 0.05
+    assert (f_topsis.rank() == [3, 1, 2]).all()
 
 def test_fVIKOR():
     """
@@ -323,3 +328,7 @@ def test_fVIKOR():
     assert (np.round(calculated_result[1], 3) == reference_result[1]).all()
     assert (np.round(calculated_result[2], 3) == reference_result[2]).all()
 
+    ranks = f_vikor.rank()
+    assert (ranks[0] == [6, 5, 2, 3, 1, 4]).all()
+    assert (ranks[1] == [5, 2, 4, 3, 1, 6]).all()
+    assert (ranks[2] == [6, 5, 3, 2, 1, 4]).all()

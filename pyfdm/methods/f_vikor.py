@@ -1,7 +1,9 @@
 # Copyright (c) 2022 Jakub Więckowski
 
+import numpy as np
 from .vikor.fuzzy import fuzzy
 from .fuzzy_sets.tfn.defuzzifications import mean_area_defuzzification
+from ..helpers import rank
 
 from .validator import Validator
 
@@ -19,6 +21,7 @@ class fVIKOR():
         """
 
         self.defuzzify = defuzzify
+        self.__descending = False
 
     def __call__(self, matrix, weights, types, v=0.5):
         """
@@ -47,5 +50,22 @@ class fVIKOR():
         # validate data
         Validator.fuzzy_validation(matrix, weights)
 
-        return fuzzy(matrix, weights, types, self.defuzzify, v)
+        self.preferences = fuzzy(matrix, weights, types, self.defuzzify, v)
+        return self.preferences
 
+    def rank(self):
+        """
+            Calculates the alternatives ranking based on the obtained preferences
+
+            Returns
+            ----------
+                ndarray:
+                    Rankings of alternatives for S, R, Q approaches
+        """
+        try:
+            return np.array([rank(pref, self.__descending) for pref in self.preferences])
+        except AttributeError:
+            raise AttributeError('Cannot calculate ranking before assessment')
+        except:
+            raise ValueError('Error occurred in ranking calculation')
+    

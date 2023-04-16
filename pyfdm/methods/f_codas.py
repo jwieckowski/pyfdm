@@ -3,6 +3,7 @@
 from .codas.fuzzy import fuzzy
 from .fuzzy_sets.tfn.normalizations import max_normalization
 from .fuzzy_sets.tfn.distances import euclidean_distance, hamming_distance
+from ..helpers import rank
 
 from .validator import Validator
 
@@ -28,6 +29,7 @@ class fCODAS():
         self.normalization = normalization
         self.distance_1 = distance_1
         self.distance_2 = distance_2
+        self.__descending = True
 
     def __call__(self, matrix, weights, types, tau=0.02):
         """
@@ -56,4 +58,21 @@ class fCODAS():
         # validate data
         Validator.fuzzy_validation(matrix, weights)
 
-        return fuzzy(matrix, weights, types, self.normalization, self.distance_1, self.distance_2, tau).astype(float)
+        self.preferences = fuzzy(matrix, weights, types, self.normalization, self.distance_1, self.distance_2, tau).astype(float)
+        return self.preferences
+
+    def rank(self):
+        """
+            Calculates the alternatives ranking based on the obtained preferences
+
+            Returns
+            ----------
+                ndarray:
+                    Ranking of alternatives
+        """
+        try:
+            return rank(self.preferences, self.__descending)
+        except AttributeError:
+            raise AttributeError('Cannot calculate ranking before assessment')
+        except:
+            raise ValueError('Error occurred in ranking calculation')

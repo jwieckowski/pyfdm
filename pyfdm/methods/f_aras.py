@@ -2,6 +2,7 @@
 
 from .aras.fuzzy import fuzzy
 from .fuzzy_sets.tfn.normalizations import sum_normalization
+from ..helpers import rank
 
 from .validator import Validator
 
@@ -18,6 +19,7 @@ class fARAS():
         """
 
         self.normalization = normalization
+        self.__descending = True
 
     def __call__(self, matrix, weights, types):
         """
@@ -44,4 +46,21 @@ class fARAS():
         # validate data
         Validator.fuzzy_validation(matrix, weights)
 
-        return fuzzy(matrix, weights, types, self.normalization).astype(float)
+        self.preferences = fuzzy(matrix, weights, types, self.normalization).astype(float)
+        return self.preferences
+
+    def rank(self):
+        """
+            Calculates the alternatives ranking based on the obtained preferences
+
+            Returns
+            ----------
+                ndarray:
+                    Ranking of alternatives
+        """
+        try:
+            return rank(self.preferences, self.__descending)
+        except AttributeError:
+            raise AttributeError('Cannot calculate ranking before assessment')
+        except:
+            raise ValueError('Error occurred in ranking calculation')
