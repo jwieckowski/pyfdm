@@ -1,8 +1,8 @@
 # Copyright (c) 2022 Jakub Więckowski
 
 from .mairca.fuzzy import fuzzy
-from .fuzzy_sets.tfn.normalizations import vector_normalization
-from .fuzzy_sets.tfn.distances import vertex_distance
+from .utils.normalizations import vector_normalization
+from .utils.distances import vertex_distance
 from ..helpers import rank
 
 from .validator import Validator
@@ -27,7 +27,7 @@ class fMAIRCA():
         self.distance = distance
         self.__descending = True
 
-    def __call__(self, matrix, weights, types):
+    def __call__(self, matrix, weights, types, *args, **kwargs):
         """
             Calculates the alternatives preferences
 

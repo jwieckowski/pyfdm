@@ -1,9 +1,9 @@
 # Copyright (c) 2022 Jakub Więckowski
 
 from .topsis.fuzzy import fuzzy
-from .fuzzy_sets.tfn.normalizations import linear_normalization
-from .fuzzy_sets.tfn.distances import vertex_distance
-from ..helpers import rank
+from .utils.normalizations import linear_normalization
+from .utils.distances import vertex_distance
+from ..helpers import rank, normalize_weights
 
 from .validator import Validator
 
@@ -27,7 +27,7 @@ class fTOPSIS():
         self.distance = distance
         self.__descending = True
 
-    def __call__(self, matrix, weights, types):
+    def __call__(self, matrix, weights, types, *args, **kwargs):
         """
             Calculates the alternatives preferences
 
@@ -51,7 +51,7 @@ class fTOPSIS():
         # validate data
         Validator.fuzzy_validation(matrix, weights)
 
-        self.preferences = fuzzy(matrix, weights, types, self.normalization, self.distance).astype(float)
+        self.preferences = fuzzy(matrix, normalize_weights(weights), types, self.normalization, self.distance).astype(float)
         return self.preferences
 
     def rank(self):

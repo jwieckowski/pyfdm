@@ -1,17 +1,21 @@
 Fuzzy EDAS
-============================
+==========================
 
-Method object
----------------------------------
-.. automodule:: pyfdm.methods.f_edas
+Submodules
+----------
+
+pyfdm.methods.edas.fuzzy module
+-------------------------------
+
+.. automodule:: pyfdm.methods.edas.fuzzy
    :members:
    :undoc-members:
    :show-inheritance:
 
+Module contents
+---------------
 
-Triangular Fuzzy Numbers calculations
----------------------------------
-.. automodule:: pyfdm.methods.edas.fuzzy
+.. automodule:: pyfdm.methods.edas
    :members:
    :undoc-members:
    :show-inheritance:

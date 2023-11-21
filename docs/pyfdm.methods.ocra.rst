@@ -1,17 +1,21 @@
 Fuzzy OCRA
-============================
+==========================
 
-Method object
----------------------------------
-.. automodule:: pyfdm.methods.f_ocra
+Submodules
+----------
+
+pyfdm.methods.ocra.fuzzy module
+-------------------------------
+
+.. automodule:: pyfdm.methods.ocra.fuzzy
    :members:
    :undoc-members:
    :show-inheritance:
 
-Triangular Fuzzy Numbers calculations
----------------------------------
+Module contents
+---------------
 
-.. automodule:: pyfdm.methods.ocra.fuzzy
+.. automodule:: pyfdm.methods.ocra
    :members:
    :undoc-members:
    :show-inheritance:

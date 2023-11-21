@@ -2,7 +2,7 @@
 
 import numpy as np
 from .vikor.fuzzy import fuzzy
-from .fuzzy_sets.tfn.defuzzifications import mean_area_defuzzification
+from .utils.defuzzifications import mean_area_defuzzification
 from ..helpers import rank
 
 from .validator import Validator
@@ -23,7 +23,7 @@ class fVIKOR():
         self.defuzzify = defuzzify
         self.__descending = False
 
-    def __call__(self, matrix, weights, types, v=0.5):
+    def __call__(self, matrix, weights, types, v=0.5, *args, **kwargs):
         """
             Calculates the alternatives preferences
 

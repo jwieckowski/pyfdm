@@ -1,17 +1,21 @@
 Fuzzy MABAC
-=============================
+===========================
 
-Method object
-----------------------------------
-.. automodule:: pyfdm.methods.f_mabac
+Submodules
+----------
+
+pyfdm.methods.mabac.fuzzy module
+--------------------------------
+
+.. automodule:: pyfdm.methods.mabac.fuzzy
    :members:
    :undoc-members:
    :show-inheritance:
 
-Triangular Fuzzy Numbers calculations
-----------------------------------
+Module contents
+---------------
 
-.. automodule:: pyfdm.methods.mabac.fuzzy
+.. automodule:: pyfdm.methods.mabac
    :members:
    :undoc-members:
    :show-inheritance:

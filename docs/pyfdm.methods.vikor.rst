@@ -1,17 +1,21 @@
 Fuzzy VIKOR
-=============================
+===========================
 
-Method object
-----------------------------------
-.. automodule:: pyfdm.methods.f_vikor
+Submodules
+----------
+
+pyfdm.methods.vikor.fuzzy module
+--------------------------------
+
+.. automodule:: pyfdm.methods.vikor.fuzzy
    :members:
    :undoc-members:
    :show-inheritance:
 
-Triangular Fuzzy Numbers calculations
-----------------------------------
+Module contents
+---------------
 
-.. automodule:: pyfdm.methods.vikor.fuzzy
+.. automodule:: pyfdm.methods.vikor
    :members:
    :undoc-members:
    :show-inheritance:

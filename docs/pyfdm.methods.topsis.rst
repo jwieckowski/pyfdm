@@ -1,17 +1,21 @@
 Fuzzy TOPSIS
-==============================
+============================
 
-Method object
------------------------------------
-.. automodule:: pyfdm.methods.f_topsis
+Submodules
+----------
+
+pyfdm.methods.topsis.fuzzy module
+---------------------------------
+
+.. automodule:: pyfdm.methods.topsis.fuzzy
    :members:
    :undoc-members:
    :show-inheritance:
 
-Triangular Fuzzy Numbers calculations
------------------------------------
+Module contents
+---------------
 
-.. automodule:: pyfdm.methods.topsis.fuzzy
+.. automodule:: pyfdm.methods.topsis
    :members:
    :undoc-members:
    :show-inheritance:

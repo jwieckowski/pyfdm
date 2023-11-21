@@ -1,17 +1,21 @@
 Fuzzy MOORA
-=============================
+===========================
 
-Method object
-----------------------------------
-.. automodule:: pyfdm.methods.f_moora
+Submodules
+----------
+
+pyfdm.methods.moora.fuzzy module
+--------------------------------
+
+.. automodule:: pyfdm.methods.moora.fuzzy
    :members:
    :undoc-members:
    :show-inheritance:
 
-Triangular Fuzzy Numbers calculations
-----------------------------------
+Module contents
+---------------
 
-.. automodule:: pyfdm.methods.moora.fuzzy
+.. automodule:: pyfdm.methods.moora
    :members:
    :undoc-members:
    :show-inheritance:

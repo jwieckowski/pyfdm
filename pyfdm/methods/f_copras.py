@@ -1,7 +1,7 @@
 # Copyright (c) 2022 Jakub Więckowski
 
 from .copras.fuzzy import fuzzy
-from .fuzzy_sets.tfn.normalizations import saw_normalization
+from .utils.normalizations import saw_normalization
 from ..helpers import rank
 
 from .validator import Validator
@@ -22,7 +22,7 @@ class fCOPRAS():
         self.normalization = normalization
         self.__descending = True
 
-    def __call__(self, matrix, weights, types):
+    def __call__(self, matrix, weights, types, *args, **kwargs):
         """
             Calculates the alternatives preferences
 

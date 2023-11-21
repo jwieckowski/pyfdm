@@ -1,4 +1,4 @@
-# Copyright (c) 2022 Jakub Więckowski
+# Copyright (c) 2022-2023 Jakub Więckowski
 
 import numpy as np
 

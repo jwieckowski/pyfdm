@@ -1,10 +1,12 @@
-# Copyright (c) 2022 Jakub Więckowski
+# Copyright (c) 2022-2023 Jakub Więckowski
 
 import numpy as np
+from .methods.utils.normalizations import sum_normalization
 
 __all__ = [
     'rank',
-    'generate_fuzzy_matrix'
+    'generate_fuzzy_matrix',
+    'normalize_weights'
 ]
 
 
@@ -63,3 +65,30 @@ def generate_fuzzy_matrix(m, n, lower=0.0, upper=1.0):
 
     matrix = np.random.uniform(low=lower, high=upper, size=(m, n, 3))
     return np.array([np.sort(m, axis=1) for m in matrix])
+
+def normalize_weights(weights):
+    """
+        Normalize fuzzy criteria weights
+
+        Parameters
+        ----------
+            weights : ndarray
+                Vector of weights in a crisp form or as a TFNs
+
+        Returns
+        -------
+            ndarray
+                Normalized fuzzy criteria weights
+
+    """
+
+    if weights.ndim != 2 or weights.shape[1] != 3:
+        raise ValueError(
+            'Fuzzy weights should be given as Triangular Fuzzy Numbers')
+
+    if any([x > 1 for x in weights.flatten()]):
+        nweights = sum_normalization(weights)
+
+        return nweights
+    else:
+        return weights

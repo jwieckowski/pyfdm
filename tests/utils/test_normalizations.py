@@ -1,7 +1,7 @@
-# Copyright (c) 2022 Jakub Więckowski
+# Copyright (c) 2022-2023 Jakub Więckowski
 
 import numpy as np
-import pyfdm.methods.fuzzy_sets.tfn.normalizations as norms
+import pyfdm.methods.utils.normalizations as norms
 
 
 def test_sum_normalization():
@@ -124,7 +124,7 @@ def test_vector_normalization():
 
 def test_saw_normalization():
     """
-        Test veryfing correctness of the vector normalization formula.
+        Test veryfing correctness of the saw normalization formula.
         Reference value: Narang, M., Joshi, M. C., & Pal, A. K. (2021). A hybrid fuzzy COPRAS-base-criterion method for multi-criteria decision making. Soft Computing, 25(13), 8391-8399.
     """
     matrix = np.array([
@@ -144,3 +144,71 @@ def test_saw_normalization():
 
     assert (np.round(calculated_value[4, 1].astype(
         float), 3) == reference_value).all() or np.sum(np.abs(calculated_value[4,1] - reference_value)) < 0.05
+
+def test_waspas_normalization():
+    """
+        Test veryfing correctness of the WASPAS normalization formula.
+        Reference value: Turskis, Z., Zavadskas, E. K., Antuchevičienė, J., & Kosareva, N. (2015). A hybrid model based on fuzzy AHP and fuzzy WASPAS for construction site selection.
+    """
+    matrix = np.array([
+        [[0.21,0.28,0.35],[0.5,0.6,0.7],[0.6,0.7,0.8],[0.6,0.7,0.8],[0.6,0.7,0.8]],
+        [[0.16,0.20,0.23],[0.6,0.7,0.8],[0.6,0.7,0.8],[0.8,0.9,1.0],[0.5,0.6,0.7]],
+        [[0.14,0.16,0.17],[0.8,0.9,1.0],[0.5,0.6,0.7],[0.6,0.7,0.8],[0.6,0.7,0.8]],
+        [[0.09,0.12,0.17],[0.5,0.6,0.7],[0.6,0.7,0.8],[0.5,0.6,0.7],[0.4,0.5,0.6]],
+        [[0.07,0.08,0.12],[0.8,0.9,1.0],[0.7,0.8,0.9],[0.6,0.7,0.8],[0.5,0.6,0.7]],
+        [[0.05,0.06,0.09],[0.5,0.6,0.7],[0.8,0.9,1.0],[0.6,0.7,0.8],[0.8,0.9,1.0]],
+        [[0.03,0.05,0.07],[0.4,0.5,0.6],[0.5,0.6,0.7],[0.8,0.9,1.0],[0.7,0.8,0.9]],
+        [[0.01,0.03,0.06],[0.5,0.6,0.7],[0.4,0.5,0.6],[0.4,0.5,0.6],[0.5,0.6,0.7]]
+    ])
+
+    M = []
+    for j in range(matrix.shape[1]):
+        M.append([matrix[i, j] for i in range(matrix.shape[0])])
+    M = np.array(M)
+    matrix = M[1:]
+    
+    types = np.array([1, 1, 1, 1, 1, 1, 1, 1])
+
+    calculated_value = norms.waspas_normalization(matrix, types)
+    reference_value = np.array([0.625, 0.750, 0.875])
+
+    assert (np.round(calculated_value[0, 0].astype(float), 3) == reference_value).all() or np.sum(np.abs(calculated_value[0, 0] - reference_value)) < 0.05
+
+def test_sqrt_normalization():
+    """
+        Test veryfing correctness of the SQRT normalization formula.
+        Formula: Kizielewicz, B., & Bączkiewicz, A. (2021). Comparison of Fuzzy TOPSIS, Fuzzy VIKOR, Fuzzy WASPAS and Fuzzy MMOORA methods in the housing selection problem. Procedia Computer Science, 192, 4578-4591.
+        Reference value: Self-calculated empirical verification
+    """
+    matrix = np.array([
+        [[3, 4, 5],[4, 5, 6],[8, 9, 9]],
+        [[6, 7, 8],[4, 5, 6],[1, 2, 3]],
+        [[5, 6, 7],[2, 3, 4],[3, 4, 5]],
+        [[8, 9, 9],[2, 3, 4],[2, 3, 4]],
+        [[7, 8, 9],[7, 8, 9],[5, 6, 7]],
+    ])
+    
+    calculated_value = norms.sqrt_normalization(matrix)
+    reference_value = np.array([0.192, 0.257, 0.321])
+
+    assert (np.round(calculated_value[0, 0].astype(float), 3) == reference_value).all() or np.sum(np.abs(calculated_value[0, 0] - reference_value)) < 0.05
+
+def test_cocoso_normalization():
+    """
+        Test veryfing correctness of the COCOSO normalization formula.
+        Reference value: Ulutaş, A., Popovic, G., Radanov, P., Stanujkic, D., & Karabasevic, D. (2021). A new hybrid fuzzy PSI-PIPRECIA-CoCoSo MCDM based approach to solving the transportation company selection problem. Technological and Economic Development of Economy, 27(5), 1227-1249.
+    """
+    matrix = np.array([
+        [[0.193, 0.408, 0.612],[0.572, 0.774, 0.939],[0.500, 0.700, 0.900],[0.500, 0.700, 0.900], [0.193, 0.408, 0.612],[0.332, 0.535, 0.736],[0.368, 0.572, 0.774]],
+        [[0.300, 0.500, 0.700],[0.572, 0.774, 0.939],[0.408, 0.612, 0.814],[0.100, 0.300, 0.500], [0.368, 0.572, 0.774], [0.500, 0.700, 0.900],[0.612, 0.814, 0.959]],
+        [[0.408, 0.612, 0.814],[0.572, 0.774, 0.939],[0.612, 0.814, 0.959],[0.856, 0.979, 1.000], [0.612, 0.814, 0.959], [0.856, 0.979, 1.000],[0.814, 0.959, 1.000]],
+        [[0.125, 0.332, 0.535],[0.241, 0.451, 0.654],[0.612, 0.814, 0.959],[0.100, 0.300, 0.500], [0.368, 0.572, 0.774],[0.572, 0.774, 0.939],[0.612, 0.814, 0.959]],
+        [[0.125, 0.332, 0.535],[0.241, 0.451, 0.654],[0.572, 0.774, 0.939],[0.535, 0.736, 0.919], [0.408, 0.612, 0.814],[0.814, 0.959, 1.000],[0.612, 0.814, 0.959]],
+    ])
+
+    types = np.array([-1, 1, 1, 1, -1, 1, 1])
+    
+    calculated_value = norms.cocoso_normalization(matrix, types)
+    reference_value = np.array([0.293, 0.589, 0.901])
+
+    assert (np.round(calculated_value[0, 0].astype(float), 3) == reference_value).all() or np.sum(np.abs(calculated_value[0, 0] - reference_value)) < 0.05

@@ -1,7 +1,7 @@
 # Copyright (c) 2022 Jakub Więckowski
 
 from .aras.fuzzy import fuzzy
-from .fuzzy_sets.tfn.normalizations import sum_normalization
+from .utils.normalizations import sum_normalization
 from ..helpers import rank
 
 from .validator import Validator
@@ -21,7 +21,7 @@ class fARAS():
         self.normalization = normalization
         self.__descending = True
 
-    def __call__(self, matrix, weights, types):
+    def __call__(self, matrix, weights, types, *args, **kwargs):
         """
             Calculates the alternatives preferences
 

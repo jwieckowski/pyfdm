@@ -1,17 +1,21 @@
 Fuzzy MAIRCA
-==============================
+============================
 
-Method object
------------------------------------
-.. automodule:: pyfdm.methods.f_mairca
+Submodules
+----------
+
+pyfdm.methods.mairca.fuzzy module
+---------------------------------
+
+.. automodule:: pyfdm.methods.mairca.fuzzy
    :members:
    :undoc-members:
    :show-inheritance:
 
-Triangular Fuzzy Numbers calculations
------------------------------------
+Module contents
+---------------
 
-.. automodule:: pyfdm.methods.mairca.fuzzy
+.. automodule:: pyfdm.methods.mairca
    :members:
    :undoc-members:
    :show-inheritance:

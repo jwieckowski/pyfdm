@@ -1,16 +1,18 @@
-# Copyright (c) 2022 Jakub Więckowski
+# Copyright (c) 2022-2023 Jakub Więckowski
 
 import numpy as np
 
 __all__ = [
+    'canberra_distance',
+    'chebyshev_distance',
     'euclidean_distance',
-    'weighted_euclidean_distance',
     'hamming_distance',
-    'weighted_hamming_distance',
-    'vertex_distance',
-    'tran_duckstein_distance',
     'lr_distance',
     'mahdavi_distance',
+    'tran_duckstein_distance',
+    'vertex_distance',
+    'weighted_euclidean_distance',
+    'weighted_hamming_distance',
 ]
 
 
@@ -171,3 +173,44 @@ def mahdavi_distance(a, b):
                 Crisp value representing distance
     """
     return np.sqrt(1/6 * ( np.sum([ (b[i] - a[i])**2 for i in range(3)]) + (b[1] - a[1])**2 + np.sum([(b[i] - a[i]) * (b[i+1] - a[i+1]) for i in range(2)]) ))
+
+def chebyshev_distance(a, b):
+    """
+    Calculates the Chebyshev distance between two Triangular Fuzzy Numbers.
+
+    Parameters
+    ----------
+        a : ndarray
+            Triangular Fuzzy Number
+
+        b : ndarray
+            Triangular Fuzzy Number
+
+    Returns
+    -------
+        float
+            Crisp value representing distance
+    """
+    distances = [abs(a[0] - b[0]), abs(a[1] - b[1]), abs(a[2] - b[2])]
+    
+    return max(distances)
+
+def canberra_distance(a, b):
+    """
+    Calculates the Canberra distance between two Triangular Fuzzy Numbers.
+
+    Parameters
+    ----------
+        a : ndarray
+            Triangular Fuzzy Number
+
+        b : ndarray
+            Triangular Fuzzy Number
+
+    Returns
+    -------
+        float
+            Crisp value representing distance
+    """
+
+    return np.sum([np.abs(a[i] - b[i]) / (np.abs(a[i]) + np.abs(b[i])) for i in range(len(a))])

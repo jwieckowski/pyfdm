@@ -1,7 +1,7 @@
-# Copyright (c) 2022 Jakub Więckowski
+# Copyright (c) 2022-2023 Jakub Więckowski
 
 import numpy as np
-import pyfdm.methods.fuzzy_sets.tfn.distances as dist
+import pyfdm.methods.utils.distances as dist
 from pyfdm.methods import f_topsis
 
 def test_euclidean_distance():
@@ -113,11 +113,35 @@ def test_mahdavi_distance():
         Formula: Wang, H., Lu, X., Du, Y., Zhang, C., Sadiq, R., & Deng, Y. (2017). Fault tree analysis based on TOPSIS and triangular fuzzy number. International journal of system assurance engineering and management, 8(4), 2064-2070.
         Reference value: Self-calculated empirical verification
     """
-    # https://link.springer.com/article/10.1007/s13198-014-0323-5#Equ20
     x = np.array([0.92, 0.96, 1.0])
     y = np.array([0.55, 0.6643, 0.7786])
     calculated_value = dist.mahdavi_distance(x, y)
-    # reference_value = 0.2278
     reference_value = 0.2988
 
     assert np.round(calculated_value, 4) == reference_value
+
+def test_canberra_distance():
+    """
+        Test veryfing correctness of the Mahdavi distance formula.
+        Formula: Rodrigues, É. O. (2018). Combining Minkowski and Chebyshev: New distance proposal and survey of distance metrics using k-nearest neighbours classifier. Pattern Recognition Letters, 110, 66-71.
+        Reference value: Self-calculated empirical verification
+    """
+    x = np.array([1, 3, 5])
+    y = np.array([4, 5, 6])
+    calculated_value = dist.canberra_distance(x, y)
+    reference_value = 0.941
+
+    assert np.round(calculated_value, 3) == reference_value
+
+def test_chebyshev_distance():
+    """
+        Test veryfing correctness of the Mahdavi distance formula.
+        Formula: Rodrigues, É. O. (2018). Combining Minkowski and Chebyshev: New distance proposal and survey of distance metrics using k-nearest neighbours classifier. Pattern Recognition Letters, 110, 66-71.
+        Reference value: Self-calculated empirical verification
+    """
+    x = np.array([1, 3, 5])
+    y = np.array([4, 5, 6])
+    calculated_value = dist.chebyshev_distance(x, y)
+    reference_value = 3
+
+    assert np.round(calculated_value, 3) == reference_value

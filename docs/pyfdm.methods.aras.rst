@@ -1,16 +1,21 @@
 Fuzzy ARAS
-=============================
+==========================
 
-Method object
-----------------------------------
-.. automodule:: pyfdm.methods.f_aras
+Submodules
+----------
+
+pyfdm.methods.aras.fuzzy module
+-------------------------------
+
+.. automodule:: pyfdm.methods.aras.fuzzy
    :members:
    :undoc-members:
    :show-inheritance:
 
-Triangular Fuzzy Numbers calculations
-----------------------------------
-.. automodule:: pyfdm.methods.aras.fuzzy
+Module contents
+---------------
+
+.. automodule:: pyfdm.methods.aras
    :members:
    :undoc-members:
    :show-inheritance:

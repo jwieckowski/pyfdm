@@ -11,9 +11,10 @@ import sys
 
 sys.path.insert(0, os.path.abspath('../'))
 
-project = 'pyfdm'
-copyright = '2022, Jakub Więckowski'
+project = 'pyFDM'
+copyright = '2023, Jakub Więckowski'
 author = 'Jakub Więckowski'
+release = '1.1.0'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -27,6 +28,12 @@ extensions = [
 
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+
+# -- Options for HTML output -------------------------------------------------
+# https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
+
+html_theme = 'sphinx_rtd_theme'
+html_static_path = ['_static']
 
 # Napoleon settings
 napoleon_google_docstring = True
@@ -43,10 +50,3 @@ napoleon_use_rtype = True
 napoleon_preprocess_types = False
 napoleon_type_aliases = None
 napoleon_attr_annotations = True
-
-
-# -- Options for HTML output -------------------------------------------------
-# https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
-
-html_theme = 'sphinx_rtd_theme'
-html_static_path = ['_static']

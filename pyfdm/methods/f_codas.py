@@ -1,8 +1,8 @@
 # Copyright (c) 2022 Jakub Więckowski
 
 from .codas.fuzzy import fuzzy
-from .fuzzy_sets.tfn.normalizations import max_normalization
-from .fuzzy_sets.tfn.distances import euclidean_distance, hamming_distance
+from .utils.normalizations import max_normalization
+from .utils.distances import euclidean_distance, hamming_distance
 from ..helpers import rank
 
 from .validator import Validator
@@ -31,7 +31,7 @@ class fCODAS():
         self.distance_2 = distance_2
         self.__descending = True
 
-    def __call__(self, matrix, weights, types, tau=0.02):
+    def __call__(self, matrix, weights, types, tau=0.02, *args, **kwargs):
         """
             Calculates the alternatives preferences
 

@@ -54,3 +54,4 @@ def fuzzy(matrix, weights, types, normalization, distance):
                           for j in range(matrix.shape[1])])
 
     return fnis / (fpis + fnis)
+

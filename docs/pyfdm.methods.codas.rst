@@ -1,16 +1,21 @@
 Fuzzy CODAS
-=============================
+===========================
 
-Method object
-----------------------------------
-.. automodule:: pyfdm.methods.f_codas
+Submodules
+----------
+
+pyfdm.methods.codas.fuzzy module
+--------------------------------
+
+.. automodule:: pyfdm.methods.codas.fuzzy
    :members:
    :undoc-members:
    :show-inheritance:
 
-Triangular Fuzzy Numbers calculations
-----------------------------------
-.. automodule:: pyfdm.methods.codas.fuzzy
+Module contents
+---------------
+
+.. automodule:: pyfdm.methods.codas
    :members:
    :undoc-members:
    :show-inheritance:

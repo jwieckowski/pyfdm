@@ -1,8 +1,8 @@
 # Copyright (c) 2022 Jakub Więckowski
 
 from .mabac.fuzzy import fuzzy
-from .fuzzy_sets.tfn.defuzzifications import mean_defuzzification
-from .fuzzy_sets.tfn.normalizations import minmax_normalization
+from .utils.defuzzifications import mean_defuzzification
+from .utils.normalizations import minmax_normalization
 from ..helpers import rank
 
 from .validator import Validator
@@ -27,7 +27,7 @@ class fMABAC():
         self.defuzzify = defuzzify
         self.__descending = True
 
-    def __call__(self, matrix, weights, types):
+    def __call__(self, matrix, weights, types, *args, **kwargs):
         """
             Calculates the alternatives preferences
 

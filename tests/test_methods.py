@@ -1,4 +1,4 @@
-# Copyright (c) 2022 Jakub Więckowski
+# Copyright (c) 2022-2023 Jakub Więckowski
 
 import numpy as np
 from pyfdm.methods import *
@@ -33,6 +33,33 @@ def test_fARAS():
     reference_result = np.array([0.76, 0.73, 0.74, 0.8, 0.81])
     assert (np.round(calculated_result.astype(float), 2) == reference_result).all()
     assert (f_aras.rank() == [3, 5, 4, 2, 1]).all()
+
+def test_fCOCOSO():
+    """
+        Test verifying correctness of the fuzzy COCOSO method combined with Triangular Fuzzy Number
+        Reference value: Ulutaş, A., Popovic, G., Radanov, P., Stanujkic, D., & Karabasevic, D. (2021). A new hybrid fuzzy PSI-PIPRECIA-CoCoSo MCDM based approach to solving the transportation company selection problem. Technological and Economic Development of Economy, 27(5), 1227-1249.
+    """
+
+    matrix = np.array([
+        [[0.193, 0.408, 0.612],[0.572, 0.774, 0.939],[0.500, 0.700, 0.900],[0.500, 0.700, 0.900], [0.193, 0.408, 0.612],[0.332, 0.535, 0.736],[0.368, 0.572, 0.774]],
+        [[0.300, 0.500, 0.700],[0.572, 0.774, 0.939],[0.408, 0.612, 0.814],[0.100, 0.300, 0.500], [0.368, 0.572, 0.774], [0.500, 0.700, 0.900],[0.612, 0.814, 0.959]],
+        [[0.408, 0.612, 0.814],[0.572, 0.774, 0.939],[0.612, 0.814, 0.959],[0.856, 0.979, 1.000], [0.612, 0.814, 0.959], [0.856, 0.979, 1.000],[0.814, 0.959, 1.000]],
+        [[0.125, 0.332, 0.535],[0.241, 0.451, 0.654],[0.612, 0.814, 0.959],[0.100, 0.300, 0.500], [0.368, 0.572, 0.774],[0.572, 0.774, 0.939],[0.612, 0.814, 0.959]],
+        [[0.125, 0.332, 0.535],[0.241, 0.451, 0.654],[0.572, 0.774, 0.939],[0.535, 0.736, 0.919], [0.408, 0.612, 0.814],[0.814, 0.959, 1.000],[0.612, 0.814, 0.959]],
+    ])
+
+    weights = np.array([
+        [0.056, 0.259, 0.852], [0.026, 0.073, 0.252] , [0.038, 0.114, 0.393], [0.021, 0.070, 0.283], [0.047, 0.180, 0.634], [0.039, 0.138, 0.537], [0.051, 0.167, 0.638]
+    ])
+
+    types = np.array([-1, 1, 1, 1, -1, 1, 1])
+
+    f_cocoso = fCOCOSO()
+
+    f_cocoso(matrix, weights, types)
+    reference_result = np.array([4, 5, 3, 2, 1])
+
+    assert (f_cocoso.rank() == reference_result).all()
 
 
 def test_fCODAS():
@@ -260,6 +287,30 @@ def test_fOCRA():
     assert (np.round(calculated_result.astype(float), 3) == reference_result).all() or np.sum(np.abs(np.round(calculated_result.astype(float), 3) - reference_result)) < 0.05 
     assert (f_ocra.rank() == [1, 3, 2, 5, 4]).all()
 
+def test_fSPOTIS():
+    """
+        Test verifying correctness of the fuzzy SPOTIS method combined with Triangular Fuzzy Number
+        Reference value: Shekhovtsov, A., Paradowski, B., Więckowski, J., Kizielewicz, B., & Sałabun, W. (2022, December). Extension of the SPOTIS method for the rank reversal free decision-making under fuzzy environment. In 2022 IEEE 61st Conference on Decision and Control (CDC) (pp. 5595-5600). IEEE.
+    """
+
+    matrix = np.array([
+        [[0.6, 0.8, 1.0], [0.6, 0.8, 1.0], [0.4, 0.6, 0.8], [0.2, 0.4, 0.6], [0.8, 1.0, 1.0]], 
+        [[0.4, 0.6, 0.8], [0.6, 0.8, 1.0], [0.4, 0.6, 0.8], [0.8, 1.0, 1.0], [0.2, 0.4, 0.6]], 
+        [[0.8, 1.0, 1.0], [0.4, 0.6, 0.8], [0.6, 0.8, 1.0], [0.0, 0.2, 0.4], [0.0, 0.2, 0.4]] 
+    ])
+
+    weights = np.array([0.364, 0.272, 0.203, 0.093, 0.068])
+    types = np.array([-1, 1, 1, 1, 1])
+    bounds = np.array([[0.0, 1.0]] * 5)
+
+    f_spotis = fSPOTIS()
+
+    calculated_result = f_spotis(matrix, weights, types, bounds)
+    reference_result = np.array([0.50416561, 0.41542608, 0.5462349])
+
+    assert (calculated_result == reference_result).all() or np.sum(np.abs(calculated_result - reference_result)) < 0.05
+    assert (f_spotis.rank() == [2, 3, 1]).all()
+
 def test_fTOPSIS():
     """
         Test verifying correctness of the fuzzy TOPSIS method combined with Triangular Fuzzy Number
@@ -332,3 +383,93 @@ def test_fVIKOR():
     assert (ranks[0] == [6, 5, 2, 3, 1, 4]).all()
     assert (ranks[1] == [5, 2, 4, 3, 1, 6]).all()
     assert (ranks[2] == [6, 5, 3, 2, 1, 4]).all()
+
+def test_fWPASPAS():
+    """
+        Test verifying correctness of the fuzzy WPM method combined with Triangular Fuzzy Number
+        Reference value: Turskis, Z., Zavadskas, E. K., Antuchevičienė, J., & Kosareva, N. (2015). A hybrid model based on fuzzy AHP and fuzzy WASPAS for construction site selection.
+    """
+
+    matrix = np.array([
+        [[0.21,0.28,0.35],[0.5,0.6,0.7],[0.6,0.7,0.8],[0.6,0.7,0.8],[0.6,0.7,0.8]],
+        [[0.16,0.20,0.23],[0.6,0.7,0.8],[0.6,0.7,0.8],[0.8,0.9,1.0],[0.5,0.6,0.7]],
+        [[0.14,0.16,0.17],[0.8,0.9,1.0],[0.5,0.6,0.7],[0.6,0.7,0.8],[0.6,0.7,0.8]],
+        [[0.09,0.12,0.17],[0.5,0.6,0.7],[0.6,0.7,0.8],[0.5,0.6,0.7],[0.4,0.5,0.6]],
+        [[0.07,0.08,0.12],[0.8,0.9,1.0],[0.7,0.8,0.9],[0.6,0.7,0.8],[0.5,0.6,0.7]],
+        [[0.05,0.06,0.09],[0.5,0.6,0.7],[0.8,0.9,1.0],[0.6,0.7,0.8],[0.8,0.9,1.0]],
+        [[0.03,0.05,0.07],[0.4,0.5,0.6],[0.5,0.6,0.7],[0.8,0.9,1.0],[0.7,0.8,0.9]],
+        [[0.01,0.03,0.06],[0.5,0.6,0.7],[0.4,0.5,0.6],[0.4,0.5,0.6],[0.5,0.6,0.7]]
+    ])
+
+    M = []
+    for j in range(matrix.shape[1]):
+        M.append([matrix[i, j] for i in range(matrix.shape[0])])
+    M = np.array(M)
+    matrix = M[1:]
+
+    weights = np.array([
+        [0.21, 0.28, 0.35],
+        [0.16, 0.20, 0.23],
+        [0.14, 0.16, 0.17],
+        [0.09, 0.12, 0.17],
+        [0.07, 0.08, 0.12],
+        [0.05, 0.06, 0.09],
+        [0.03, 0.05, 0.07],
+        [0.01, 0.03, 0.06]
+    ])
+    types = np.array([1, 1, 1, 1, 1, 1, 1, 1])
+
+    f_waspas = fWASPAS()
+
+    calculated_result = f_waspas(matrix, weights, types)
+    ref_pref = [0.76, 0.77, 0.870, 0.73]
+    ref_rank = [3, 2, 1, 4]
+
+    assert (np.round(calculated_result.astype(float), 2) == ref_pref).all() or np.sum(np.abs(calculated_result - ref_pref)) < 0.1
+    assert (f_waspas.rank() == ref_rank).all()
+
+def test_fWPM():
+    """
+        Test verifying correctness of the fuzzy WPM method combined with Triangular Fuzzy Number
+        Reference value: Triantaphyllou, E., & Lin, C. T. (1996). Development and evaluation of five fuzzy multiattribute decision-making methods. international Journal of Approximate reasoning, 14(4), 281-310.
+    """
+
+    matrix = np.array([
+        [[3, 4, 5], [5, 6, 7], [5, 6, 7], [2, 3, 4]],
+        [[6, 7, 8], [5, 6, 7], [0.5, 1, 2], [4, 5, 6]],
+        [[4, 5, 6], [3, 4, 5], [7, 8, 9], [6, 7, 8]],
+    ])
+
+    weights = np.array([
+        [0.13, 0.2, 0.31], [0.08, 0.15, 0.25], [0.29, 0.40, 0.56], [0.17, 0.25, 0.38]
+    ])
+
+    f_wpm = fWPM()
+
+    f_wpm(matrix, weights)
+    reference_result = np.array([2, 3, 1])
+
+    assert (f_wpm.rank() == reference_result).all()
+
+def test_fWSM():
+    """
+        Test verifying correctness of the fuzzy WSM method combined with Triangular Fuzzy Number
+        Reference value: Triantaphyllou, E., & Lin, C. T. (1996). Development and evaluation of five fuzzy multiattribute decision-making methods. international Journal of Approximate reasoning, 14(4), 281-310.
+    """
+
+    matrix = np.array([
+        [[3, 4, 5], [5, 6, 7], [5, 6, 7], [2, 3, 4]],
+        [[6, 7, 8], [5, 6, 7], [0.5, 1, 2], [4, 5, 6]],
+        [[4, 5, 6], [3, 4, 5], [7, 8, 9], [6, 7, 8]],
+    ])
+
+    weights = np.array([
+        [0.13, 0.2, 0.31], [0.08, 0.15, 0.25], [0.29, 0.40, 0.56], [0.17, 0.25, 0.38]
+    ])
+
+    f_wsm = fWSM()
+
+    f_wsm(matrix, weights)
+    reference_result = np.array([2, 3, 1])
+
+    assert (f_wsm.rank() == reference_result).all()
