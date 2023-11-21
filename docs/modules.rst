@@ -1,4 +1,4 @@
-pyfdm
+API
 =====
 
 .. toctree::

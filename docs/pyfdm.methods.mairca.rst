@@ -1,10 +1,7 @@
 Fuzzy MAIRCA
 ============================
 
-Submodules
-----------
-
-pyfdm.methods.mairca.fuzzy module
+Calculation
 ---------------------------------
 
 .. automodule:: pyfdm.methods.mairca.fuzzy

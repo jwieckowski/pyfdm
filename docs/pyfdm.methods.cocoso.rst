@@ -1,10 +1,7 @@
 Fuzzy CoCoSo
 ============================
 
-Submodules
-----------
-
-pyfdm.methods.cocoso.fuzzy module
+Calculation
 ---------------------------------
 
 .. automodule:: pyfdm.methods.cocoso.fuzzy

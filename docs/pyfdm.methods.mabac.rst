@@ -1,10 +1,7 @@
 Fuzzy MABAC
 ===========================
 
-Submodules
-----------
-
-pyfdm.methods.mabac.fuzzy module
+Calculation
 --------------------------------
 
 .. automodule:: pyfdm.methods.mabac.fuzzy

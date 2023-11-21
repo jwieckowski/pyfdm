@@ -1,10 +1,7 @@
 Fuzzy EDAS
 ==========================
 
-Submodules
-----------
-
-pyfdm.methods.edas.fuzzy module
+Calculation
 -------------------------------
 
 .. automodule:: pyfdm.methods.edas.fuzzy

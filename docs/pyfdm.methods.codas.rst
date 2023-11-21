@@ -1,10 +1,7 @@
 Fuzzy CODAS
 ===========================
 
-Submodules
-----------
-
-pyfdm.methods.codas.fuzzy module
+Calculation
 --------------------------------
 
 .. automodule:: pyfdm.methods.codas.fuzzy

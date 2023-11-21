@@ -1,9 +1,6 @@
 Utils package
 ===========================
 
-Submodules
-----------
-
 Defuzzifications module
 -------------------------------------------
 

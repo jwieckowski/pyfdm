@@ -1,10 +1,7 @@
 Fuzzy WSM
 =========================
 
-Submodules
-----------
-
-pyfdm.methods.wsm.fuzzy module
+Calculation
 ------------------------------
 
 .. automodule:: pyfdm.methods.wsm.fuzzy

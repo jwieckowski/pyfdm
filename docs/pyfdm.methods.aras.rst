@@ -1,10 +1,7 @@
 Fuzzy ARAS
 ==========================
 
-Submodules
-----------
-
-pyfdm.methods.aras.fuzzy module
+Calculation
 -------------------------------
 
 .. automodule:: pyfdm.methods.aras.fuzzy

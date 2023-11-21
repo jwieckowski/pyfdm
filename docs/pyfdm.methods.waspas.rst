@@ -1,10 +1,7 @@
 Fuzzy WASPAS
 ============================
 
-Submodules
-----------
-
-pyfdm.methods.waspas.fuzzy module
+Calculation
 ---------------------------------
 
 .. automodule:: pyfdm.methods.waspas.fuzzy

@@ -1,10 +1,7 @@
 Fuzzy SPOTIS
 ============================
 
-Submodules
-----------
-
-pyfdm.methods.spotis.fuzzy module
+Calculation
 ---------------------------------
 
 .. automodule:: pyfdm.methods.spotis.fuzzy

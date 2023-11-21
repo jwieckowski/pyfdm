@@ -1,10 +1,7 @@
 Fuzzy OCRA
 ==========================
 
-Submodules
-----------
-
-pyfdm.methods.ocra.fuzzy module
+Calculation
 -------------------------------
 
 .. automodule:: pyfdm.methods.ocra.fuzzy

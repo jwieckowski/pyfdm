@@ -1,10 +1,7 @@
 Fuzzy MOORA
 ===========================
 
-Submodules
-----------
-
-pyfdm.methods.moora.fuzzy module
+Calculation
 --------------------------------
 
 .. automodule:: pyfdm.methods.moora.fuzzy

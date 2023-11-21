@@ -1,10 +1,7 @@
 Triangular Fuzzy Numbers
 ========================
 
-Submodules
-----------
-
-pyfdm.TFN.tfn module
+Implementation
 --------------------
 
 .. automodule:: pyfdm.TFN.tfn

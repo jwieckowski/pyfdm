@@ -1,10 +1,7 @@
 Fuzzy TOPSIS
 ============================
 
-Submodules
-----------
-
-pyfdm.methods.topsis.fuzzy module
+Calculation
 ---------------------------------
 
 .. automodule:: pyfdm.methods.topsis.fuzzy

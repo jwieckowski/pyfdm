@@ -1,9 +1,6 @@
 Fuzzy Methods
 =====================
 
-Subpackages
------------
-
 .. toctree::
    :maxdepth: 4
 
@@ -24,10 +21,8 @@ Subpackages
    pyfdm.methods.wpm
    pyfdm.methods.wsm
 
-Submodules
-----------
 
-pyfdm.methods.f\_aras module
+Fuzzy ARAS
 ----------------------------
 
 .. automodule:: pyfdm.methods.f_aras
@@ -35,7 +30,7 @@ pyfdm.methods.f\_aras module
    :undoc-members:
    :show-inheritance:
 
-pyfdm.methods.f\_cocoso module
+Fuzzy CoCoSo
 ------------------------------
 
 .. automodule:: pyfdm.methods.f_cocoso
@@ -43,7 +38,7 @@ pyfdm.methods.f\_cocoso module
    :undoc-members:
    :show-inheritance:
 
-pyfdm.methods.f\_codas module
+Fuzzy CODAS
 -----------------------------
 
 .. automodule:: pyfdm.methods.f_codas
@@ -51,7 +46,7 @@ pyfdm.methods.f\_codas module
    :undoc-members:
    :show-inheritance:
 
-pyfdm.methods.f\_copras module
+Fuzzy COPRAS
 ------------------------------
 
 .. automodule:: pyfdm.methods.f_copras
@@ -59,7 +54,7 @@ pyfdm.methods.f\_copras module
    :undoc-members:
    :show-inheritance:
 
-pyfdm.methods.f\_edas module
+Fuzzy EDAS
 ----------------------------
 
 .. automodule:: pyfdm.methods.f_edas
@@ -67,7 +62,7 @@ pyfdm.methods.f\_edas module
    :undoc-members:
    :show-inheritance:
 
-pyfdm.methods.f\_mabac module
+Fuzzy MABAC
 -----------------------------
 
 .. automodule:: pyfdm.methods.f_mabac
@@ -75,7 +70,7 @@ pyfdm.methods.f\_mabac module
    :undoc-members:
    :show-inheritance:
 
-pyfdm.methods.f\_mairca module
+Fuzzy MAIRCA
 ------------------------------
 
 .. automodule:: pyfdm.methods.f_mairca
@@ -83,7 +78,7 @@ pyfdm.methods.f\_mairca module
    :undoc-members:
    :show-inheritance:
 
-pyfdm.methods.f\_moora module
+Fuzzy MOORA
 -----------------------------
 
 .. automodule:: pyfdm.methods.f_moora
@@ -91,7 +86,7 @@ pyfdm.methods.f\_moora module
    :undoc-members:
    :show-inheritance:
 
-pyfdm.methods.f\_ocra module
+Fuzzy OCRA
 ----------------------------
 
 .. automodule:: pyfdm.methods.f_ocra
@@ -99,7 +94,7 @@ pyfdm.methods.f\_ocra module
    :undoc-members:
    :show-inheritance:
 
-pyfdm.methods.f\_spotis module
+Fuzzy SPOTIS
 ------------------------------
 
 .. automodule:: pyfdm.methods.f_spotis
@@ -107,7 +102,7 @@ pyfdm.methods.f\_spotis module
    :undoc-members:
    :show-inheritance:
 
-pyfdm.methods.f\_topsis module
+Fuzzy TOPSIS
 ------------------------------
 
 .. automodule:: pyfdm.methods.f_topsis
@@ -115,7 +110,7 @@ pyfdm.methods.f\_topsis module
    :undoc-members:
    :show-inheritance:
 
-pyfdm.methods.f\_vikor module
+Fuzzy VIKOR
 -----------------------------
 
 .. automodule:: pyfdm.methods.f_vikor
@@ -123,7 +118,7 @@ pyfdm.methods.f\_vikor module
    :undoc-members:
    :show-inheritance:
 
-pyfdm.methods.f\_waspas module
+Fuzzy WASPAS
 ------------------------------
 
 .. automodule:: pyfdm.methods.f_waspas
@@ -131,7 +126,7 @@ pyfdm.methods.f\_waspas module
    :undoc-members:
    :show-inheritance:
 
-pyfdm.methods.f\_wpm module
+Fuzzy WPM
 ---------------------------
 
 .. automodule:: pyfdm.methods.f_wpm
@@ -139,7 +134,7 @@ pyfdm.methods.f\_wpm module
    :undoc-members:
    :show-inheritance:
 
-pyfdm.methods.f\_wsm module
+Fuzzy WSM
 ---------------------------
 
 .. automodule:: pyfdm.methods.f_wsm
@@ -147,7 +142,7 @@ pyfdm.methods.f\_wsm module
    :undoc-members:
    :show-inheritance:
 
-pyfdm.methods.validator module
+Validator
 ------------------------------
 
 .. automodule:: pyfdm.methods.validator

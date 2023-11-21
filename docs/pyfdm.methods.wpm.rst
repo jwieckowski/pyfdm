@@ -1,10 +1,7 @@
 Fuzzy WPM
 =========================
 
-Submodules
-----------
-
-pyfdm.methods.wpm.fuzzy module
+Calculation
 ------------------------------
 
 .. automodule:: pyfdm.methods.wpm.fuzzy

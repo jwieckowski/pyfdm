@@ -1,10 +1,7 @@
 Fuzzy VIKOR
 ===========================
 
-Submodules
-----------
-
-pyfdm.methods.vikor.fuzzy module
+Calculation
 --------------------------------
 
 .. automodule:: pyfdm.methods.vikor.fuzzy

@@ -1,10 +1,7 @@
 Fuzzy COPRAS
 ============================
 
-Submodules
-----------
-
-pyfdm.methods.copras.fuzzy module
+Calculation
 ---------------------------------
 
 .. automodule:: pyfdm.methods.copras.fuzzy

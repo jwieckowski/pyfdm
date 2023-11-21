@@ -11,8 +11,6 @@ Subpackages
    pyfdm.graphs
    pyfdm.methods
 
-Submodules
-----------
 
 Correlations module
 -------------------------
