@@ -24,11 +24,3 @@ Normalizations module
    :members:
    :undoc-members:
    :show-inheritance:
-
-Module contents
----------------
-
-.. automodule:: pyfdm.methods.utils
-   :members:
-   :undoc-members:
-   :show-inheritance:

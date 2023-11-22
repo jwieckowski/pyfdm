@@ -13,10 +13,8 @@ The PyFDM (Python Fuzzy Decision Making) package serves as a versatile toolkit d
    :caption: Contents:
 
    readme_link
-   user_guide
    modules
    examples
-
 
 
 Indices and tables

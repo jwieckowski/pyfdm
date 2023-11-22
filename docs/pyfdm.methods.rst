@@ -1,5 +1,5 @@
-Fuzzy Methods
-=====================
+Fuzzy methods calculation logic
+===============================
 
 .. toctree::
    :maxdepth: 4
@@ -21,6 +21,8 @@ Fuzzy Methods
    pyfdm.methods.wpm
    pyfdm.methods.wsm
 
+Fuzzy methods class
+===============================
 
 Fuzzy ARAS
 ----------------------------
@@ -146,14 +148,6 @@ Validator
 ------------------------------
 
 .. automodule:: pyfdm.methods.validator
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Module contents
----------------
-
-.. automodule:: pyfdm.methods
    :members:
    :undoc-members:
    :show-inheritance:
