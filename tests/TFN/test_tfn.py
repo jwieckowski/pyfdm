@@ -4,7 +4,7 @@ from pyfdm.TFN import TFN
 
 def test_mathematical_operations():
     """
-        Test veryfing correctness of Triangular Fuzzy Numbers arithmetical operations.
+        Test verifying correctness of Triangular Fuzzy Numbers arithmetical operations.
         Reference value: Sudha, T., & Jayalalitha, G. (2020, July). Fuzzy triangular numbers in-Sierpinski triangle and right angle triangle. In Journal of Physics: Conference Series (Vol. 1597, No. 1, p. 012022). IOP Publishing.
     """
 
@@ -29,7 +29,7 @@ def test_mathematical_operations():
 
 def test_membership_function():
     """
-        Test veryfing correctness of membership function calculation of Triangular Fuzzy Numbers.
+        Test verifying correctness of membership function calculation of Triangular Fuzzy Numbers.
         Reference value: Sudha, T., & Jayalalitha, G. (2020, July). Fuzzy triangular numbers in-Sierpinski triangle and right angle triangle. In Journal of Physics: Conference Series (Vol. 1597, No. 1, p. 012022). IOP Publishing.
     """
     
@@ -43,7 +43,7 @@ def test_membership_function():
 
 def test_centroid():
     """
-        Test veryfing correctness of centroid calculation of Triangular Fuzzy Numbers.
+        Test verifying correctness of centroid calculation of Triangular Fuzzy Numbers.
         Reference value: Sudha, T., & Jayalalitha, G. (2020, July). Fuzzy triangular numbers in-Sierpinski triangle and right angle triangle. In Journal of Physics: Conference Series (Vol. 1597, No. 1, p. 012022). IOP Publishing.
     """
     tfn = TFN(1, 2, 3)
@@ -54,7 +54,7 @@ def test_centroid():
 
 def test_core():
     """
-        Test veryfing correctness of core calculations of Triangular Fuzzy Numbers arithmetical.
+        Test verifying correctness of core calculations of Triangular Fuzzy Numbers arithmetical.
         Reference value: Sudha, T., & Jayalalitha, G. (2020, July). Fuzzy triangular numbers in-Sierpinski triangle and right angle triangle. In Journal of Physics: Conference Series (Vol. 1597, No. 1, p. 012022). IOP Publishing.
     """
     tfn = TFN(1, 2, 3)
@@ -65,7 +65,7 @@ def test_core():
 
 def test_equality():
     """
-        Test veryfing correctness of equality of Triangular Fuzzy Numbers.
+        Test verifying correctness of equality of Triangular Fuzzy Numbers.
         Reference value: Sudha, T., & Jayalalitha, G. (2020, July). Fuzzy triangular numbers in-Sierpinski triangle and right angle triangle. In Journal of Physics: Conference Series (Vol. 1597, No. 1, p. 012022). IOP Publishing.
     """
     tfn1 = TFN(1, 2, 3)
@@ -76,7 +76,7 @@ def test_equality():
 
 def test_inclusion():
     """
-        Test veryfing correctness of inclusion of Triangular Fuzzy Numbers.
+        Test verifying correctness of inclusion of Triangular Fuzzy Numbers.
         Reference value: Sudha, T., & Jayalalitha, G. (2020, July). Fuzzy triangular numbers in-Sierpinski triangle and right angle triangle. In Journal of Physics: Conference Series (Vol. 1597, No. 1, p. 012022). IOP Publishing.
     """
     tfn1 = TFN(1, 2, 3)
@@ -88,7 +88,7 @@ def test_inclusion():
 
 def test_s_norm():
     """
-        Test veryfing correctness of S-norm operator of Triangular Fuzzy Numbers.
+        Test verifying correctness of S-norm operator of Triangular Fuzzy Numbers.
         Reference value: Sudha, T., & Jayalalitha, G. (2020, July). Fuzzy triangular numbers in-Sierpinski triangle and right angle triangle. In Journal of Physics: Conference Series (Vol. 1597, No. 1, p. 012022). IOP Publishing.
     """
     tfn1 = TFN(1, 2, 3)
@@ -105,7 +105,7 @@ def test_s_norm():
 
 def test_t_norm():
     """
-        Test veryfing correctness of T-norm operator Triangular Fuzzy Numbers.
+        Test verifying correctness of T-norm operator Triangular Fuzzy Numbers.
         Reference value: Sudha, T., & Jayalalitha, G. (2020, July). Fuzzy triangular numbers in-Sierpinski triangle and right angle triangle. In Journal of Physics: Conference Series (Vol. 1597, No. 1, p. 012022). IOP Publishing.
     """
     tfn1 = TFN(1, 2, 3)
