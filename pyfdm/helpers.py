@@ -66,7 +66,7 @@ def generate_fuzzy_matrix(m, n, lower=0.0, upper=1.0):
     matrix = np.random.uniform(low=lower, high=upper, size=(m, n, 3))
     return np.array([np.sort(m, axis=1) for m in matrix])
 
-def normalize_weights(weights, types=None):
+def normalize_weights(weights):
     """
         Normalize fuzzy criteria weights
 
@@ -87,10 +87,8 @@ def normalize_weights(weights, types=None):
             'Fuzzy weights should be given as Triangular Fuzzy Numbers')
 
     if any([x > 1 for x in weights.flatten()]):
-        if types is not None:
-            nweights = sum_normalization(weights, types)
-        else:
-            nweights = vector_normalization(weights)
+        nweights = weights.copy()
+        nweights = weights / np.max(weights, axis=0)[2]
 
         return nweights
     else:
