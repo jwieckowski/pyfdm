@@ -51,7 +51,7 @@ class fTOPSIS():
         # validate data
         Validator.fuzzy_validation(matrix, weights)
 
-        self.preferences = fuzzy(matrix, normalize_weights(weights), types, self.normalization, self.distance).astype(float)
+        self.preferences = fuzzy(matrix, normalize_weights(weights, types), types, self.normalization, self.distance).astype(float)
         return self.preferences
 
     def rank(self):
