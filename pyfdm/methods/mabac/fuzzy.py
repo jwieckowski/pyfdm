@@ -41,7 +41,7 @@ def fuzzy(matrix, weights, types, normalization, defuzzify):
     wmatrix = nmatrix * weights + weights
 
     # approximate border area matrix
-    G = np.product(wmatrix, axis=0) ** (1/wmatrix.shape[0])
+    G = np.prod(wmatrix, axis=0) ** (1/wmatrix.shape[0])
 
     # distance
     Q = wmatrix - G[..., ::-1]
