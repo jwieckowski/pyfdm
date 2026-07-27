@@ -1,4 +1,4 @@
-# Copyright (c) 2023 Jakub Więckowski
+# Copyright (c) 2023-2026 Jakub Więckowski
 
 import matplotlib.pyplot as plt
 import numpy as np

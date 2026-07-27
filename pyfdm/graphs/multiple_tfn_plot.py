@@ -1,9 +1,8 @@
-# Copyright (c) 2023 Jakub Więckowski
+# Copyright (c) 2023-2026 Jakub Więckowski
 
 import numpy as np
 import matplotlib.pyplot as plt
-# from ..TFN import TFN
-from pyfdm.TFN import TFN
+from ..TFN import TFN
 
 def multiple_tfn_plot(data, title=None, ax=None):
     """
