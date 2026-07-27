@@ -1,226 +1,597 @@
-# Copyright (c) 2023 Jakub Więckowski
+# Copyright (c) 2023 - 2026 Jakub Więckowski
+
+from __future__ import annotations
 import numpy as np
 
+__all__ = ["TFN"]
+
 class TFN:
-    def __init__(self, a, b, c):
-        """
-        Initializes a Triangular Fuzzy Number with parameters a, b, and c.
+    """
+    Representation of a Triangular Fuzzy Number.
 
-        Parameters:
-        - a: Lower bound
-        - b: Peak (mode)
-        - c: Upper bound
-        """
+    A Triangular Fuzzy Number (TFN) is defined by three parameters:
 
-        if not (a <= b <= c):
-            raise ValueError(f'a should be less of equal to b, and b should be less or equal to c.')
-        
-        self.a = a
-        self.b = b
-        self.c = c
+    .. math::
+
+        A = (a, b, c)
+
+    where:
+
+    - ``a`` is the lower bound,
+    - ``b`` is the modal value,
+    - ``c`` is the upper bound.
+
+    Parameters
+    ----------
+    a : int | float
+        Lower bound of the TFN.
+    b : int | float
+        Modal value (membership degree equal to 1).
+    c : int | float
+        Upper bound of the TFN.
+
+    Raises
+    ------
+    ValueError
+        If the TFN does not satisfy ``a <= b <= c``.
+    TypeError
+        If input values are not numeric.
+    """
+
+    def __init__(
+        self,
+        a: int | float,
+        b: int | float,
+        c: int | float
+    ) -> None:
+
+        try:
+            if not all(
+                isinstance(x, (int, float))
+                for x in (a, b, c)
+            ):
+                raise TypeError("TFN parameters must be numeric values.")
+
+            if not (a <= b <= c):
+                raise ValueError( "TFN parameters must satisfy a <= b <= c.")
+
+            self.a = float(a)
+            self.b = float(b)
+            self.c = float(c)
+
+        except (TypeError, ValueError):
+            raise
+
+        except Exception as e:
+            raise RuntimeError(f"Failed to initialize TFN: {e}") from e
+
 
     def __repr__(self) -> str:
         """
-        Returns a string representation of the Triangular Fuzzy Number.
+        Return developer-oriented string representation.
+
+        Returns
+        -------
+        str
+            TFN representation.
         """
 
         return f"TFN({self.a}, {self.b}, {self.c})"
 
-    def __str__(self):
-        return f'({self.a}, {self.b}, {self.c})'
-
-
-    def __add__(self, other) -> 'TFN':
+    def __str__(self) -> str:
         """
-        Overloads the '+' operator for addition of Triangular Fuzzy Numbers.
-        Also handling an addition with number.
+        Return human-readable TFN representation.
 
-        Returns a new Triangular Fuzzy Number representing the sum.
-        """
-        if isinstance(other, TFN):
-            a = self.a + other.a
-            b = self.b + other.b
-            c = self.c + other.c
-
-            return TFN(a, b, c)
-        else:
-            return TFN(self.a + other, self.b + other, self.c + other)
-
-    def __sub__(self, other) -> 'TFN':
-        """
-        Overloads the '-' operator for subtraction of Triangular Fuzzy Numbers.
-        Also handling a subtraction with number.
-
-        Returns a new Triangular Fuzzy Number representing the difference.
+        Returns
+        -------
+        str
+            TFN values formatted as tuple.
         """
 
-        if isinstance(other, TFN):
-            a = self.a - other.c
-            b = self.b - other.b
-            c = self.c - other.a
+        return f"({self.a}, {self.b}, {self.c})"
 
-            return TFN(a, b, c)
-        else:
-            return self + (- other)
-
-    def __mul__(self, other) -> 'TFN':
+    def _validate_other(self, other: TFN) -> None:
         """
-        Overloads the '*' operator for multiplication of Triangular Fuzzy Numbers.
-        Also handling a multiplication by number.
+        Validate another TFN instance.
 
-        Returns a new triangular fuzzy number representing the product.
-        """
+        Parameters
+        ----------
+        other : TFN
+            Object to validate.
 
-        if isinstance(other, TFN):
-            a = min(self.a * other.a, self.a * other.c, self.c * other.a, self.c * other.c)
-            b = self.b * other.b
-            c = max(self.a * other.a, self.a * other.c, self.c * other.a, self.c * other.c)
-
-            return TFN(a, b, c)
-        else:
-            return TFN(self.a * other, self.b * other, self.c * other)
-
-    def __truediv__(self, other: 'TFN') -> 'TFN':
-        """
-        Overloads the '/' operator for division of Triangular Fuzzy Numbers.
-        Also handling a division by number.
-        
-        Returns a new Triangular Fuzzy Number representing the quotient.
-
-        Raises a ValueError if the denominator contains zero.
+        Raises
+        ------
+        TypeError
+            If object is not a TFN.
         """
 
-        if isinstance(other, TFN):
-            if other.a <= 0 <= other.c:
-                raise ValueError("Division by a Triangular Fuzzy Number containing zero is undefined.")
-            
-            a = min(self.a / other.a, self.a / other.c, self.c / other.a, self.c / other.c)
-            b = self.b / other.b
-            c = max(self.a / other.a, self.a / other.c, self.c / other.a, self.c / other.c)
+        if not isinstance(other, TFN):
+            raise TypeError(f"Expected TFN object, got {type(other).__name__}.")
 
-            return TFN(a, b, c)
-        else:
-        
-            return TFN(self.a / other, self.b / other, self.c / other)
-
-    def __eq__(self, other: 'TFN') -> bool:
+    def __add__(self, other: TFN | int | float) -> TFN:
         """
-        Checks if two Triangular Fuzzy Numbers are equal.
-        Returns True if they are equal, False otherwise.
-        """
-        return self.a == other.a and self.b == other.b and self.c == other.c
+        Add two TFNs or add a scalar value.
 
-    def __le__(self, other):
+        Parameters
+        ----------
+        other : TFN | int | float
+            TFN or scalar value.
+
+        Returns
+        -------
+        TFN
+            Resulting TFN.
+
+        Raises
+        ------
+        TypeError
+            If the operand type is unsupported.
+        """
+
+        try:
+            if isinstance(other, TFN):
+                return TFN(
+                    self.a + other.a,
+                    self.b + other.b,
+                    self.c + other.c
+                )
+
+            if isinstance(other, (int, float)):
+                return TFN(
+                    self.a + other,
+                    self.b + other,
+                    self.c + other
+                )
+
+            return NotImplemented
+
+        except Exception as e:
+            raise RuntimeError(f"TFN addition failed: {e}") from e
+
+
+    def __sub__(self, other: TFN | int | float) -> TFN:
+        """
+        Subtract another TFN or scalar value.
+
+        Parameters
+        ----------
+        other : TFN | int | float
+            TFN or scalar value.
+
+        Returns
+        -------
+        TFN
+            Resulting TFN.
+
+        Raises
+        ------
+        TypeError
+            If the operand type is unsupported.
+        """
+
+        try:
+
+            if isinstance(other, TFN):
+                return TFN(
+                    self.a - other.c,
+                    self.b - other.b,
+                    self.c - other.a
+                )
+
+            if isinstance(other, (int, float)):
+                return TFN(
+                    self.a - other,
+                    self.b - other,
+                    self.c - other
+                )
+
+            return NotImplemented
+
+        except Exception as e:
+            raise RuntimeError(f"TFN subtraction failed: {e}") from e
+
+    def __mul__(self, other: TFN | int | float) -> TFN:
+        """
+        Multiply two TFNs or multiply a TFN by a scalar.
+
+        Parameters
+        ----------
+        other : TFN | int | float
+            TFN or scalar value.
+
+        Returns
+        -------
+        TFN
+            Resulting TFN.
+
+        Raises
+        ------
+        TypeError
+            If the operand type is unsupported.
+        """
+
+        try:
+
+            if isinstance(other, TFN):
+                values = [
+                    self.a * other.a,
+                    self.a * other.c,
+                    self.c * other.a,
+                    self.c * other.c
+                ]
+
+                return TFN(
+                    min(values),
+                    self.b * other.b,
+                    max(values)
+                )
+
+            if isinstance(other, (int, float)):
+                values = [
+                    self.a * other,
+                    self.b * other,
+                    self.c * other
+                ]
+
+                return TFN(
+                    min(values),
+                    values[1],
+                    max(values)
+                )
+
+            return NotImplemented
+
+        except Exception as e:
+            raise RuntimeError(f"TFN multiplication failed: {e}") from e
+
+    def __truediv__(self, other: TFN | int | float) -> TFN:
+        """
+        Divide a TFN by another TFN or scalar.
+
+        For TFN division, the resulting bounds are calculated using
+        the extension principle.
+
+        Parameters
+        ----------
+        other : TFN | int | float
+            Divisor TFN or scalar value.
+
+        Returns
+        -------
+        TFN
+            Resulting TFN.
+
+        Raises
+        ------
+        ValueError
+            If the divisor contains zero.
+        TypeError
+            If the operand type is unsupported.
+        RuntimeError
+            If division cannot be computed.
+        """
+
+        try:
+
+            if isinstance(other, TFN):
+                if other.a <= 0 <= other.c:
+                    raise ValueError("Division by TFN containing zero is undefined.")
+
+                values = [
+                    self.a / other.a,
+                    self.a / other.c,
+                    self.c / other.a,
+                    self.c / other.c
+                ]
+
+                return TFN(
+                    min(values),
+                    self.b / other.b,
+                    max(values)
+                )
+
+            if isinstance(other, (int, float)):
+                if other == 0:
+                    raise ValueError("Division by zero is undefined.")
+
+                values = [
+                    self.a / other,
+                    self.b / other,
+                    self.c / other
+                ]
+
+                return TFN(
+                    min(values),
+                    values[1],
+                    max(values)
+                )
+
+            return NotImplemented
+
+        except (ValueError, TypeError):
+            raise
+
+        except Exception as e:
+            raise RuntimeError(f"TFN division failed: {e}") from e
+
+    def __eq__(self, other: TFN) -> bool:
+        """
+        Check equality between two TFNs.
+
+        Parameters
+        ----------
+        other : TFN
+            TFN to compare.
+
+        Returns
+        -------
+        bool
+            True if both TFNs have identical parameters.
+        """
+
+        if not isinstance(other, TFN):
+            return False
+
+        return (
+            self.a == other.a
+            and self.b == other.b
+            and self.c == other.c
+        )
+
+    def __le__(self, other: TFN) -> bool:
+        """
+        Compare TFNs using lower bounds.
+
+        Parameters
+        ----------
+        other : TFN
+            TFN to compare.
+
+        Returns
+        -------
+        bool
+            True if this TFN lower bound is smaller or equal.
+
+        Raises
+        ------
+        TypeError
+            If other object is not a TFN.
+        """
+
+        self._validate_other(other)
         return self.a <= other.a
 
-    def __ge__(self, other):
+    def __ge__(self, other: TFN) -> bool:
+        """
+        Compare TFNs using upper bounds.
+
+        Parameters
+        ----------
+        other : TFN
+            TFN to compare.
+
+        Returns
+        -------
+        bool
+            True if this TFN upper bound is greater or equal.
+
+        Raises
+        ------
+        TypeError
+            If other object is not a TFN.
+        """
+
+        self._validate_other(other)
+
         return self.c >= other.c
 
-    def __abs__(self):
-        a = abs(self.a)
-        b = abs(self.b)
-        c = abs(self.c)
-        if a > c:
-            return TFN(c, b, a)
-        return TFN(a, b, c)
+    def __abs__(self) -> TFN:
+        """
+        Return absolute value of a TFN.
 
-    def __round__(self, value):
-        return TFN(round(self.a, value), round(self.b, value), round(self.c, value))
+        Returns
+        -------
+        TFN
+            Absolute TFN.
+        """
+
+        try:
+
+            values = [
+                abs(self.a),
+                abs(self.b),
+                abs(self.c)
+            ]
+
+            return TFN(
+                min(values),
+                values[1],
+                max(values)
+            )
+
+        except Exception as e:
+            raise RuntimeError(f"Absolute TFN operation failed: {e}") from e
+
+    def __round__(self, ndigits: int = 0) -> TFN:
+        """
+        Round TFN values.
+
+        Parameters
+        ----------
+        ndigits : int
+            Number of decimal digits.
+
+        Returns
+        -------
+        TFN
+            Rounded TFN.
+        """
+
+        try:
+            return TFN(
+                round(self.a, ndigits),
+                round(self.b, ndigits),
+                round(self.c, ndigits)
+            )
+
+        except Exception as e:
+            raise RuntimeError(f"TFN rounding failed: {e}") from e
 
     def membership_function(self, x: float | np.ndarray) -> float | np.ndarray:
         """
-        Calculates the membership function value at a given point x.
-        Also handles calculation for an array of values.
+        Calculate the membership degree of a value.
 
-        Parameters:
-        - x (float): The point at which to calculate the membership function.
+        The membership function of a TFN is defined as:
 
-        Returns:
-        - float: The membership function value at the given point x.
+        .. math::
+
+            \\mu_A(x)=
+            \\begin{cases}
+            0, & x \\le a \\\\
+            \\frac{x-a}{b-a}, & a < x \\le b \\\\
+            \\frac{c-x}{c-b}, & b < x < c \\\\
+            0, & x \\ge c
+            \\end{cases}
+
+        Parameters
+        ----------
+        x : float | np.ndarray
+            Input value or array of values.
+
+        Returns
+        -------
+        float | np.ndarray
+            Membership degree(s) in interval [0, 1].
+
+        Raises
+        ------
+        TypeError
+            If input type is unsupported.
+
+        RuntimeError
+            If membership calculation fails.
         """
-        
-        if isinstance(x, np.ndarray):
-            return self._membership_array(x)
-        else:
-            return self._membership_number(x)
 
-    def _membership_array(self, x):
-        res = np.zeros(x.shape)
-        mask = x == self.b
-        res[mask] = 1
+        try:
 
-        mask = np.logical_and(x > self.a, x < self.b)
-        res[mask] = (x[mask] - self.a) / (self.b - self.a)
+            if isinstance(x, np.ndarray):
+                return self._membership_array(x)
 
-        mask = np.logical_and(x < self.c, x > self.b)
-        res[mask] = (self.c - x[mask]) / (self.c - self.b)
-        return res
+            if isinstance(x, (int, float)):
+                return self._membership_number(float(x))
 
-    def _membership_number(self, x):
-        if x <= self.a or x >= self.c:
+            raise TypeError(f"'x' must be float or np.ndarray, got {type(x).__name__}.")
+
+        except (TypeError, ValueError):
+            raise
+
+        except Exception as e:
+            raise RuntimeError(f"Membership function calculation failed: {e}") from e
+
+    def _membership_array(self, x: np.ndarray) -> np.ndarray:
+        """
+        Calculate membership degrees for an array of values.
+
+        Parameters
+        ----------
+        x : np.ndarray
+            Array of input values.
+
+        Returns
+        -------
+        np.ndarray
+            Membership values corresponding to ``x``.
+
+        Raises
+        ------
+        RuntimeError
+            If vectorized computation fails.
+        """
+
+        try:
+
+            x = np.asarray(x, dtype=float)
+            result = np.zeros(x.shape, dtype=float)
+
+            # maximum membership point
+            mask = x == self.b
+            result[mask] = 1.0
+
+            # increasing part
+            if self.b != self.a:
+                mask = (
+                    (x > self.a)
+                    &
+                    (x < self.b)
+                )
+
+                result[mask] = (
+                    (x[mask] - self.a)
+                    /
+                    (self.b - self.a)
+                )
+
+            # decreasing part
+            if self.c != self.b:
+                mask = (
+                    (x > self.b)
+                    &
+                    (x < self.c)
+                )
+
+                result[mask] = (
+                    (self.c - x[mask])
+                    /
+                    (self.c - self.b)
+                )
+
+            return result
+
+        except Exception as e:
+            raise RuntimeError(f"Array membership calculation failed: {e}") from e
+
+    def _membership_number(self, x: int | float) -> float:
+        """
+        Calculate membership degree for a single value.
+
+        Parameters
+        ----------
+        x : int | float
+            Input value.
+
+        Returns
+        -------
+        float
+            Membership degree.
+
+        Raises
+        ------
+        RuntimeError
+            If calculation fails.
+        """
+
+        try:
+            x = float(x)
+
+            if x <= self.a or x >= self.c:
+                return 0.0
+
+            if x == self.b:
+                return 1.0
+
+            if self.a < x < self.b:
+                if self.b == self.a:
+                    return 1.0
+
+                return (x - self.a) / (self.b - self.a)
+
+            if self.b < x < self.c:
+                if self.c == self.b:
+                    return 1.0
+
+                return (self.c - x) / (self.c - self.b)
+
             return 0.0
-        elif self.a < x <= self.b:
-            return (x - self.a) / (self.b - self.a)
-        elif self.b <= x < self.c:
-            return (self.c - x) / (self.c - self.b)
 
-    def centroid(self) -> float:
-        """
-        Calculates the centroid of the Triangular Fuzzy Number.
-        
-        Returns:
-        - float: The centroid of the Triangular Fuzzy Number.
-        """
-
-        return (self.a + self.b + self.c) / 3
-
-    def core(self) -> list:
-        """
-        Calculates the core of the Triangular Fuzzy Number.
-        
-        Returns:
-        - list: A list containing the core values of the Triangular Fuzzy Number.
-        """
-
-        return [self.b]
-
-    def is_included_in(self, other: 'TFN') -> bool:
-        """
-        Checks if the current Triangular Fuzzy Number is included in the other.
-        
-        Returns:
-        - bool: True if the current Triangular Fuzzy Number is included in the other, False otherwise.
-        """
-        return self.a >= other.a and self.c <= other.c
-
-    def s_norm(self, other):
-        """
-        S-norm operator for fuzzy OR operation.
-
-        Parameters:
-        - other (TFN): Another Triangular Fuzzy Number.
-
-        Returns:
-        - TFN: Result of the fuzzy OR operation.
-        """
-        a = max(self.a, other.a)
-        b = max(self.b, other.b)
-        c = max(self.c, other.c)
-        return TFN(a, b, c)
-
-    def t_norm(self, other):
-        """
-        T-norm operator for fuzzy AND operation.
-
-        Parameters:
-        - other (TFN): Another Triangular Fuzzy Number.
-
-        Returns:
-        - TFN: Result of the fuzzy AND operation.
-        """
-        a = min(self.a, other.a)
-        b = min(self.b, other.b)
-        c = min(self.c, other.c)
-        return TFN(a, b, c)
-
-    
+        except Exception as e:
+            raise RuntimeError(f"Scalar membership calculation failed: {e}") from e

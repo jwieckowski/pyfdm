@@ -1,95 +1,78 @@
-# Copyright (c) 2022-2024 Jakub Więckowski
+# Copyright (c) 2022 - 2026 Jakub Więckowski
 
+"""
+pyfdm.helpers — DEPRECATED.
+
+All functions have moved to pyfdm.utils:
+
+    rank()                  → pyfdm.utils.rank_alternatives()
+    normalize_weights()     → pyfdm.utils.normalize_weights()
+    generate_fuzzy_matrix() → pyfdm.utils.generate_fuzzy_matrix()
+
+This module re-exports everything for one-version backwards compatibility
+and will be removed in v3.0.
+"""
+
+import warnings
 import numpy as np
-from .methods.utils.normalizations import sum_normalization, vector_normalization
 
-__all__ = [
-    'rank',
-    'generate_fuzzy_matrix',
-    'normalize_weights'
-]
+from .utils import normalize_weights as _normalize_weights_impl
+from .utils import rank_alternatives as _rank_alternatives
+
+__all__ = ['rank', 'generate_fuzzy_matrix', 'normalize_weights']
 
 
 def rank(x, descending=True):
     """
-        Calculates ranking of given values with the given direction, default descending order
+    Calculate ranking of given values.
 
-        Parameters
-        ----------
-            x: ndarray
-                Array with values
-
-            descending: boolean, default=True
-                Switch to change ranking order
-
-        Returns
-        -------
-            ndarray
-                Ranking with given order
-
+    .. deprecated::
+        Use ``pyfdm.utils.rank_alternatives()`` instead.
+        This function will be removed in v3.0.
     """
+    warnings.warn(
+        'pyfdm.helpers.rank() is deprecated. '
+        'Use: from pyfdm.utils import rank_alternatives',
+        DeprecationWarning,
+        stacklevel=2,
+    )
     try:
-        s = [sorted(x, reverse=descending).index(r)+1 for r in x]
-    except:
-        raise ValueError('Error occurred in ranking calculation')
-    return np.array([(ss * s.count(ss) + s.count(ss) - 1) / s.count(ss) if s.count(ss) <= 2 else np.sum(list(range(ss, ss+s.count(ss)))) / s.count(ss) for ss in s])
+        return _rank_alternatives(x, descending=descending, method='average')
+    except (TypeError, ValueError) as e:
+        raise ValueError(f'Error occurred in ranking calculation: {e}') from e
 
 
-def generate_fuzzy_matrix(m, n, lower=0.0, upper=1.0):
+def generate_fuzzy_matrix(m: int, n: int,
+                          lower: float = 0.0, upper: float = 1.0) -> np.ndarray:
     """
-        Generates random Triangular Fuzzy Numbers with m alternatives and n criteria, each TFN is places between lower and upper bound
+    Generate a random TFN decision matrix.
 
-        Parameters
-        ----------
-            m: int
-                Number of alternatives
-
-            n: int
-                Number of criteria
-
-            lower: float, default=0.0
-                Minimum value of left bound
-
-            upper: float, default=1.0
-                Maximum value of right bound
-
-        Returns
-        -------
-            ndarray
-                Matrix with random TFN within given bounds
-
+    .. deprecated::
+        Use ``pyfdm.utils.generate_fuzzy_matrix()`` instead.
+        This function will be removed in v3.0.
     """
+    warnings.warn(
+        'pyfdm.helpers.generate_fuzzy_matrix() is deprecated. '
+        'Use: from pyfdm.utils import generate_fuzzy_matrix',
+        DeprecationWarning,
+        stacklevel=2,
+    )
+    from .utils import generate_fuzzy_matrix as _gen
+    return _gen(m, n, lower, upper)
 
-    if lower > upper:
-        raise ValueError("Lower bound of TFN must be greater than upper")
 
-    matrix = np.random.uniform(low=lower, high=upper, size=(m, n, 3))
-    return np.array([np.sort(m, axis=1) for m in matrix])
-
-def normalize_weights(weights):
+def normalize_weights(weights: np.ndarray) -> np.ndarray:
     """
-        Normalize fuzzy criteria weights
+    Normalize fuzzy criteria weights.
 
-        Parameters
-        ----------
-            weights : ndarray
-                Vector of weights in a crisp form or as a TFNs
-
-        Returns
-        -------
-            ndarray
-                Normalized fuzzy criteria weights
-
+    .. deprecated::
+        Use ``pyfdm.utils.normalize_weights()`` instead.
+        This function will be removed in v3.0.
     """
-
-    if weights.ndim != 2 or weights.shape[1] != 3:
-        raise ValueError(
-            'Fuzzy weights should be given as Triangular Fuzzy Numbers')
-
-    if any([x > 1 for x in weights.flatten()]):
-        nweights = weights.copy()
-        nweights = weights / np.max(weights, axis=0)[2]
-
-        return nweights
-    else:
-        return weights
+    warnings.warn(
+        'pyfdm.helpers.normalize_weights() is deprecated. '
+        'Use: from pyfdm.utils import normalize_weights',
+        DeprecationWarning,
+        stacklevel=2,
+    )
+    return _normalize_weights_impl(weights)
