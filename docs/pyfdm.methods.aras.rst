@@ -1,16 +1,9 @@
 Fuzzy ARAS
 ==========================
 
-Method object
+Method class
 ----------------------------------
 .. automodule:: pyfdm.methods.f_aras
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Fuzzy calculations
-----------------------------------
-.. automodule:: pyfdm.methods.aras.fuzzy
    :members:
    :undoc-members:
    :show-inheritance:

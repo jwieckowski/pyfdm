@@ -7,9 +7,13 @@ Subpackages
 .. toctree::
    :maxdepth: 4
 
+   pyfdm.methods
+   pyfdm.weights
+   pyfdm.expert
+   pyfdm.group
+   pyfdm.utils
    pyfdm.TFN
    pyfdm.graphs
-   pyfdm.methods
 
 
 Correlations module
@@ -28,10 +32,18 @@ Helpers module
    :undoc-members:
    :show-inheritance:
 
-Weights module
---------------------
+StepLogger
+-------------------------------------------
 
-.. automodule:: pyfdm.weights
+.. automodule:: pyfdm.step_logger
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Validator
+------------------------------
+
+.. automodule:: pyfdm.validator
    :members:
    :undoc-members:
    :show-inheritance:

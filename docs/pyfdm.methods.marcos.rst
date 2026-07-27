@@ -1,9 +1,9 @@
-Fuzzy VIKOR
-===========================
+Fuzzy MARCOS
+============================
 
 Method class
 ----------------------------------
-.. automodule:: pyfdm.methods.f_vikor
+.. automodule:: pyfdm.methods.f_marcos
    :members:
    :undoc-members:
    :show-inheritance:

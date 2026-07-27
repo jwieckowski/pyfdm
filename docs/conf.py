@@ -13,9 +13,9 @@ import sphinx_rtd_theme
 sys.path.insert(0, os.path.abspath('../'))
 
 project = 'pyFDM'
-copyright = '2023, Jakub Więckowski'
+copyright = '2026, Jakub Więckowski'
 author = 'Jakub Więckowski'
-release = '1.1.0'
+release = '1.2.0'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -66,3 +66,7 @@ napoleon_use_rtype = True
 napoleon_preprocess_types = False
 napoleon_type_aliases = None
 napoleon_attr_annotations = True
+
+# Prevent duplicate label warnings when the same section titles
+# (e.g. "Method object", "Fuzzy calculations") appear across multiple .rst files
+autosectionlabel_prefix_document = True

@@ -1,7 +1,4 @@
-.. pyFDM documentation master file, created by
-   sphinx-quickstart on Tue Nov 21 16:01:42 2023.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+.. pyFDM documentation master file
 
 Welcome to pyFDM's documentation!
 =================================

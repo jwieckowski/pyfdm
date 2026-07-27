@@ -1,9 +1,9 @@
-Fuzzy VIKOR
-===========================
+Fuzzy ERVD
+============================
 
 Method class
 ----------------------------------
-.. automodule:: pyfdm.methods.f_vikor
+.. automodule:: pyfdm.methods.f_ervd
    :members:
    :undoc-members:
    :show-inheritance:
