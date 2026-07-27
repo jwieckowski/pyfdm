@@ -1,3 +1,49 @@
 [build-system]
-requires = ["setuptools"]
+requires = ["setuptools>=61"]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "pyfdm"
+version = "1.2.0"
+description = "Python library for Fuzzy Decision Making based on Triangular Fuzzy Numbers"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+    { name = "Jakub Więckowski", email = "j.wieckowski@il-pib.pl" },
+]
+license = { text = "MIT" }
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "numpy",
+    "scipy",
+    "matplotlib",
+    "tabulate",
+]
+
+[project.optional-dependencies]
+docs = [
+    "sphinx",
+    "sphinx-rtd-theme",
+    "sphinx-autodoc-typehints",
+]
+
+excel = [
+    "openpyxl",
+]
+
+dev = [
+    "pytest",
+    "openpyxl",
+]
+
+[project.urls]
+Homepage = "https://github.com/jwieckowski/pyfdm"
+Repository = "https://github.com/jwieckowski/pyfdm"
