@@ -1,4 +1,4 @@
-# Copyright (c) 2023 Jakub Więckowski
+# Copyright (c) 2023 - 2026 Jakub Więckowski
 
 from pyfdm.TFN import TFN
 

@@ -1,12 +1,12 @@
-# Copyright (c) 2022-2023 Jakub Więckowski
+# Copyright (c) 2022 - 2026 Jakub Więckowski
 
 import numpy as np
-import pyfdm.methods.utils.distances as dist
+import pyfdm.utils.distances as dist
 from pyfdm.methods import f_topsis
 
 def test_euclidean_distance():
     """
-        Test veryfing correctness of the Euclidean distance formula.
+        Test verifying correctness of the Euclidean distance formula.
         Reference value: Vidyadhar, R., Kumar, R. S., Vinodh, S., & Antony, J. (2016). Application of fuzzy logic for leanness assessment in SMEs: a case study. Journal of Engineering, Design and Technology.
     """
     x = np.array([4.42, 6, 7.64])
@@ -19,7 +19,7 @@ def test_euclidean_distance():
 
 def test_weighted_euclidean_distance(): 
     """
-        Test veryfing correctness of the weighted Euclidean distance formula.
+        Test verifying correctness of the weighted Euclidean distance formula.
         Formula: Roszkowska, E., & Wachowicz, T. (2015). Application of fuzzy TOPSIS to scoring the negotiation offers in ill-structured negotiation problems. European Journal of Operational Research, 242(3), 920-932.
         Reference value: Self-calculated empirical verification
     """
@@ -31,7 +31,7 @@ def test_weighted_euclidean_distance():
 
 def test_hamming_distance():
     """
-        Test veryfing correctness of the Hamming distance formula.
+        Test verifying correctness of the Hamming distance formula.
         Reference value: Talukdar, P., & Dutta, P. A Comparative Study of TOPSIS Method via Different Distance Measure.
     """
     matrix = np.array([
@@ -51,7 +51,7 @@ def test_hamming_distance():
 
 def test_weighted_hamming_distance():
     """
-        Test veryfing correctness of the weighted Hamming distance formula.
+        Test verifying correctness of the weighted Hamming distance formula.
         Reference value: Roszkowska, E., & Wachowicz, T. (2015). Application of fuzzy TOPSIS to scoring the negotiation offers in ill-structured negotiation problems. European Journal of Operational Research, 242(3), 920-932.
     """
     x = np.array([3, 5, 8])
@@ -62,7 +62,7 @@ def test_weighted_hamming_distance():
 
 def test_vertex_distance():
     """
-        Test veryfing correctness of the Vertex distance formula.
+        Test verifying correctness of the Vertex distance formula.
         Reference value: Roszkowska, E., & Wachowicz, T. (2015). Application of fuzzy TOPSIS to scoring the negotiation offers in ill-structured negotiation problems. European Journal of Operational Research, 242(3), 920-932.
     """
     x = np.array([3, 5, 8])
@@ -75,7 +75,7 @@ def test_vertex_distance():
 
 def test_tran_duckstein_distance():
     """
-        Test veryfing correctness of the Tran Duckstein distance formula.
+        Test verifying correctness of the Tran Duckstein distance formula.
         Reference value: Tran, L., & Duckstein, L. (2002). Comparison of fuzzy numbers using a fuzzy distance measure. Fuzzy sets and Systems, 130(3), 331-341.
     """
     x = np.array([0.4, 0.43, 1])
@@ -88,7 +88,7 @@ def test_tran_duckstein_distance():
 
 def test_lr_distance():
     """
-        Test veryfing correctness of the L-R distance formula.
+        Test verifying correctness of the L-R distance formula.
         Reference value: Talukdar, P., & Dutta, P. A Comparative Study of TOPSIS Method via Different Distance Measure.
     """
     matrix = np.array([
@@ -109,7 +109,7 @@ def test_lr_distance():
 
 def test_mahdavi_distance():
     """
-        Test veryfing correctness of the Mahdavi distance formula.
+        Test verifying correctness of the Mahdavi distance formula.
         Formula: Wang, H., Lu, X., Du, Y., Zhang, C., Sadiq, R., & Deng, Y. (2017). Fault tree analysis based on TOPSIS and triangular fuzzy number. International journal of system assurance engineering and management, 8(4), 2064-2070.
         Reference value: Self-calculated empirical verification
     """
@@ -122,7 +122,7 @@ def test_mahdavi_distance():
 
 def test_canberra_distance():
     """
-        Test veryfing correctness of the Mahdavi distance formula.
+        Test verifying correctness of the Mahdavi distance formula.
         Formula: Rodrigues, É. O. (2018). Combining Minkowski and Chebyshev: New distance proposal and survey of distance metrics using k-nearest neighbours classifier. Pattern Recognition Letters, 110, 66-71.
         Reference value: Self-calculated empirical verification
     """
@@ -135,7 +135,7 @@ def test_canberra_distance():
 
 def test_chebyshev_distance():
     """
-        Test veryfing correctness of the Mahdavi distance formula.
+        Test verifying correctness of the Mahdavi distance formula.
         Formula: Rodrigues, É. O. (2018). Combining Minkowski and Chebyshev: New distance proposal and survey of distance metrics using k-nearest neighbours classifier. Pattern Recognition Letters, 110, 66-71.
         Reference value: Self-calculated empirical verification
     """

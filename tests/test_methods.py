@@ -1,4 +1,4 @@
-# Copyright (c) 2022-2023 Jakub Więckowski
+# Copyright (c) 2022 - 2026 Jakub Więckowski
 
 import numpy as np
 from pyfdm.methods import *
@@ -33,6 +33,33 @@ def test_fARAS():
     reference_result = np.array([0.76, 0.73, 0.74, 0.8, 0.81])
     assert (np.round(calculated_result.astype(float), 2) == reference_result).all()
     assert (f_aras.rank() == [3, 5, 4, 2, 1]).all()
+
+def test_fAROMAN():
+    """
+        Test verifying correctness of the fuzzy AROMAN method combined with Triangular Fuzzy Number
+        Reference value: Čubranić-Dobrodolac, M., Jovčić, S., Bošković, S., & Babić, D. (2023). A decision-making model for professional drivers selection: A hybridized fuzzy-AROMAN-Fuller approach. Mathematics, 11(13), 2831.
+    """
+
+    matrix = np.array([
+        [[4.33, 6.33, 8], [3.67, 5.67, 7.67], [5.67, 7.67, 9.33], [5, 7, 8.67], [3, 5, 7], [3.67, 5.67, 7.67], [1.67, 3.67, 5.67]],
+        [[7.67, 9.33, 10], [6.33, 8.33, 9.67], [0, 0.67, 2.33], [5.67, 7.67, 9], [3.67, 5.67, 7.67], [6.33, 8.33, 9.67], [5, 7, 8.67]],
+        [[6.33, 8.33, 9.67], [2.33, 4.33, 6.33], [1.67, 3.67, 5.67], [7.67, 9.33, 10], [5.67, 7.67, 9.33], [7, 8.67, 9.67], [4.33, 6.33, 8.33]]
+    ], dtype=float)
+
+    criteria_types = np.array([1, 1, -1, 1, -1, 1, 1])
+    weights = np.array([0.114, 0.106, 0.103, 0.092, 0.092, 0.088, 0.084])
+    weights = weights / np.sum(weights)
+
+    f_aroman = fAROMAN()
+
+    calculated_result = f_aroman(matrix, weights, criteria_types)
+    reference_result = np.array([
+        [0.85903919, 0.91025893, 0.94483788],
+        [0.96645388, 1.00191567, 1.01310649],
+        [0.97607372, 0.99659208, 1.00105645]
+    ])
+    assert (np.round(calculated_result.astype(float), 2) == reference_result).all()
+    assert (f_aroman.rank() == [3, 5, 4, 2, 1]).all()
 
 def test_fCOCOSO():
     """
@@ -170,6 +197,46 @@ def test_fEDAS():
     assert (calculated_result == reference_result).all() or np.sum(calculated_result - reference_result) < 0.3
     assert (f_edas.rank() == [3, 1, 2]).all()
 
+def test_fERVD():
+    """
+        Test verifying correctness of the fuzzy ERVD method combined with Triangular Fuzzy Number
+        Decision problem: Shojaeimehr, S., & Rahmani, D. (2022). Risk management of photovoltaic power plants using a novel fuzzy multi-criteria decision-making method based on prospect theory: A sustainable development approach. Energy Conversion and Management: X, 16, 100293.
+        Reference value: Self-made analytic calculation
+    """
+    matrix = np.array([
+        [[5,6.5,8], [5,6.5,8], [5,6.5,8], [4,5,6],  [4,5,6],  [5,6.5,8]],   # A1
+        [[7,8,9],   [5,6.5,8], [7,8,9],   [4,5,6],  [5,6.5,8], [4,5,6]],    # A2
+        [[5,6.5,8], [7,8,9],   [8,10,10], [4,5,6],  [2,3.5,5], [5,6.5,8]],  # A3
+        [[7,8,9],   [5,6.5,8], [5,6.5,8], [5,6.5,8], [5,6.5,8], [5,6.5,8]], # A4
+        [[8,10,10], [8,10,10], [8,10,10], [7,8,9],  [7,8,9],  [4,5,6]],    # A5
+        [[8,10,10], [5,6.5,8], [8,10,10], [7,8,9],  [7,8,9],  [4,5,6]],    # A6
+        [[7,8,9],   [4,5,6],   [8,10,10], [5,6.5,8], [4,5,6],  [2,3.5,5]]   # A7
+    ], dtype=float)
+    ref = np.array([
+        [4, 5, 6],
+        [4, 5, 6],
+        [5, 6.5, 8],
+        [5, 6.5, 8],    
+        [4, 5, 6],
+        [4, 5, 6],
+    ])
+    criteria_types = np.array([1, 1, 1, 1, 1, 1])
+    weights = np.array([
+        [0.7, 0.8, 0.9],
+        [0.5, 0.65, 0.8],
+        [0.1, 0.2, 0.3],
+        [0.4, 0.5, 0.6],
+        [0.4, 0.5, 0.6],
+        [0.2, 0.35, 0.5]
+    ])
+
+    f_ervd = fERVD()
+    calculated_result = f_ervd(matrix, weights, criteria_types, ref_point = ref)
+    reference_result = np.array([-0.070, -0.047 , -0.082, -0.008,  0.050, 0.026, -0.068])
+
+    assert (calculated_result == reference_result).all() or np.abs(np.sum(calculated_result - reference_result)) < 0.05
+    assert (f_ervd.rank() == [6, 4, 7, 3, 1, 2, 5]).all()
+
 
 def test_fMABAC():
     """
@@ -231,6 +298,110 @@ def test_fMAIRCA():
     assert (np.round(calculated_result, 4) == reference_result).all() or np.sum(np.abs(calculated_result - reference_result)) < 0.05
     assert (f_mairca.rank() == [7, 4, 3, 5, 8, 6, 2, 1]).all()
 
+def test_fMARCOS():
+    """
+        Test verifying correctness of the fuzzy MAARCOS method combined with Triangular Fuzzy Number
+        Reference value: Stanković, M., Stević, Ž., Das, D. K., Subotić, M., & Pamučar, D. (2020). A new fuzzy MARCOS method for road traffic risk analysis. Mathematics, 8(3), 457.
+    """
+
+    matrix = np.array([
+        # A1
+        [(1,1,1), (1,1,3), (1,1,1), (3,5,5), (3,5,5), (3,3,5)],
+        # A2
+        [(1,1,3), (1,1,3), (1,1,1), (1,1,1), (1,3,3), (1,1,3)],
+        # A3
+        [(3,3,5), (1,1,3), (1,1,1), (1,1,1), (1,1,1), (1,1,3)],
+        # A4
+        [(3,5,5), (1,1,1), (1,1,1), (3,5,5), (1,1,1), (1,1,3)],
+        # A5
+        [(1,1,3), (1,1,3), (7,9,9), (1,1,1), (1,1,1), (1,1,1)],
+        # A6
+        [(3,3,5), (1,1,1), (1,1,1), (1,1,3), (1,3,3), (1,1,3)],
+        # A7
+        [(1,3,3), (1,1,3), (1,1,1), (3,3,5), (1,1,1), (5,5,7)],
+        # A8
+        [(5,5,7), (1,1,3), (1,1,1), (1,1,1), (1,3,3), (1,3,3)],
+        # A9
+        [(1,1,1), (1,1,3), (1,1,1), (1,1,1), (5,7,7), (1,1,3)],
+        # A10
+        [(5,7,7), (1,1,3), (1,1,1), (1,1,1), (1,1,1), (1,3,3)],
+        # A11
+        [(1,1,3), (1,1,3), (1,1,1), (1,1,1), (1,1,1), (1,1,3)],
+        # A12
+        [(3,5,5), (1,1,3), (7,9,9), (1,1,1), (1,1,1), (1,1,1)],
+        # A13
+        [(3,5,5), (1,3,3), (1,1,1), (1,1,3), (1,1,1), (1,1,3)],
+        # A14
+        [(3,3,5), (3,5,5), (1,1,1), (1,1,3), (1,1,1), (1,3,3)],
+        # A15
+        [(1,1,3), (3,3,5), (1,1,1), (1,1,3), (1,1,1), (1,3,3)],
+        # A16
+        [(1,1,3), (7,7,9), (1,1,1), (1,1,3), (1,1,1), (1,1,1)],
+        # A17
+        [(3,3,5), (7,9,9), (1,1,1), (1,3,3), (1,1,1), (1,3,3)],
+        # A18
+        [(3,3,5), (7,7,9), (7,9,9), (1,1,1), (1,1,1), (1,3,3)],
+        # A19
+        [(3,3,5), (5,7,7), (1,1,1), (3,3,5), (1,1,1), (3,3,5)],
+        # A20
+        [(1,1,3), (7,7,9), (1,1,1), (5,5,7), (1,3,3), (7,9,9)],
+        # A21
+        [(7,9,9), (5,7,7), (1,1,1), (1,1,1), (1,3,3), (1,1,3)],
+        # A22
+        [(5,5,7), (3,3,5), (1,1,1), (1,1,3), (1,1,1), (1,1,1)],
+        # A23
+        [(3,3,5), (3,5,5), (7,9,9), (7,7,9), (3,5,5), (7,9,9)],
+        # A24
+        [(1,1,3), (3,3,5), (1,1,1), (1,1,1), (1,1,1), (1,1,3)],
+        # A25
+        [(1,3,3), (3,5,5), (1,1,1), (1,1,3), (1,1,1), (1,1,1)],
+        # A26
+        [(5,5,7), (3,5,5), (1,1,1), (1,1,1), (1,1,1), (1,1,3)],
+        # A27
+        [(3,5,5), (1,3,3), (1,1,1), (1,1,3), (1,1,1), (1,1,3)],
+        # A28
+        [(1,1,3), (1,1,1), (1,1,1), (5,7,7), (3,5,5), (3,3,5)],
+        # A29
+        [(1,3,3), (1,1,3), (1,1,1), (1,1,3), (1,1,1), (1,1,1)],
+        # A30
+        [(1,3,3), (1,1,3), (1,1,1), (1,1,3), (1,1,1), (1,1,3)],
+        # A31
+        [(1,1,1), (1,1,3), (1,1,1), (1,1,3), (1,1,1), (1,3,3)],
+        # A32
+        [(1,1,3), (1,3,3), (1,1,1), (3,5,5), (1,3,3), (1,1,3)],
+        # A33
+        [(1,3,3), (1,3,3), (7,9,9), (1,1,3), (1,1,1), (5,5,7)],
+        # A34
+        [(1,1,3), (1,1,1), (1,1,1), (1,1,1), (1,1,1), (1,1,3)],
+        # A35
+        [(1,3,3), (1,1,1), (1,1,1), (1,1,1), (1,1,1), (1,1,1)],
+        # A36
+        [(1,1,3), (1,1,3), (1,1,1), (1,1,3), (1,3,3), (1,1,3)],
+        # A37
+        [(5,5,7), (1,1,3), (1,1,1), (1,1,1), (1,3,3), (3,3,5)],
+        # A38
+        [(3,3,5), (1,1,3), (1,1,1), (1,1,1), (1,1,1), (1,1,3)]
+    ], dtype=float)
+
+    criteria_types = np.array([1, 1, 1, 1, 1, 1])
+    weights = np.array([
+        [0.098, 0.174, 0.336],   # w1
+        [0.133, 0.254, 0.471],   # w2
+        [0.100, 0.203, 0.411],   # w3
+        [0.064, 0.119, 0.234],   # w4
+        [0.083, 0.149, 0.263],   # w5
+        [0.060, 0.102, 0.185]    # w6
+    ])
+    f_marcos = fMARCOS()
+
+    calculated_result = f_marcos(matrix, weights, criteria_types)
+    reference_result = np.array([0.181, 0.084, 0.083])
+    
+    assert (np.round(calculated_result[:3], 4) == reference_result).all() or np.sum(np.abs(calculated_result[:3] - reference_result)) < 0.06
+    rank = f_marcos.rank()
+    assert int(rank[22]) == 1
+    assert int(rank[36]) == 14
+
 def test_fMOORA():
     """
         Test verifying correctness of the fuzzy MOORA method combined with Triangular Fuzzy Number
@@ -286,6 +457,204 @@ def test_fOCRA():
     
     assert (np.round(calculated_result.astype(float), 3) == reference_result).all() or np.sum(np.abs(np.round(calculated_result.astype(float), 3) - reference_result)) < 0.05 
     assert (f_ocra.rank() == [1, 3, 2, 5, 4]).all()
+
+def test_fPIV():
+    """
+        Test verifying correctness of the fuzzy PIV method combined with Triangular Fuzzy Number
+        Reference value: Seraj, M., Yahya, S. M., Badruddin, I. A., Anqi, A. E., Asjad, M., & Khan, Z. A. (2019). Multi-response optimization of nanofluid-based IC engine cooling system using fuzzy method. Processes, 8(1), 30.
+    """
+
+    raw_data = [
+        [0.65, 2195, 0.70, 0.17, 35],
+        [0.68, 2560, 0.79, 0.18, 24],
+        [0.72, 3240, 0.99, 0.22, 30],
+        [0.63, 2253, 0.71, 0.20, 32],
+        [0.67, 2588, 0.80, 0.24, 22],
+        [0.74, 2895, 1.01, 0.28, 31],
+        [0.69, 2666, 0.81, 0.25, 25],
+        [0.75, 3022, 1.00, 0.34, 31],
+        [0.61, 2092, 0.68, 0.23, 29],
+        [0.79, 3440, 0.75, 0.22, 33],
+        [0.66, 2510, 0.51, 0.16, 28],
+        [0.74, 3025, 0.59, 0.20, 30],
+        [0.76, 3163, 0.61, 0.21, 26],
+        [0.80, 3522, 0.74, 0.25, 31],
+        [0.68, 2480, 0.50, 0.19, 30],
+        [0.81, 3705, 0.76, 0.30, 33],
+        [0.69, 2350, 0.52, 0.27, 29],
+        [0.74, 2942, 0.62, 0.26, 27]
+    ]
+
+    fuzzy_matrix_list = [
+        [[val, val, val] for val in row] 
+        for row in raw_data
+    ]
+
+    matrix = np.array(fuzzy_matrix_list, dtype=float)
+
+    criteria_types = np.array([1, 1, 1, 1, 1])
+    weights = np.array([
+        [0.7, 0.875, 0.975],
+        [0.7, 0.85, 0.95],
+        [0.075, 0.25, 0.45],
+        [0.05, 0.20, 0.40],
+        [0.80, 0.95, 1.0]
+    ])
+    f_piv = fPIV()
+
+    f_piv(matrix, weights, criteria_types)
+    rank = f_piv.rank()
+    assert int(rank[15]) == 1
+    assert int(rank[9]) == 2
+    assert int(rank[13]) == 3
+
+def test_fRAFSI():
+    """
+        Test verifying correctness of the fuzzy RAFSI method combined with Triangular Fuzzy Number
+        Reference value: Božanić, D., Milić, A., Tešić, D., Salabun, W., & Pamučar, D. (2021). D numbers–FUCOM–fuzzy RAFSI model for selecting the group of construction machines for enabling mobility. Facta Universitatis, Series: Mechanical Engineering, 19(3), 447-471.
+    """
+
+    decision_matrix = np.array([
+        [
+            [37, 40, 44],
+            [1, 1, 2],
+            [60, 70, 75],
+            [6, 7, 7],
+            [6, 7, 7],
+            [2, 2, 2],
+        ],
+        [
+            [22, 25, 27],
+            [5.5, 6, 6],
+            [75, 80, 85],
+            [3.5, 5, 6.5],
+            [1, 1, 2],
+            [14, 14, 14],
+        ],
+        [
+            [43, 45, 49],
+            [3.5, 4, 4.5],
+            [72, 75, 80],
+            [1.5, 3, 4.5],
+            [1, 1, 2],
+            [14, 14, 14],
+        ],
+        [
+            [25, 30, 33],
+            [4, 5, 6],
+            [75, 78, 80],
+            [3.5, 5, 6.5],
+            [1.5, 3, 4.5],
+            [2, 2, 2],
+        ],
+        [
+            [37, 40, 44],
+            [1.5, 2, 2.5],
+            [60, 70, 75],
+            [6, 7, 7],
+            [3.5, 5, 6.5],
+            [15, 15, 15],
+        ],
+        [
+            [37, 40, 44],
+            [1.5, 2, 2.5],
+            [60, 65, 70],
+            [6, 7, 7],
+            [6, 7, 7],
+            [3, 3, 3],
+        ],
+        [
+            [22, 25, 27],
+            [4, 5, 6],
+            [75, 80, 85],
+            [3.5, 5, 6.5],
+            [3.5, 5, 6.5],
+            [1, 1, 1],
+        ],
+        [
+            [43, 45, 49],
+            [2, 3, 4],
+            [65, 75, 80],
+            [1.5, 3, 4.5],
+            [1.5, 3, 4.5],
+            [1, 1, 1],
+        ],
+    ])
+    criteria_types = np.array([1, 1, 1, -1, 1, 1])
+    ideal = np.array([65, 6, 100, 1, 7, 15])
+    anti_ideal = np.array([15, 1, 50, 7, 1, 1])
+    weights = np.array([0.304, 0.218, 0.162, 0.132, 0.117, 0.067])
+
+    f_rafsi = fRAFSI()
+    calculated_result = f_rafsi(decision_matrix, weights, criteria_types, ideal=ideal, anti_ideal=anti_ideal)
+    rank = f_rafsi.rank()
+    reference_result = np.array([0.387, 0.463, 0.501, 0.435, 0.432, 0.406, 0.443, 0.448])
+    
+    assert (np.round(calculated_result.astype(float), 3) == reference_result).all() or np.sum(np.abs(np.round(calculated_result.astype(float), 3) - reference_result)) < 0.05 
+    assert (rank == [8, 2, 1, 5, 6, 7, 4, 3]).all()
+
+def test_fRIM():
+    """
+        Test verifying correctness of the fuzzy RIM method combined with Triangular Fuzzy Number
+        Reference value: Cables, E., Lamata, M. T., & Verdegay, J. L. (2017). FRIM—fuzzy reference ideal method in multicriteria decision making. In Soft computing applications for group decision-making and consensus modeling (pp. 305-317). Cham: Springer International Publishing.   
+    """
+
+    matrix = np.array([
+        [[2.99, 3.29, 3.75], [0.17, 0.19, 0.21], [64, 67, 70], [6.9, 6.9, 6.9]],
+        [[2.69, 3.27, 3.85], [0.18, 0.20, 0.22], [54, 57, 60], [5.8, 5.8, 5.8]],
+        [[2.93, 3.04, 3.80], [0.28, 0.31, 0.34], [59, 62, 65], [6.3, 6.3, 6.3]],
+        [[2.80, 3.24, 3.69], [0.23, 0.26, 0.29], [66, 69, 72], [6.8, 6.8, 6.8]],
+        [[2.95, 3.14, 3.46], [0.22, 0.25, 0.28], [53, 56, 59], [6.0, 6.0, 6.0]],
+        [[2.74, 2.96, 3.99], [0.33, 0.37, 0.40], [46, 49, 52], [6.4, 6.4, 6.4]],
+        [[2.89, 3.08, 3.80], [0.18, 0.20, 0.22], [57, 60, 63], [6.6, 6.6, 6.6]],
+        [[3.00, 3.19, 3.45], [0.23, 0.26, 0.29], [56, 59, 62], [6.4, 6.4, 6.4]],
+    ], dtype=float)
+
+    criteria_types = np.array([1, 1, 1, 1])
+    weights = np.full(4, 0.25)
+
+    lower_b = np.array([
+        [2.69, 2.96, 3.45],
+        [0.15, 0.16, 0.17],
+        [0, 15, 35],
+        [1, 1, 1],
+    ])
+
+    upper_b = np.array([
+        [3.00, 3.29, 3.99],
+        [0.55, 0.70, 0.80],
+        [110, 135, 150],
+        [9, 9, 9],
+    ])
+
+    lower_ref = np.array([
+        [2.69, 2.96, 3.04],
+        [0.16, 0.16, 0.17],
+        [50, 52, 54],
+        [8, 9, 9],
+    ])
+
+    upper_ref = np.array([
+        [2.69, 2.96, 3.04],
+        [0.20, 0.22, 0.26],
+        [57, 60, 63],
+        [8, 9, 9],
+    ])
+    f_rim = fRIM()
+    calculated_result = f_rim(
+        matrix, 
+        weights,
+        criteria_types, 
+        lower_b,
+        upper_b,
+        lower_ref,
+        upper_ref
+    )
+    rank = f_rim.rank()
+    reference_result = np.array([0.648, 0.630, 0.636, 0.668, 0.719, 0.557, 0.667, 0.716])
+    
+    assert (np.round(calculated_result.astype(float), 3) == reference_result).all() or np.sum(np.abs(np.round(calculated_result.astype(float), 3) - reference_result)) < 0.1 
+    assert (rank == [5, 7, 6, 3, 1, 8, 4, 2]).all()
 
 def test_fSPOTIS():
     """

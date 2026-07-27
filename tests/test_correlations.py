@@ -1,4 +1,4 @@
-# Copyright (c) 2022 Jakub Więckowski
+# Copyright (c) 2022 - 2026 Jakub Więckowski
 
 import numpy as np
 from pyfdm.correlations import *
@@ -6,7 +6,7 @@ from pyfdm.correlations import *
 
 def test_spearman_coef():
     """
-        Test veryfing correctness of the spearman correlation coefficient formula.
+        Test verifying correctness of the spearman correlation coefficient formula.
         Reference value: Sałabun, W., & Urbaniak, K. (2020, June). A new coefficient of rankings similarity in decision-making problems. In International Conference on Computational Science (pp. 632-645). Springer, Cham.
     """
     x = np.array([1, 2, 3, 4, 5])
@@ -16,7 +16,7 @@ def test_spearman_coef():
 
 def test_person_coef():
     """
-        Test veryfing correctness of the pearson correlation coefficient formula.
+        Test verifying correctness of the pearson correlation coefficient formula.
         Reference value: Sałabun, W., Karczmarczyk, A., & Wątróbski, J. (2018, November). Decision-making using the hesitant fuzzy sets COMET method: An empirical study of the electric city buses selection. In 2018 IEEE Symposium Series on Computational Intelligence (SSCI) (pp. 1485-1492). IEEE.
     """
     x = np.array([
@@ -38,7 +38,7 @@ def test_person_coef():
 
 def test_weighted_spearman_coef():
     """
-        Test veryfing correctness of the weighted spearman correlation coefficient formula.
+        Test verifying correctness of the weighted spearman correlation coefficient formula.
         Reference value: Paradowski, B., Bączkiewicz, A., & Watrąbski, J. (2021). Towards proper consumer choices-MCDM based product selection. Procedia Computer Science, 192, 1347-1358.
     """
     x = np.array([7, 11, 2, 1, 4, 9, 6, 3, 5, 10, 8, 12])
@@ -48,7 +48,7 @@ def test_weighted_spearman_coef():
 
 def test_ws_rank_similarity_coef():
     """
-        Test veryfing correctness of the ws rank similarity coefficient formula.
+        Test verifying correctness of the ws rank similarity coefficient formula.
         Reference value: Paradowski, B., Bączkiewicz, A., & Watrąbski, J. (2021). Towards proper consumer choices-MCDM based product selection. Procedia Computer Science, 192, 1347-1358.
     """
     x = np.array([7, 11, 2, 1, 4, 9, 6, 3, 5, 10, 8, 12])

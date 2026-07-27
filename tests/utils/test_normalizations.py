@@ -1,12 +1,12 @@
-# Copyright (c) 2022-2023 Jakub Więckowski
+# Copyright (c) 2022 - 2026 Jakub Więckowski
 
 import numpy as np
-import pyfdm.methods.utils.normalizations as norms
+import pyfdm.utils.normalizations as norms
 
 
 def test_sum_normalization():
     """
-        Test veryfing correctness of the sum normalization formula.
+        Test verifying correctness of the sum normalization formula.
         Reference value: Fu, Y. K., Wu, C. J., & Liao, C. N. (2021). Selection of in-flight duty-free product suppliers using a combination fuzzy AHP, fuzzy ARAS, and MSGP methods. Mathematical Problems in Engineering, 2021.
     """
     matrix = np.array([
@@ -34,7 +34,7 @@ def test_sum_normalization():
 
 def test_max_normalization():
     """
-        Test veryfing correctness of the max normalization formula.
+        Test verifying correctness of the max normalization formula.
         Formula: Panchal, D., Chatterjee, P., Shukla, R. K., Choudhury, T., & Tamosaitiene, J. (2017). Integrated Fuzzy AHP-Codas Framework for Maintenance Decision in Urea Fertilizer Industry. Economic Computation & Economic Cybernetics Studies & Research, 51(3).
         Reference value: Self-calculated empirical verification
     """
@@ -55,7 +55,7 @@ def test_max_normalization():
 
 def test_linear_normalization():
     """
-        Test veryfing correctness of the linear normalization formula.
+        Test verifying correctness of the linear normalization formula.
         Reference value: Chen, C. T. (2000). Extensions of the TOPSIS for group decision-making under fuzzy environment. Fuzzy sets and systems, 114(1), 1-9.
     """
     matrix = np.array([
@@ -74,7 +74,7 @@ def test_linear_normalization():
 
 def test_minmax_normalization():
     """
-        Test veryfing correctness of the Min-Max normalization formula.
+        Test verifying correctness of the Min-Max normalization formula.
         Reference value: Bozanic, D., Tešić, D., & Milićević, J. (2018). A hybrid fuzzy AHP-MABAC model: Application in the Serbian Army–The selection of the location for deep wading as a technique of crossing the river by tanks. Decision Making: Applications in Management and Engineering, 1(1), 143-164.
     """
     matrix = np.array([
@@ -102,7 +102,7 @@ def test_minmax_normalization():
 
 def test_vector_normalization():
     """
-        Test veryfing correctness of the vector normalization formula.
+        Test verifying correctness of the vector normalization formula.
         Reference value: Karande, P., & Chakraborty, S. (2012). A Fuzzy-MOORA approach for ERP system selection. Decision Science Letters, 1(1), 11-21.
     """
     matrix = np.array([
@@ -124,7 +124,7 @@ def test_vector_normalization():
 
 def test_saw_normalization():
     """
-        Test veryfing correctness of the saw normalization formula.
+        Test verifying correctness of the saw normalization formula.
         Reference value: Narang, M., Joshi, M. C., & Pal, A. K. (2021). A hybrid fuzzy COPRAS-base-criterion method for multi-criteria decision making. Soft Computing, 25(13), 8391-8399.
     """
     matrix = np.array([
@@ -147,7 +147,7 @@ def test_saw_normalization():
 
 def test_waspas_normalization():
     """
-        Test veryfing correctness of the WASPAS normalization formula.
+        Test verifying correctness of the WASPAS normalization formula.
         Reference value: Turskis, Z., Zavadskas, E. K., Antuchevičienė, J., & Kosareva, N. (2015). A hybrid model based on fuzzy AHP and fuzzy WASPAS for construction site selection.
     """
     matrix = np.array([
@@ -176,7 +176,7 @@ def test_waspas_normalization():
 
 def test_sqrt_normalization():
     """
-        Test veryfing correctness of the SQRT normalization formula.
+        Test verifying correctness of the SQRT normalization formula.
         Formula: Kizielewicz, B., & Bączkiewicz, A. (2021). Comparison of Fuzzy TOPSIS, Fuzzy VIKOR, Fuzzy WASPAS and Fuzzy MMOORA methods in the housing selection problem. Procedia Computer Science, 192, 4578-4591.
         Reference value: Self-calculated empirical verification
     """
@@ -195,7 +195,7 @@ def test_sqrt_normalization():
 
 def test_cocoso_normalization():
     """
-        Test veryfing correctness of the COCOSO normalization formula.
+        Test verifying correctness of the COCOSO normalization formula.
         Reference value: Ulutaş, A., Popovic, G., Radanov, P., Stanujkic, D., & Karabasevic, D. (2021). A new hybrid fuzzy PSI-PIPRECIA-CoCoSo MCDM based approach to solving the transportation company selection problem. Technological and Economic Development of Economy, 27(5), 1227-1249.
     """
     matrix = np.array([

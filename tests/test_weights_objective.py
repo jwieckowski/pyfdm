@@ -1,12 +1,12 @@
-# Copyright (c) 2022 Jakub Więckowski
+# Copyright (c) 2022 - 2026 Jakub Więckowski
 
 import numpy as np
-from pyfdm.weights import *
+from pyfdm.weights.objective import *
 
 
 def test_equal_weights():
     """
-        Test veryfing correctness of the equal weights methods.
+        Test verifying correctness of the equal weights methods.
         Each weight should have the same value for all criteria and for each element of the Triangular Fuzzy Number
     """
 
@@ -29,7 +29,7 @@ def test_equal_weights():
 
 def test_shannon_entropy_weights():
     """
-        Test veryfing correctness of the shannon entropy weights methods.
+        Test verifying correctness of the shannon entropy weights methods.
         Reference value: Kacprzak, D. (2017). Objective weights based on ordered fuzzy numbers for fuzzy multiple criteria decision-making methods. Entropy, 19(7), 373
     """
 
@@ -59,7 +59,7 @@ def test_shannon_entropy_weights():
 
 def test_standard_deviation_weights():
     """
-        Test veryfing correctness of the standard deviation weights methods.
+        Test verifying correctness of the standard deviation weights methods.
         Formula: Wang, Y. M., & Luo, Y. (2010). Integration of correlations with standard deviations for determining attribute weights in multiple attribute decision making. Mathematical and Computer Modelling, 51(1-2), 1-12.
         Reference value: Self-calculated empirical verification
     """
@@ -83,7 +83,7 @@ def test_standard_deviation_weights():
 
 def test_variance_weights():
     """
-        Test veryfing correctness of the variance weights methods.
+        Test verifying correctness of the variance weights methods.
         Formula: Bikmukhamedov, R., Yeryomin, Y., & Seitz, J. (2016, July). Evaluation of MCDA-based handover algorithms for mobile networks. In 2016 Eighth International Conference on Ubiquitous and Future Networks (ICUFN) (pp. 810-815). IEEE.
         Reference value: Self-calculated empirical verification
     """
