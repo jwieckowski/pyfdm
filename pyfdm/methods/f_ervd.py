@@ -369,11 +369,11 @@ class fERVD(BaseFuzzyMethod):
 
             for j in range(n):
                 if types[j] == 1:
-                    v_plus[j] = np.abs(np.max(vnmatrix[:, j, :]))
-                    v_minus[j] = np.abs(np.min(vnmatrix[:, j, :]))
+                    v_plus[j] = np.max(vnmatrix[:, j, :])
+                    v_minus[j] = np.min(vnmatrix[:, j, :])
                 else: 
-                    v_plus[j] = np.abs(np.min(vnmatrix[:, j, :]))
-                    v_minus[j] = np.abs(np.max(vnmatrix[:, j, :]))
+                    v_plus[j] = np.min(vnmatrix[:, j, :])
+                    v_minus[j] = np.max(vnmatrix[:, j, :])
         except Exception as e:
             raise RuntimeError(f"Failed to compute positive/negative ideal solutions: {e}") from e
 

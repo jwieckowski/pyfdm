@@ -8,6 +8,7 @@ from ..step_logger import StepLogger
 from ..validator import Validator
 
 from ..utils.normalizations import minmax_normalization, vector_normalization
+from ..utils import rank_alternatives, graded_mean_average_defuzzification
 
 class fAROMAN(BaseFuzzyMethod):
     """
@@ -317,18 +318,34 @@ class fAROMAN(BaseFuzzyMethod):
         )
         return ri
 
-# matrix = np.array([
-#     [[4.33, 6.33, 8], [3.67, 5.67, 7.67], [5.67, 7.67, 9.33], [5, 7, 8.67], [3, 5, 7], [3.67, 5.67, 7.67], [1.67, 3.67, 5.67]],
-#     [[7.67, 9.33, 10], [6.33, 8.33, 9.67], [0, 0.67, 2.33], [5.67, 7.67, 9], [3.67, 5.67, 7.67], [6.33, 8.33, 9.67], [5, 7, 8.67]],
-#     [[6.33, 8.33, 9.67], [2.33, 4.33, 6.33], [1.67, 3.67, 5.67], [7.67, 9.33, 10], [5.67, 7.67, 9.33], [7, 8.67, 9.67], [4.33, 6.33, 8.33]]
-# ], dtype=float)
+    def rank(self, defuzzify: callable = graded_mean_average_defuzzification):
+        """
+        Calculate rankings for S, R, and Q.
 
-# criteria_types = np.array([1, 1, -1, 1, -1, 1, 1])
-# weights = np.array([0.114, 0.106, 0.103, 0.092, 0.092, 0.088, 0.084])
-# weights = weights / np.sum(weights)
-# weights = np.array([[a, a, a] for a in weights])
-# f_aroman = fAROMAN()
-# prefs = f_aroman(matrix, weights, criteria_types)
-# prefs
+        Must be called after ``__call__()``.
 
-# a2, a3, a1
+        Parameters
+        ----------
+        defuzzify : callable, default=graded_mean_average_defuzzification
+            Function used to transform fuzzy preference values into crisp
+            scores.
+
+        Returns
+        -------
+            tuple of ndarray
+                (rank_S, rank_R, rank_Q), each of shape (m,). Lower
+                values of S/R/Q receive rank 1 (best).
+
+        Raises
+        ------
+            AttributeError
+                If called before the method has been evaluated.
+        """
+        if defuzzify is not None and not callable(defuzzify):
+            raise TypeError("'defuzzify' must be callable or None.")
+        
+        if self.preferences is None:
+            raise AttributeError(f'{self.method_name}: call the method first before requesting a ranking.')
+
+        crisp_prefs = np.array([defuzzify(tfn) for tfn in self.preferences])
+        return rank_alternatives(crisp_prefs, descending=self._descending, method="average")

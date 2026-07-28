@@ -36,7 +36,7 @@ def mean_defuzzification(a: np.ndarray | list) -> float:
         Defuzzified crisp value.
     """
 
-    Validator.validate_tfn(a)
+    Validator.validate_tfn(a, 'a')
 
     try:
         return (a[0] + a[1] + a[2]) / 3
@@ -64,7 +64,7 @@ def mean_area_defuzzification(a: np.ndarray | list) -> float:
         Defuzzified crisp value.
     """
 
-    Validator.validate_tfn(a)
+    Validator.validate_tfn(a, 'a')
 
     try:
         return (a[0] + 2 * a[1] + a[2]) / 4
@@ -92,7 +92,7 @@ def graded_mean_average_defuzzification(a: np.ndarray | list) -> float:
         Defuzzified crisp value.
     """
 
-    Validator.validate_tfn(a)
+    Validator.validate_tfn(a, 'a')
 
     try:
         return (a[0] + 4 * a[1] + a[2]) / 6
@@ -128,7 +128,7 @@ def weighted_mean_defuzzification(a: np.ndarray | list, k: float = 2) -> float:
         If ``k <= -2``.
     """
 
-    Validator.validate_tfn(a)
+    Validator.validate_tfn(a, 'a')
 
     if k <= -2:
         raise ValueError("'k' must be greater than -2.")
@@ -159,7 +159,7 @@ def bisector_defuzzification(a: np.ndarray | list) -> float:
         Defuzzified crisp value.
     """
 
-    Validator.validate_tfn(a)
+    Validator.validate_tfn(a, 'a')
 
     try:
         return (a[0] + a[2]) / 2
@@ -183,7 +183,7 @@ def height_defuzzification(a: np.ndarray | list) -> float:
         Defuzzified crisp value.
     """
 
-    Validator.validate_tfn(a)
+    Validator.validate_tfn(a, 'a')
 
     try:
         return a[1]
@@ -206,7 +206,7 @@ def lom_defuzzification(a: np.ndarray | list) -> float:
         Largest value of the TFN.
     """
 
-    Validator.validate_tfn(a)
+    Validator.validate_tfn(a, 'a')
 
     try:
         return np.max(a)
@@ -229,7 +229,7 @@ def som_defuzzification(a: np.ndarray | list) -> float:
         Smallest value of the TFN.
     """
 
-    Validator.validate_tfn(a)
+    Validator.validate_tfn(a, 'a')
 
     try:
         return np.min(a)

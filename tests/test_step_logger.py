@@ -69,7 +69,8 @@ class TestStepLoggerConstruction:
 
     def test_custom_path_accepted(self):
         lg = StepLogger(output='json', path='/tmp/my_results')
-        assert str(lg.path) == '/tmp/my_results'
+        assert lg.path.name == 'my_results'
+        assert lg.path.parent.name == 'tmp'
 
     def test_custom_labels(self, alt_names, crit_names):
         lg = StepLogger(output='console', alternative_names=alt_names, criterion_names=crit_names)
@@ -112,44 +113,44 @@ class TestStepLoggerLog:
         assert isinstance(lg.steps[0]['data'], dict)
 
 
-# verbose parameter on methods
+# logger parameter on methods
 
-class TestVerboseParameter:
+class TestLoggerParameter:
 
-    def test_verbose_none_no_steps(self, matrix, weights, types):
+    def test_logger_none_no_steps(self, matrix, weights, types):
         method = fTOPSIS()
-        method(matrix, weights, types, verbose=None)
+        method(matrix, weights, types)
         assert not hasattr(method, '_logger')   # no logger attached
 
-    def test_verbose_step_logger_populates_steps(self, matrix, weights, types):
+    def test_logger_step_logger_populates_steps(self, matrix, weights, types):
         lg = StepLogger(output='console')
-        fTOPSIS()(matrix, weights, types, verbose=lg)
+        fTOPSIS(logger=lg)(matrix, weights, types)
         assert len(lg.steps) > 0
 
-    def test_verbose_wrong_type_raises(self, matrix, weights, types):
-        with pytest.raises(TypeError, match='StepLogger'):
-            fTOPSIS()(matrix, weights, types, verbose='console')
+    def test_logger_wrong_type_raises(self, matrix, weights, types):
+        with pytest.raises(ValueError, match='Invalid output format'):
+            StepLogger(output='consolejson')
 
-    def test_verbose_wrong_type_bool_raises(self, matrix, weights, types):
+    def test_logger_wrong_type_bool_raises(self, matrix, weights, types):
         with pytest.raises(TypeError, match='StepLogger'):
-            fTOPSIS()(matrix, weights, types, verbose=True)
+            fTOPSIS(logger=True)(matrix, weights, types)
 
-    def test_verbose_method_name_set(self, matrix, weights, types):
+    def test_logger_method_name_set(self, matrix, weights, types):
         lg = StepLogger(output='console')
-        fTOPSIS()(matrix, weights, types, verbose=lg)
+        fTOPSIS(logger=lg)(matrix, weights, types)
         assert lg._method_name == 'fTOPSIS'
 
-    def test_result_unchanged_with_verbose(self, matrix, weights, types):
+    def test_result_unchanged_with_logger(self, matrix, weights, types):
         """verbose must not alter the returned preferences."""
         lg = StepLogger(output='console')
-        prefs_verbose = fTOPSIS()(matrix, weights, types, verbose=lg)
+        prefs_logger = fTOPSIS(logger=lg)(matrix, weights, types)
         prefs_plain   = fTOPSIS()(matrix, weights, types)
-        assert np.allclose(prefs_verbose, prefs_plain)
+        assert np.allclose(prefs_logger, prefs_plain)
 
-    def test_ranking_unchanged_with_verbose(self, matrix, weights, types):
+    def test_ranking_unchanged_with_logger(self, matrix, weights, types):
         lg = StepLogger(output='console')
-        m = fTOPSIS()
-        m(matrix, weights, types, verbose=lg)
+        m = fTOPSIS(logger=lg)
+        m(matrix, weights, types)
         rank_v = m.rank()
         m2 = fTOPSIS()
         m2(matrix, weights, types)
@@ -164,12 +165,12 @@ class TestStepContent:
 
     def _get_steps(self, method_cls, matrix, weights, types, **kwargs):
         lg = StepLogger(output='console')
-        method_cls()( matrix, weights, types, verbose=lg, **kwargs)
+        method_cls(logger=lg)( matrix, weights, types, **kwargs)
         return {s['name'] for s in lg.steps}
 
-    def test_topsis_has_normalised_matrix(self, matrix, weights, types):
+    def test_topsis_has_normalized_matrix(self, matrix, weights, types):
         steps = self._get_steps(fTOPSIS, matrix, weights, types)
-        assert 'Normalized matrix' in steps
+        assert 'Normalized fuzzy decision matrix' in steps
 
     def test_topsis_has_weighted_matrix(self, matrix, weights, types):
         steps = self._get_steps(fTOPSIS, matrix, weights, types)
@@ -191,13 +192,13 @@ class TestStepContent:
 
     def test_vikor_has_ideal_nadir(self, matrix, weights, types):
         steps = self._get_steps(fVIKOR, matrix, weights, types)
-        assert 'Ideal solution (f*)' in steps
-        assert 'Nadir solution (f-)' in steps
+        assert 'Ideal solution (F*)' in steps
+        assert 'Nadir solution (F-)' in steps
 
     def test_vikor_has_S_R_Q(self, matrix, weights, types):
         steps = self._get_steps(fVIKOR, matrix, weights, types)
-        assert 'S vector (utility measure)' in steps
-        assert 'R vector (regret measure)' in steps
+        assert 'Utility measure (S)' in steps
+        assert "Regret measure (R)" in steps
 
     def test_moora_has_profit_cost_sums(self, matrix, weights, types):
         steps = self._get_steps(fMOORA, matrix, weights, types)
@@ -219,9 +220,9 @@ class TestStepContent:
 
     def test_marcos_has_utility_functions(self, matrix, weights, types):
         lg = StepLogger(output='console')
-        fMARCOS()(matrix, weights, types, verbose=lg)
+        fMARCOS(logger=lg)(matrix, weights, types)
         names = {s['name'] for s in lg.steps}
-        assert any('AAI' in n or 'AI' in n or 'Utility' in n or 'Ideal' in n or 'Normalised' in n for n in names)
+        assert any('AAI' in n or 'AI' in n or 'Utility' in n or 'Ideal' in n or 'Normalized' in n for n in names)
 
 
 # Console output 
@@ -230,27 +231,27 @@ class TestConsoleOutput:
 
     def test_console_output_printed(self, matrix, weights, types, capsys):
         lg = StepLogger(output='console')
-        fTOPSIS()(matrix, weights, types, verbose=lg)
+        fTOPSIS(logger=lg)(matrix, weights, types)
         captured = capsys.readouterr()
         assert 'fTOPSIS' in captured.out
 
     def test_console_shows_step_names(self, matrix, weights, types, capsys):
         lg = StepLogger(output='console')
-        fTOPSIS()(matrix, weights, types, verbose=lg)
+        fTOPSIS(logger=lg)(matrix, weights, types)
         captured = capsys.readouterr()
-        assert 'Normalized matrix' in captured.out
+        assert 'Normalized fuzzy decision matrix' in captured.out
         assert 'Preference scores' in captured.out
 
     def test_console_shows_custom_alt_names(self, matrix, weights, types, capsys, alt_names):
         lg = StepLogger(output='console', alternative_names=alt_names)
-        fTOPSIS()(matrix, weights, types, verbose=lg)
+        fTOPSIS(logger=lg)(matrix, weights, types)
         captured = capsys.readouterr()
         assert 'Alpha' in captured.out
 
     def test_manual_print(self, matrix, weights, types, capsys):
         """logger.print() should re-print even without console in output."""
         lg = StepLogger(output='json', path='/tmp/test_manual')
-        fTOPSIS()(matrix, weights, types, verbose=lg)
+        fTOPSIS(logger=lg)(matrix, weights, types)
         lg.print()
         captured = capsys.readouterr()
         assert 'fTOPSIS' in captured.out
@@ -263,27 +264,27 @@ class TestJSONOutput:
     def test_json_file_created(self, tmp_path, matrix, weights, types):
         path = tmp_path / 'steps'
         lg = StepLogger(output='json', path=path)
-        fTOPSIS()(matrix, weights, types, verbose=lg)
+        fTOPSIS(logger=lg)(matrix, weights, types)
         assert (tmp_path / 'steps.json').exists()
 
     def test_json_has_method_name(self, tmp_path, matrix, weights, types):
         path = tmp_path / 'steps'
         lg = StepLogger(output='json', path=path)
-        fTOPSIS()(matrix, weights, types, verbose=lg)
+        fTOPSIS(logger=lg)(matrix, weights, types)
         data = json.loads((tmp_path / 'steps.json').read_text())
         assert data['method'] == 'fTOPSIS'
 
     def test_json_has_all_steps(self, tmp_path, matrix, weights, types):
         path = tmp_path / 'steps'
         lg = StepLogger(output='json', path=path)
-        fTOPSIS()(matrix, weights, types, verbose=lg)
+        fTOPSIS(logger=lg)(matrix, weights, types)
         data = json.loads((tmp_path / 'steps.json').read_text())
         assert len(data['steps']) >= 5
 
     def test_json_step_has_name_description_data(self, tmp_path, matrix, weights, types):
         path = tmp_path / 'steps'
         lg = StepLogger(output='json', path=path)
-        fTOPSIS()(matrix, weights, types, verbose=lg)
+        fTOPSIS(logger=lg)(matrix, weights, types)
         data = json.loads((tmp_path / 'steps.json').read_text())
         step = data['steps'][0]
         assert 'name' in step
@@ -293,7 +294,7 @@ class TestJSONOutput:
     def test_json_3d_matrix_stored_as_tfn(self, tmp_path, matrix, weights, types):
         path = tmp_path / 'steps'
         lg = StepLogger(output='json', path=path)
-        fTOPSIS()(matrix, weights, types, verbose=lg)
+        fTOPSIS(logger=lg)(matrix, weights, types)
         data = json.loads((tmp_path / 'steps.json').read_text())
         # find a step with ndim=3
         tfn_steps = [s for s in data['steps'] if isinstance(s['data'], dict) and 'tfn' in s['data']]
@@ -302,7 +303,7 @@ class TestJSONOutput:
     def test_json_1d_array_has_values(self, tmp_path, matrix, weights, types):
         path = tmp_path / 'steps'
         lg = StepLogger(output='json', path=path)
-        fTOPSIS()(matrix, weights, types, verbose=lg)
+        fTOPSIS(logger=lg)(matrix, weights, types)
         data = json.loads((tmp_path / 'steps.json').read_text())
         # Preference scores are 1D
         pref_step = next(s for s in data['steps'] if 'Preference' in s['name'])
@@ -317,41 +318,41 @@ class TestCSVOutput:
     def test_csv_file_created(self, tmp_path, matrix, weights, types):
         path = tmp_path / 'steps'
         lg = StepLogger(output='csv', path=path)
-        fTOPSIS()(matrix, weights, types, verbose=lg)
+        fTOPSIS(logger=lg)(matrix, weights, types)
         assert (tmp_path / 'steps.csv').exists()
 
     def test_csv_contains_method_name(self, tmp_path, matrix, weights, types):
         path = tmp_path / 'steps'
         lg = StepLogger(output='csv', path=path)
-        fTOPSIS()(matrix, weights, types, verbose=lg)
+        fTOPSIS(logger=lg)(matrix, weights, types)
         content = (tmp_path / 'steps.csv').read_text()
         assert 'fTOPSIS' in content
 
     def test_csv_contains_step_names(self, tmp_path, matrix, weights, types):
         path = tmp_path / 'steps'
         lg = StepLogger(output='csv', path=path)
-        fTOPSIS()(matrix, weights, types, verbose=lg)
+        fTOPSIS(logger=lg)(matrix, weights, types)
         content = (tmp_path / 'steps.csv').read_text()
-        assert 'Normalized matrix' in content
+        assert 'Normalized fuzzy decision matrix' in content
 
     def test_csv_has_alternative_labels(self, tmp_path, matrix, weights, types, alt_names):
         path = tmp_path / 'steps'
         lg = StepLogger(output='csv', path=path, alternative_names=alt_names)
-        fTOPSIS()(matrix, weights, types, verbose=lg)
+        fTOPSIS(logger=lg)(matrix, weights, types)
         content = (tmp_path / 'steps.csv').read_text()
         assert 'Alpha' in content
 
     def test_csv_3d_tfn_expanded_to_lmu_columns(self, tmp_path, matrix, weights, types):
         path = tmp_path / 'steps'
         lg = StepLogger(output='csv', path=path)
-        fTOPSIS()(matrix, weights, types, verbose=lg)
+        fTOPSIS(logger=lg)(matrix, weights, types)
         content = (tmp_path / 'steps.csv').read_text()
         assert '_l' in content and '_m' in content and '_u' in content
 
     def test_csv_multiple_steps_separated_by_blank(self, tmp_path, matrix, weights, types):
         path = tmp_path / 'steps'
         lg = StepLogger(output='csv', path=path)
-        fTOPSIS()(matrix, weights, types, verbose=lg)
+        fTOPSIS(logger=lg)(matrix, weights, types)
         content = (tmp_path / 'steps.csv').read_text()
         # blank rows between steps
         assert '\n\n' in content or ',\n,' in content
@@ -365,14 +366,14 @@ class TestExcelOutput:
         pytest.importorskip('openpyxl')
         path = tmp_path / 'steps'
         lg = StepLogger(output='excel', path=path)
-        fTOPSIS()(matrix, weights, types, verbose=lg)
+        fTOPSIS(logger=lg)(matrix, weights, types)
         assert (tmp_path / 'steps.xlsx').exists()
 
     def test_excel_has_overview_sheet(self, tmp_path, matrix, weights, types):
         openpyxl = pytest.importorskip('openpyxl')
         path = tmp_path / 'steps'
         lg = StepLogger(output='excel', path=path)
-        fTOPSIS()(matrix, weights, types, verbose=lg)
+        fTOPSIS(logger=lg)(matrix, weights, types)
         wb = openpyxl.load_workbook(tmp_path / 'steps.xlsx')
         assert 'Overview' in wb.sheetnames
 
@@ -380,7 +381,7 @@ class TestExcelOutput:
         openpyxl = pytest.importorskip('openpyxl')
         path = tmp_path / 'steps'
         lg = StepLogger(output='excel', path=path)
-        fTOPSIS()(matrix, weights, types, verbose=lg)
+        fTOPSIS(logger=lg)(matrix, weights, types)
         wb = openpyxl.load_workbook(tmp_path / 'steps.xlsx')
         # overview + n step sheets
         assert len(wb.sheetnames) > 1
@@ -389,7 +390,7 @@ class TestExcelOutput:
         openpyxl = pytest.importorskip('openpyxl')
         path = tmp_path / 'steps'
         lg = StepLogger(output='excel', path=path)
-        fTOPSIS()(matrix, weights, types, verbose=lg)
+        fTOPSIS(logger=lg)(matrix, weights, types)
         wb = openpyxl.load_workbook(tmp_path / 'steps.xlsx')
         ws = wb['Overview']
         cell_values = [ws.cell(row=r, column=c).value
@@ -419,17 +420,17 @@ class TestLoggerReuse:
 
     def test_clear_and_rerun(self, matrix, weights, types):
         lg = StepLogger(output='console')
-        fTOPSIS()(matrix, weights, types, verbose=lg)
+        fTOPSIS(logger=lg)(matrix, weights, types)
         n_steps_first = len(lg.steps)
         lg.clear()
-        fTOPSIS()(matrix, weights, types, verbose=lg)
+        fTOPSIS(logger=lg)(matrix, weights, types)
         assert len(lg.steps) == n_steps_first
 
     def test_different_methods_accumulate_steps_after_clear(self, matrix, weights, types):
         lg = StepLogger(output='console')
-        fTOPSIS()(matrix, weights, types, verbose=lg)
+        fTOPSIS(logger=lg)(matrix, weights, types)
         lg.clear()
-        fMOORA()(matrix, weights, types, verbose=lg)
+        fMOORA(logger=lg)(matrix, weights, types)
         assert lg._method_name == 'fMOORA'
         assert len(lg.steps) > 0
 
@@ -447,21 +448,21 @@ class TestVerboseIntegration:
             alternative_names=['Car A', 'Car B', 'Car C'],
             criterion_names=['Price', 'Quality', 'Speed'],
         )
-        prefs = fTOPSIS()(matrix, weights, types, verbose=lg)
+        prefs = fTOPSIS(logger=lg)(matrix, weights, types)
         assert prefs.shape == (3,)
         assert (tmp_path / 'full.json').exists()
         assert (tmp_path / 'full.csv').exists()
         assert (tmp_path / 'full.xlsx').exists()
 
-    def test_cocoas_vikor_special_steps(self, matrix, weights, types):
+    def test_vikor_special_steps(self, matrix, weights, types):
         """Methods with more than basic steps log all of them."""
         lg = StepLogger(output='console')
-        fVIKOR()(matrix, weights, types, verbose=lg)
+        fVIKOR(logger=lg)(matrix, weights, types)
         names = {s['name'] for s in lg.steps}
-        assert 'Crisp Q (compromise score)' in names
+        assert 'Compromise measure (Q)' in names
 
     def test_edas_appraisal_score_present(self, matrix, weights, types):
         lg = StepLogger(output='console')
-        fEDAS()(matrix, weights, types, verbose=lg)
+        fEDAS(logger=lg)(matrix, weights, types)
         names = {s['name'] for s in lg.steps}
-        assert 'Appraisal Score (AS)' in names
+        assert 'Appraisal scores (AS)' in names

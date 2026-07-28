@@ -184,11 +184,11 @@ class TestValidation:
 # Import paths / re-exports
 class TestImportPaths:
     def test_import_from_methods_utils_star(self):
-        from pyfdm.methods.utils import rank_alternatives as ra
+        from pyfdm.utils import rank_alternatives as ra
         assert callable(ra)
 
     def test_import_from_methods_top_level(self):
-        from pyfdm.methods import rank_alternatives as ra
+        from pyfdm.helpers import rank as ra
         assert callable(ra)
 
     def test_legacy_helpers_rank_still_works(self):

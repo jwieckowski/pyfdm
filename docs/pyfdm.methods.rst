@@ -22,7 +22,6 @@ Methods
    pyfdm.methods.rim
    pyfdm.methods.spotis
    pyfdm.methods.topsis
-   pyfdm.methods.utils
    pyfdm.methods.vikor
    pyfdm.methods.waspas
    pyfdm.methods.wpm

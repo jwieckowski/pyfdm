@@ -32,7 +32,7 @@ def equal_weights(matrix: np.ndarray) -> np.ndarray:
         `Validator.validate_matrix_shape`).
     """
 
-    matrix = Validator.validate_matrix_shape(matrix)
+    Validator.validate_matrix_shape(matrix)
 
     try:
         w = np.ones(matrix.shape[1]) / matrix.shape[1]
@@ -72,7 +72,7 @@ def shannon_entropy_weights(matrix: np.ndarray) -> np.ndarray:
         `Validator.validate_matrix_shape`), or has fewer than 2 alternatives.
     """
 
-    matrix = Validator.validate_matrix_shape(matrix)
+    Validator.validate_matrix_shape(matrix)
 
     m, n, _ = matrix.shape
 
@@ -100,6 +100,7 @@ def shannon_entropy_weights(matrix: np.ndarray) -> np.ndarray:
         d_sum = np.sum(d, axis=0)
         d_sum = np.where(d_sum == 0, 1e-10, d_sum)
         w = d / d_sum
+
     except Exception as e:
         raise RuntimeError(f"Failed to compute Shannon entropy weights: {e}") from e
 
@@ -132,7 +133,7 @@ def standard_deviation_weights(matrix: np.ndarray) -> np.ndarray:
         `Validator.validate_matrix_shape`).
     """
 
-    matrix = Validator.validate_matrix_shape(matrix)
+    Validator.validate_matrix_shape(matrix)
 
     try:
         std = np.std(matrix, axis=0)               # (n, 3)
@@ -165,7 +166,7 @@ def variance_weights(matrix: np.ndarray) -> np.ndarray:
         `Validator.validate_matrix_shape`).
     """
 
-    matrix = Validator.validate_matrix_shape(matrix)
+    Validator.validate_matrix_shape(matrix)
 
     try:
         var = np.var(matrix, axis=0)             
