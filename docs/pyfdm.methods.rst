@@ -26,12 +26,3 @@ Methods
    pyfdm.methods.waspas
    pyfdm.methods.wpm
    pyfdm.methods.wsm
-
-
-Validator
-------------------------------
-
-.. automodule:: pyfdm.methods.validator
-   :members:
-   :undoc-members:
-   :show-inheritance:

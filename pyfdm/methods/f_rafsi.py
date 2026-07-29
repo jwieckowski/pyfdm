@@ -24,16 +24,8 @@ class fRAFSI(BaseFuzzyMethod):
     fuzzy division reverses the interval). This orients `gamma` so that
     HIGHER is always better, for both benefit and cost criteria. Each
     alternative's fuzzy criteria function is the weighted (crisp weights)
-    sum of its `gamma` values, defuzzified via the PERT-style
-    expected value ``(l + 4m + u) / 6``. Higher scores indicate
-    better alternatives.
-
-    .. rubric:: Reference
-
-        Bozanic, D., Milic, A., Tesic, D., Salabun, W., & Pamucar, D. (2021).
-        D numbers - FUCOM - Fuzzy RAFSI model for selecting the group of
-        construction machines for enabling mobility. Facta Universitatis,
-        Series: Mechanical Engineering, 19(3), 447-471.
+    sum of its `gamma` values, defuzzified via the ``(l + 4m + u) / 6``. 
+    Higher scores indicate better alternatives.
 
     Parameters
     ----------
@@ -56,6 +48,13 @@ class fRAFSI(BaseFuzzyMethod):
         Notes).
     logger : StepLogger | None, optional
         Optional logger used for recording computation steps.
+
+    References
+    ----------
+    Bozanic, D., Milic, A., Tesic, D., Salabun, W., & Pamucar, D. (2021).
+    D numbers - FUCOM - Fuzzy RAFSI model for selecting the group of
+    construction machines for enabling mobility. Facta Universitatis,
+    Series: Mechanical Engineering, 19(3), 447-471.
     """
 
     _crisp_weights_required = True
@@ -186,10 +185,12 @@ class fRAFSI(BaseFuzzyMethod):
             to sum to 1 via `normalize_weights`.
         types : np.ndarray | list, shape (n,)
             Criteria types: ``1`` for benefit, ``-1`` for cost.
-        lower_bound : float, default=1.0
+        lower_bound : float | None, default=None
             Lower bound of the common mapping interval.
-        upper_bound : float, default=6.0
+            If not given calculated as minimum value from matrix.
+        upper_bound : float | None, default=None
             Upper bound of the common mapping interval.
+            If not given calculated as maximum value from matrix.
         ideal : np.ndarray | None, shape (n,), optional
             Crisp ideal bound per criterion. Overridable per-call.
         anti_ideal : np.ndarray | None, shape (n,), optional
@@ -217,10 +218,10 @@ class fRAFSI(BaseFuzzyMethod):
             [[3, 4, 5], [5, 6, 7], [6, 7, 8]],
             [[7, 8, 9], [6, 7, 8], [4, 5, 6]],
         ])
-        >>> weights = np.array([[5, 7, 9], [7, 9, 9], [3, 5, 7]])
+        >>> weights = np.array([0.3, 0.5, 0.2])
         >>> types = np.array([1, 1, 1])
-        >>> ideal = np.array([65, 6, 100, 1, 7, 15])
-        >>> anti_ideal = np.array([15, 1, 50, 7, 1, 1])
+        >>> ideal = np.array([[7, 5, 6])
+        >>> anti_ideal = np.array([2, 1, 4])
         >>> frafsi = fRAFSI()
         >>> scores = frafsi(matrix, weights, types, ideal=ideal, anti_ideal=anti_ideal)
 
@@ -304,8 +305,8 @@ class fRAFSI(BaseFuzzyMethod):
         matrix: np.ndarray,
         weights: np.ndarray,
         types: np.ndarray,
-        lower_bound: float = 1.0,
-        upper_bound: float = 6.0,
+        lower_bound: float | None = None,
+        upper_bound: float | None = None,
         ideal: np.ndarray | None = None,
         anti_ideal: np.ndarray | None = None,
         *args: Any,
@@ -324,10 +325,12 @@ class fRAFSI(BaseFuzzyMethod):
             to sum to 1.
         types : np.ndarray, shape (n,)
             Criteria types (``1`` for benefit, ``-1`` for cost).
-        lower_bound : float, default=1.0
+        lower_bound : float | None, default=None
             Lower bound of the common mapping interval.
-        upper_bound : float, default=6.0
+            If not given calculated as minimum value from matrix.
+        upper_bound : float | None, default=None
             Upper bound of the common mapping interval.
+            If not given calculated as maximum value from matrix.
         ideal : np.ndarray | None, shape (n,), optional
             Crisp ideal bound per criterion. Overridable per-call.
         anti_ideal : np.ndarray | None, shape (n,), optional
@@ -347,6 +350,19 @@ class fRAFSI(BaseFuzzyMethod):
         """
 
         m, n, _ = matrix.shape
+
+        # Common mapping interval [lower_bound, upper_bound]
+        try:
+            if lower_bound is None:
+                lower_bound = float(np.min(matrix[:, :, 0]))
+
+            if upper_bound is None:
+                upper_bound = float(np.max(matrix[:, :, 2]))
+
+        except Exception as e:
+            raise RuntimeError(f"Failed to derive lower_bound/upper_bound from matrix: {e}") from e
+
+        self._log_step(self.logger, 'Mapping interval', (lower_bound, upper_bound), 'Crisp [lower_bound, upper_bound] used for standardization')
 
         # Ideal / anti-ideal bounds per criterion
         try:

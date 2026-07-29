@@ -18,12 +18,6 @@ class fARAS(BaseFuzzyMethod):
     the weighted sum. The preference score is the ratio ``K_i = S_i / S_0``:
     the closer to 1, the closer the alternative is to the ideal.
 
-    .. rubric:: Reference
-
-        Fu, Y. K., Wu, C. J., & Liao, C. N. (2021). Selection of in-flight 
-        duty-free product suppliers using a combination fuzzy AHP, fuzzy ARAS,
-        and MSGP methods. Mathematical Problems in Engineering, 2021.
-
     Parameters
     ----------
     normalization : callable, default=sum_normalization
@@ -33,6 +27,11 @@ class fARAS(BaseFuzzyMethod):
     logger : StepLogger | None, optional
         Optional logger used for recording computation steps.
 
+    References
+    ----------
+    Fu, Y. K., Wu, C. J., & Liao, C. N. (2021). Selection of in-flight 
+    duty-free product suppliers using a combination fuzzy AHP, fuzzy ARAS,
+    and MSGP methods. Mathematical Problems in Engineering, 2021.
     """
 
     def __init__(

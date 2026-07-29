@@ -28,14 +28,6 @@ class fRIM(BaseFuzzyMethod):
     ``p_i = i_minus_i / (i_plus_i + i_minus_i)``. Higher scores indicate
     better alternatives.
 
-    .. rubric:: Reference
-    
-        Cables, E., Lamata, M. T., & Verdegay, J. L. (2017). 
-        FRIM—fuzzy reference ideal method in multicriteria 
-        decision making. In Soft computing applications for 
-        group decision-making and consensus modeling 
-        (pp. 305-317). Cham: Springer International Publishing.
-
     Parameters
     ----------
     lower_bound : np.ndarray | None, shape (n, 3), optional
@@ -56,7 +48,16 @@ class fRIM(BaseFuzzyMethod):
         Euclidean aggregation) in the final relative-closeness score.
     logger : StepLogger | None, optional
         Optional logger used for recording computation steps.
+
+    References
+    ----------
+    Cables, E., Lamata, M. T., & Verdegay, J. L. (2017). 
+    FRIM—fuzzy reference ideal method in multicriteria 
+    decision making. In Soft computing applications for 
+    group decision-making and consensus modeling 
+    (pp. 305-317). Cham: Springer International Publishing.
     """
+    _crisp_weights_required = True
 
     def __init__(
         self,
@@ -204,19 +205,45 @@ class fRIM(BaseFuzzyMethod):
             If any computation step fails unexpectedly.
 
         Examples
+        --------
         >>> matrix = np.array([
         ...     [[3, 4, 5], [4, 5, 6], [8, 9, 9]],
         ...     [[6, 7, 8], [4, 5, 6], [2, 3, 4]],
         ...     [[3, 4, 5], [5, 6, 7], [6, 7, 8]],
         ...     [[7, 8, 9], [6, 7, 8], [4, 5, 6]],
         ... ])
-        >>> weights = np.array([[5, 7, 9], [7, 9, 9], [3, 5, 7]])
+        >>> weights = np.array([0.5, 0.3, 0.2])
         >>> types = np.array([1, 1, 1])
-        --------
+        >>> lower_b = np.array([
+        ...     [1, 1, 1],
+        ...     [1, 1, 1],
+        ...     [1, 2, 3],
+        ... ])
+        >>> upper_b = np.array([
+        ...     [8, 9, 10],
+        ...     [8, 8, 8],
+        ...     [9, 9, 9],
+        ... ])
+        >>> lower_ref = np.array([
+        ...     [3, 4, 5],
+        ...     [2, 3, 4],
+        ...     [2, 3, 4],
+        ... ])
+        >>> upper_ref = np.array([
+        ...     [6, 7, 8],
+        ...     [5, 6, 7],
+        ...     [5, 6, 7],
+        ... ])
         >>> frim = fRIM()
-        >>> scores = frim(matrix, weights, types,
-        ...                lower_bound=lower_b, upper_bound=upper_b,
-        ...                lower_reference=lower_ref, upper_reference=upper_ref)
+        >>> scores = frim(
+        ...     matrix,
+        ...     weights,
+        ...     types,
+        ...     lower_bound=lower_b,
+        ...     upper_bound=upper_b,
+        ...     lower_reference=lower_ref,
+        ...     upper_reference=upper_ref,
+        ... )
         """
         return super().__call__(
             matrix,

@@ -22,14 +22,6 @@ class fSPOTIS(BaseFuzzyMethod):
     therefore the ranking direction is descending internally reversed
     according to the SPOTIS principle.
 
-    .. rubric:: Reference
-    
-        Shekhovtsov, A., Paradowski, B., Więckowski, J., Kizielewicz, B.,
-        & Sałabun, W. (2022, December). Extension of the SPOTIS method
-        for the rank reversal free decision-making under fuzzy 
-        environment. In 2022 IEEE 61st Conference on Decision 
-        and Control (CDC) (pp. 5595-5600). IEEE.
-
     Parameters
     ----------
     normalization : callable | None, optional
@@ -42,6 +34,14 @@ class fSPOTIS(BaseFuzzyMethod):
 
     logger : StepLogger | None, optional
         Optional logger used for recording computation steps.
+
+    References
+    ----------
+    Shekhovtsov, A., Paradowski, B., Więckowski, J., Kizielewicz, B.,
+    & Sałabun, W. (2022, December). Extension of the SPOTIS method
+    for the rank reversal free decision-making under fuzzy 
+    environment. In 2022 IEEE 61st Conference on Decision 
+    and Control (CDC) (pp. 5595-5600). IEEE.
     """
 
     _crisp_weights_required = True

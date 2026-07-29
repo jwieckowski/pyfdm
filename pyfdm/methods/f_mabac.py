@@ -22,14 +22,6 @@ class fMABAC(BaseFuzzyMethod):
     matrix whose aggregated values are finally defuzzified into crisp
     preference scores. Higher scores indicate better alternatives.
 
-    .. rubric:: Reference
-
-        Zolfani, S. H., Görçün, Ö. F., & Küçükönder, H. (2021). Evaluating
-        logistics villages in Turkey using hybrid improved fuzzy SWARA (IMF SWARA)
-        and fuzzy MABAC techniques. Technological and Economic Development of
-        Economy, 27(6), 1582-1612.
-
-
     Parameters
     ----------
     normalization : callable, default=minmax_normalization
@@ -40,6 +32,12 @@ class fMABAC(BaseFuzzyMethod):
     logger : StepLogger | None, optional
         Optional logger used for recording intermediate computation steps.
 
+    References
+    ----------
+    Zolfani, S. H., Görçün, Ö. F., & Küçükönder, H. (2021). Evaluating
+    logistics villages in Turkey using hybrid improved fuzzy SWARA (IMF SWARA)
+    and fuzzy MABAC techniques. Technological and Economic Development of
+    Economy, 27(6), 1582-1612.
     """
 
     def __init__(

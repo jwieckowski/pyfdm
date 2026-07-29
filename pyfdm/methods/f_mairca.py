@@ -23,11 +23,6 @@ class fMAIRCA(BaseFuzzyMethod):
     total gap, the closer the alternative is to the theoretical ideal, so
     lower scores indicate better alternatives.
 
-    .. rubric:: Reference
-        Boral, S., Howard, I., Chaturvedi, S. K., McKee, K., & Naikan, V. N. A. (2020).
-        An integrated approach for fuzzy failure modes and effects analysis using
-        fuzzy AHP and fuzzy MAIRCA. Engineering Failure Analysis, 108, 104195.
-
     Parameters
     ----------
     normalization : callable, default=vector_normalization
@@ -36,6 +31,12 @@ class fMAIRCA(BaseFuzzyMethod):
         Function computing the distance between two individual TFNs.
     logger : StepLogger | None, optional
         Optional logger used for recording computation steps.
+
+    References
+    ----------
+    Boral, S., Howard, I., Chaturvedi, S. K., McKee, K., & Naikan, V. N. A. (2020).
+    An integrated approach for fuzzy failure modes and effects analysis using
+    fuzzy AHP and fuzzy MAIRCA. Engineering Failure Analysis, 108, 104195.
     """
 
     def __init__(

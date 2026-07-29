@@ -2,7 +2,7 @@
 
 Python 3 package with Fuzzy Decision Making (PyFDM) methods based on Triangular Fuzzy Numbers (TFN).
 
-**Version 1.2.0** adds 6 new MCDA methods, 6 subjective weighting methods, an expert-data collection and export module, group aggregation, step-by-step intermediate result inspection, and a standalone ranking utility — on top of a refactored, more robust core architecture. See [What's new in 1.2.0](#whats-new-in-1.2.0) below.
+**Version 1.2.0** adds 6 new MCDA methods, 6 subjective weighting methods, an expert-data collection and export module, group aggregation, step-by-step intermediate result inspection, and a standalone ranking utility — on top of a refactored, more robust core architecture. See [What's new in 1.2.0](#whats-new-in-120) below.
 
 ---
 
@@ -11,7 +11,7 @@ Python 3 package with Fuzzy Decision Making (PyFDM) methods based on Triangular 
 - [Installation](#installation)
 - [Local development setup](#local-development-setup)
 - [Testing](#testing)
-- [What's new in 1.2.0](#whats-new-in-1.2.0)
+- [What's new in 1.2.0](#whats-new-in-120)
 - [Modules and functionalities](#modules-and-functionalities)
 - [Usage examples](#usage-examples)
 - [Citations](#citations)
@@ -287,11 +287,11 @@ Every MCDA method and subjective weighting method now accepts a `logger=` keywor
 ### Helper / utility functions
 
 | Function                | Module        | Description                                                               |
-| ----------------------- | ------------- | ------------------------------------------------------------------------- | --- |
+| ----------------------- | ------------- | ------------------------------------------------------------------------- |
 | `rank`                  | `pyfdm.utils` | Legacy ranking helper (delegates to `rank_alternatives`).                 |
 | `rank_alternatives`     | `pyfdm.utils` | Standalone ranking from any score vector, with 5 tie-breaking strategies. |
 | `generate_fuzzy_matrix` | `pyfdm.utils` | Generates a random TFN decision matrix.                                   |
-| `normalize_weights`     | `pyfdm.utils` | Normalizes fuzzy criteria weights to `[0, 1]`.                            |     |
+| `normalize_weights`     | `pyfdm.utils` | Normalizes fuzzy criteria weights to `[0, 1]`.                            |
 | `defuzzify_matrix`      | `pyfdm.utils` | Defuzzifies an entire TFN decision matrix.                                |
 
 ### Expert data collection and export
@@ -362,19 +362,19 @@ types = np.array([1, -1, 1])
 
 # Print to console
 logger = StepLogger(output='console')
-method = fMARCOS(logger)
+method = fMARCOS(logger=logger)
 pref = method(matrix, weights, types)
 
 # Or export to selected format
 logger = StepLogger(output='json', path='results/marcos_steps')
-method = fMARCOS(logger)
+method = fMARCOS(logger=logger)
 pref = method(matrix, weights, types)
 # -> results/marcos_steps.json,
 ```
 
 Available `output` formats: `'console'`, `'json'`, `'csv'`, `'excel'` (requires `pip install pyfdm[excel]`). Pass a single string or a list to combine formats.
 
-## Subjective weighting (f-AHP)
+## Subjective weighting (fAHP)
 
 ```python
 from pyfdm.weights.subjective import fAHP
@@ -387,7 +387,7 @@ comparison_matrix = np.array([
     [(1/6, 1/5, 1/4), (1/4, 1/3, 1/2), (1, 1, 1)],
 ], dtype=float)
 
-ahp = FAHP()
+ahp = fAHP()
 weights = ahp(comparison_matrix)   # shape (3, 3), TFN weights
 ```
 
@@ -459,7 +459,7 @@ If you use **pyFDM** in your research to perform Fuzzy Multi-Criteria Decision A
 }
 ```
 
-# Version 1.1
+## Version 1.1
 
 **APA:**
 

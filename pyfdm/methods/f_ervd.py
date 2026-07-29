@@ -23,13 +23,6 @@ class fERVD(BaseFuzzyMethod):
     Kahneman & Tversky's prospect theory. Higher scores indicate better
     alternatives.
 
-    .. rubric:: Reference
-
-        Shojaeimehr, S., & Rahmani, D. (2022). Risk management of photovoltaic 
-        power plants using a novel fuzzy multi-criteria decision-making method 
-        based on prospect theory: A sustainable development approach. 
-        Energy Conversion and Management: X, 16, 100293.
-
     Parameters
     ----------
     normalization : callable, default=saw_normalization
@@ -52,6 +45,12 @@ class fERVD(BaseFuzzyMethod):
     logger : StepLogger | None, optional
         Optional logger used for recording computation steps.
 
+    References
+    ----------
+    Shojaeimehr, S., & Rahmani, D. (2022). Risk management of photovoltaic 
+    power plants using a novel fuzzy multi-criteria decision-making method 
+    based on prospect theory: A sustainable development approach. 
+    Energy Conversion and Management: X, 16, 100293.
     """
 
     _descending = True

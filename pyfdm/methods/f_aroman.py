@@ -22,12 +22,6 @@ class fAROMAN(BaseFuzzyMethod):
     exponents derived from the weights) into a final preference score via
     ``R_i = e^(A_i - L_i)``. Higher scores indicate better alternatives.
 
-    .. rubric:: Reference
-
-        Čubranić-Dobrodolac, M., Jovčić, S., Bošković, S., & Babić, D. (2023).
-        A decision-making model for professional drivers selection:
-        A hybridized fuzzy-AROMAN-Fuller approach. Mathematics, 11(13), 2831.
-
     Parameters
     ----------
     beta : float, default=0.5
@@ -37,6 +31,11 @@ class fAROMAN(BaseFuzzyMethod):
     logger : StepLogger | None, optional
         Optional logger used for recording computation steps.
 
+    References
+    ----------
+    Čubranić-Dobrodolac, M., Jovčić, S., Bošković, S., & Babić, D. (2023).
+    A decision-making model for professional drivers selection:
+    A hybridized fuzzy-AROMAN-Fuller approach. Mathematics, 11(13), 2831.
     """
 
     def __init__(

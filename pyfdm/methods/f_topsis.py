@@ -21,11 +21,6 @@ class fTOPSIS(BaseFuzzyMethod):
 
     Higher values indicate better alternatives.
 
-    .. rubric:: Reference
-    
-        Chen, C. T. (2000). Extensions of the TOPSIS for group decision-making
-        under fuzzy environment. Fuzzy sets and systems, 114(1), 1-9.
-
     Parameters
     ----------
     normalization : callable, default=linear_normalization
@@ -36,6 +31,11 @@ class fTOPSIS(BaseFuzzyMethod):
 
     logger : StepLogger | None, optional
         Optional logger used for recording computation steps.
+
+    References
+    ----------
+    Chen, C. T. (2000). Extensions of the TOPSIS for group decision-making
+    under fuzzy environment. Fuzzy sets and systems, 114(1), 1-9.
     """
 
     def __init__(

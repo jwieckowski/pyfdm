@@ -17,12 +17,6 @@ class fWSM(BaseFuzzyMethod):
     obtain crisp preference values. Higher scores indicate better
     alternatives.
 
-    .. rubric:: Reference
-
-        Triantaphyllou, E., & Lin, C. T. (1996). Development and evaluation
-        of five fuzzy multiattribute decision-making methods. International
-        Journal of Approximate reasoning, 14(4), 281-310.
-
     Parameters
     ----------
     defuzzify : callable, default=mean_defuzzification
@@ -33,6 +27,12 @@ class fWSM(BaseFuzzyMethod):
         the original decision matrix is used.
     logger : StepLogger | None, optional
         Optional logger used for recording computation steps.
+
+    References
+    ----------
+    Triantaphyllou, E., & Lin, C. T. (1996). Development and evaluation
+    of five fuzzy multiattribute decision-making methods. International
+    Journal of Approximate reasoning, 14(4), 281-310.
     """
 
     def __init__(

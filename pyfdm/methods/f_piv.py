@@ -21,12 +21,6 @@ class fPIV(BaseFuzzyMethod):
     index. A LOWER proximity index means the alternative is closer to
     the positive ideal solution, so ranking is ascending.
 
-    .. rubric:: Reference
-        Seraj, M., Yahya, S. M., Badruddin, I. A., Anqi, A. E., Asjad, 
-        M., & Khan, Z. A. (2019). Multi-response optimization of 
-        nanofluid-based IC engine cooling system using fuzzy 
-        method. Processes, 8(1), 30.
-
     Parameters
     ----------
     normalization : callable, default=vector_normalization
@@ -37,6 +31,13 @@ class fPIV(BaseFuzzyMethod):
         score into a crisp value.
     logger : StepLogger | None, optional
         Optional logger used for recording computation steps.
+
+    References
+    ----------
+    Seraj, M., Yahya, S. M., Badruddin, I. A., Anqi, A. E., Asjad, 
+    M., & Khan, Z. A. (2019). Multi-response optimization of 
+    nanofluid-based IC engine cooling system using fuzzy 
+    method. Processes, 8(1), 30.
     """
 
     _descending = False 

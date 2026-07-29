@@ -18,18 +18,18 @@ class fCOPRAS(BaseFuzzyMethod):
     values are then defuzzified and normalized to obtain the final
     preference scores. Higher scores indicate better alternatives.
 
-    .. rubric:: Reference
-
-        Narang, M., Joshi, M. C., & Pal, A. K. (2021). A hybrid fuzzy 
-        COPRAS-base-criterion method for multi-criteria decision making.
-        Soft Computing, 25(13), 8391-8399.
-
     Parameters
     ----------
     normalization : callable
         Function used to normalize the fuzzy decision matrix.
     logger : StepLogger | None, optional
         Optional logger used for recording computation steps.
+
+    References
+    ----------
+    Narang, M., Joshi, M. C., & Pal, A. K. (2021). A hybrid fuzzy 
+    COPRAS-base-criterion method for multi-criteria decision making.
+    Soft Computing, 25(13), 8391-8399.
     """
 
     _different_types_required = True

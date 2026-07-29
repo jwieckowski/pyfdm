@@ -17,20 +17,20 @@ class fEDAS(BaseFuzzyMethod):
     appraisal score is obtained by averaging the normalized positive and
     negative distances. Higher scores indicate better alternatives.
 
-    .. rubric:: Reference
-
-        Zindani, D., Maity, S. R., & Bhowmik, S. (2019). Fuzzy-EDAS 
-        (evaluation based on distance from average solution) for material 
-        selection problems. In Advances in Computational Methods in 
-        Manufacturing (pp. 755-771). Springer, Singapore.
-
-    Attributes
+    Parameters
     ----------
     defuzzify : callable
         Function used to transform Triangular Fuzzy Numbers into crisp
         values.
     logger : StepLogger | None, optional
         Optional logger used for recording computation steps.
+
+    References
+    ----------
+    Zindani, D., Maity, S. R., & Bhowmik, S. (2019). Fuzzy-EDAS 
+    (evaluation based on distance from average solution) for material 
+    selection problems. In Advances in Computational Methods in 
+    Manufacturing (pp. 755-771). Springer, Singapore.
     """
 
     def __init__(

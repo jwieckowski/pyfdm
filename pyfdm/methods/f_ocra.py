@@ -23,11 +23,6 @@ class fOCRA(BaseFuzzyMethod):
     performance score, again shifted to a zero baseline and defuzzified.
     Higher scores indicate better alternatives.
 
-    .. rubric:: Reference
-    
-        ULUTAŞ, A. (2019). Supplier selection by using a fuzzy integrated 
-        model for a textile company. Engineering Economics, 30(5), 579-590.
-
     Parameters
     ----------
     defuzzify : callable, default=mean_defuzzification
@@ -35,6 +30,11 @@ class fOCRA(BaseFuzzyMethod):
         score into a crisp value.
     logger : StepLogger | None, optional
         Optional logger used for recording computation steps.
+
+    References
+    ----------
+    ULUTAŞ, A. (2019). Supplier selection by using a fuzzy integrated 
+    model for a textile company. Engineering Economics, 30(5), 579-590.
     """
 
 

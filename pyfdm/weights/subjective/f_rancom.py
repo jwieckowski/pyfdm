@@ -12,7 +12,7 @@ class fRANCOM(BaseSubjectiveFuzzyMethod):
     """
     Fuzzy Ranking Comparison Method (F-RANCOM).
 
-    F-RANCOM extends the crisp RANCOM method to a fuzzy environment. Either
+    Fuzzy RANCOM extends the crisp RANCOM method to a fuzzy environment. Either
     a criteria ranking is provided (from which a crisp Matrix of Ranking
     Comparison, MAC, is derived automatically via pairwise rank
     comparisons: 1.0 if criterion i outranks j, 0.5 if tied, 0.0
@@ -20,19 +20,17 @@ class fRANCOM(BaseSubjectiveFuzzyMethod):
     fuzzified into a fuzzy MAC (fMAC) by mapping each of its three possible
     values (0.0, 0.5, 1.0) to a corresponding Triangular Fuzzy Number
     (TFN), and fuzzy weights are obtained by summing each criterion's row
-    of the fMAC and normalizing.
-
-    .. rubric:: Reference
-        
-        Więckowski, J., Kizielewicz, B., & Sałabun, W. (2025). Fuzzy RANCOM: 
-        a novel approach for modeling uncertainty in decision-making processes. 
-        Information sciences, 694, 121716.
 
     Parameters
     ----------
     logger : StepLogger | None, optional
         Step logger used to record intermediate computation steps.
-
+    
+    References
+    ----------
+    Więckowski, J., Kizielewicz, B., & Sałabun, W. (2025). Fuzzy RANCOM: 
+    a novel approach for modeling uncertainty in decision-making processes. 
+    Information sciences, 694, 121716.
 
     Examples
     --------

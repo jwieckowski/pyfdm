@@ -22,13 +22,6 @@ class fCOCOSO(BaseFuzzyMethod):
     single final score via the geometric-mean/arithmetic-mean combination
     of Yazdani et al.'s COCOSO. Higher scores indicate better alternatives.
 
-    .. rubric:: Reference
-
-        Ulutaş, A., Popovic, G., Radanov, P., Stanujkic, D., & Karabasevic, D. (2021).
-        A new hybrid fuzzy PSI-PIPRECIA-CoCoSo MCDM based approach to solving the 
-        transportation company selection problem. Technological and Economic 
-        Development of Economy, 27(5), 1227-1249.
-
     Parameters
     ----------
     normalization : callable
@@ -39,6 +32,13 @@ class fCOCOSO(BaseFuzzyMethod):
         Compromise parameter blending S and P in strategy `fc`.
     logger : StepLogger | None, optional
         Optional logger used for recording computation steps.
+    
+    References
+    ----------
+    Ulutaş, A., Popovic, G., Radanov, P., Stanujkic, D., & Karabasevic, D. (2021).
+    A new hybrid fuzzy PSI-PIPRECIA-CoCoSo MCDM based approach to solving the 
+    transportation company selection problem. Technological and Economic 
+    Development of Economy, 27(5), 1227-1249.
     """
 
     def __init__(

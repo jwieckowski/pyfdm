@@ -13,7 +13,7 @@ class fAHP(BaseSubjectiveFuzzyMethod):
     """
     Fuzzy Analytic Hierarchy Process (F-AHP).
 
-    F-AHP extends Saaty's AHP to a fuzzy environment: pairwise comparisons
+    Fuzzy AHP extends Saaty's AHP to a fuzzy environment: pairwise comparisons
     of criteria are expressed using linguistic terms mapped to Triangular
     Fuzzy Numbers (TFN) instead of crisp values. Fuzzy weights are derived
     via the extent-analysis-free geometric mean method (fuzzy geometric
@@ -22,11 +22,15 @@ class fAHP(BaseSubjectiveFuzzyMethod):
     checked on the defuzzified (crisp) comparison matrix and weights,
     analogous to Saaty's consistency ratio.
 
-    .. rubric:: Reference
-
-        Sun, C. C. (2010). A performance evaluation model by integrating 
-        fuzzy AHP and fuzzy TOPSIS methods. Expert systems with applications,
-        37(12), 7745-7754.
+    Attributes
+    ----------
+    scale : dict[str, list[float]]
+        The linguistic scale in effect (either the one passed in, or
+        `DEFAULT_SCALE`).
+    consistency : float | None
+        Defuzzified consistency ratio computed by `_check_consistency`, if
+        `consistency_check` is True; otherwise None (inherited from
+        `BaseSubjectiveFuzzyMethod`).
 
     Parameters
     ----------
@@ -42,15 +46,12 @@ class fAHP(BaseSubjectiveFuzzyMethod):
     logger : StepLogger | None, optional
         Step logger used to record intermediate computation steps.
 
-    Attributes
+
+    References
     ----------
-    scale : dict[str, list[float]]
-        The linguistic scale in effect (either the one passed in, or
-        `DEFAULT_SCALE`).
-    consistency : float | None
-        Defuzzified consistency ratio computed by `_check_consistency`, if
-        `consistency_check` is True; otherwise None (inherited from
-        `BaseSubjectiveFuzzyMethod`).
+    Sun, C. C. (2010). A performance evaluation model by integrating 
+    fuzzy AHP and fuzzy TOPSIS methods. Expert systems with applications,
+    37(12), 7745-7754.
 
     Examples
     --------

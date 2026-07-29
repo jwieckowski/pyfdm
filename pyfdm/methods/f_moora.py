@@ -21,12 +21,6 @@ class fMOORA(BaseFuzzyMethod):
     defuzzified into a crisp preference value. Higher scores indicate
     better alternatives.
 
-    .. rubric:: Reference
-
-        Karande, P., & Chakraborty, S. (2012). A Fuzzy-MOORA 
-        approach for ERP system selection. Decision Science 
-        Letters, 1(1), 11-21.
-
     Parameters
     ----------
     normalization : callable, default=vector_normalization
@@ -36,6 +30,11 @@ class fMOORA(BaseFuzzyMethod):
     logger : StepLogger | None, optional
         Optional logger used for recording intermediate computation steps.
 
+    References
+    ----------
+    Karande, P., & Chakraborty, S. (2012). A Fuzzy-MOORA 
+    approach for ERP system selection. Decision Science 
+    Letters, 1(1), 11-21.
     """
 
     def __init__(

@@ -22,12 +22,6 @@ class fCODAS(BaseFuzzyMethod):
     alternative's Assessment Score is the row sum of that matrix. Higher
     scores indicate better alternatives.
 
-    .. rubric:: Reference
-
-        Panchal, D., Chatterjee, P., Shukla, R. K., Choudhury, T., & Tamosaitiene, J. (2017).
-        Integrated Fuzzy AHP-Codas Framework for Maintenance Decision in Urea Fertilizer Industry.
-        Economic Computation & Economic Cybernetics Studies & Research, 51(3).
-
     Parameters
     ----------
     normalization : callable, default=max_normalization
@@ -45,6 +39,11 @@ class fCODAS(BaseFuzzyMethod):
     logger : StepLogger | None, optional
         Optional logger used for recording computation steps.
 
+    References
+    ----------
+    Panchal, D., Chatterjee, P., Shukla, R. K., Choudhury, T., & Tamosaitiene, J. (2017).
+    Integrated Fuzzy AHP-Codas Framework for Maintenance Decision in Urea Fertilizer Industry.
+    Economic Computation & Economic Cybernetics Studies & Research, 51(3).
     """
 
     def __init__(

@@ -27,11 +27,6 @@ class fVIKOR(BaseFuzzyMethod):
     The parameter ``v`` controls the balance between maximizing group utility
     (S) and minimizing individual regret (R). Lower values of all three
     measures indicate better alternatives.
-    
-    .. rubric:: Reference
-        Opricovic, S. (2007). A fuzzy compromise solution for multicriteria
-        problems. International Journal of Uncertainty, Fuzziness and 
-        Knowledge-Based Systems, 15(03), 363-380.
 
     Parameters
     ----------
@@ -45,6 +40,12 @@ class fVIKOR(BaseFuzzyMethod):
         individual regret (R). Must lie in the interval [0, 1].
     logger : StepLogger | None, optional
         Optional logger used for recording computation steps.
+    
+    References
+    ----------
+    Opricovic, S. (2007). A fuzzy compromise solution for multicriteria
+    problems. International Journal of Uncertainty, Fuzziness and 
+    Knowledge-Based Systems, 15(03), 363-380.
     """
 
     _descending = False 

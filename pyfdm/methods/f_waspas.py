@@ -21,12 +21,6 @@ class fWASPAS(BaseFuzzyMethod):
     WSM utility values and P the WPM utility values.
     Higher scores indicate better alternatives.
 
-    .. rubric:: Reference
-
-        Turskis, Z., Zavadskas, E. K., Antuchevičienė, J., & Kosareva, N.
-        (2015). A hybrid model based on fuzzy AHP and fuzzy WASPAS for 
-        construction site selection.
-
     Parameters
     ----------
     normalization : callable, default=waspas_normalization
@@ -36,6 +30,12 @@ class fWASPAS(BaseFuzzyMethod):
         values.
     logger : StepLogger | None, optional
         Optional logger used for recording intermediate computation steps.
+
+    References
+    ----------
+    Turskis, Z., Zavadskas, E. K., Antuchevičienė, J., & Kosareva, N.
+    (2015). A hybrid model based on fuzzy AHP and fuzzy WASPAS for 
+    construction site selection.
     """
 
     def __init__(

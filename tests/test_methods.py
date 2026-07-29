@@ -611,7 +611,7 @@ def test_fRIM():
     ], dtype=float)
 
     criteria_types = np.array([1, 1, 1, 1])
-    weights = np.full(4, 0.25)
+    weights = np.array([0.25, 0.25, 0.25, 0.25])
 
     lower_b = np.array([
         [2.69, 2.96, 3.45],

@@ -13,7 +13,7 @@ class fBWM(BaseSubjectiveFuzzyMethod):
     """
     Fuzzy Best-Worst Method (F-BWM).
 
-    F-BWM extends Rezaei's Best-Worst Method to a fuzzy environment: the
+    Fuzzy BWM extends Rezaei's Best-Worst Method to a fuzzy environment: the
     decision-maker provides a Best-to-Others vector (fuzzy preference of the
     best criterion over every other criterion) and an Others-to-Worst
     vector (fuzzy preference of every criterion over the worst one), both
@@ -26,11 +26,14 @@ class fBWM(BaseSubjectiveFuzzyMethod):
     linear inequalities obtained by multiplying through by the denominator)
     and solved as a nonlinear program with SLSQP.
 
-    .. rubric:: Reference
-        
-        Guo, S., & Zhao, H. (2017). Fuzzy best-worst multi-criteria
-        decision-making method and its applications. Knowledge-Based
-        Systems, 121, 23-31.
+    Attributes
+    ----------
+    k_ : float | None
+        The optimal fuzzy consistency measure (deviation k) found by the
+        optimizer, populated after `_calculate` runs.
+    consistency : float | None
+        Alias of `k_`, set via the inherited attribute for consistency with
+        other subjective methods (`BaseSubjectiveFuzzyMethod`).
 
     Parameters
     ----------
@@ -41,14 +44,11 @@ class fBWM(BaseSubjectiveFuzzyMethod):
     logger : StepLogger | None, optional
         Step logger used to record intermediate computation steps.
 
-    Attributes
+    References
     ----------
-    k_ : float | None
-        The optimal fuzzy consistency measure (deviation k) found by the
-        optimizer, populated after `_calculate` runs.
-    consistency : float | None
-        Alias of `k_`, set via the inherited attribute for consistency with
-        other subjective methods (`BaseSubjectiveFuzzyMethod`).
+    Guo, S., & Zhao, H. (2017). Fuzzy best-worst multi-criteria
+    decision-making method and its applications. Knowledge-Based
+    Systems, 121, 23-31.
 
     Examples
     --------

@@ -12,7 +12,7 @@ class fLMAW(BaseSubjectiveFuzzyMethod):
     """
     Fuzzy Logarithm Methodology of Additive Weights (F-LMAW).
 
-    F-LMAW derives criteria weights from expert-assigned significance
+    Fuzzy LMAW derives criteria weights from expert-assigned significance
     ratings (linguistic terms or raw TFNs) on a bounded scale, relative to
     an anti-ideal point (the smallest possible rating on that scale). Each
     rating is related to the anti-ideal point via fuzzy division
@@ -22,12 +22,13 @@ class fLMAW(BaseSubjectiveFuzzyMethod):
     When multiple experts are provided, individual expert weights are
     aggregated criterion-wise via the geometric mean.
 
-    .. rubric:: Reference
-        
-        Božanić, D., Pamučar, D., Milić, A., Marinković, D., & Komazec, N. (2022). 
-        Modification of the logarithm methodology of additive weights (LMAW) 
-        by a triangular fuzzy number and its application in multi-criteria 
-        decision making. Axioms, 11(3), 89.
+    Attributes
+    ----------
+    gamma_a : np.ndarray
+        The anti-ideal point as a float array of shape (3,).
+    linguistic_scale : dict[str, tuple[float, float, float]]
+        The linguistic scale in effect (either the one passed in, or
+        `DEFAULT_SCALE`).
 
     Parameters
     ----------
@@ -41,14 +42,13 @@ class fLMAW(BaseSubjectiveFuzzyMethod):
         (a 9-point scale from 'AL' to 'AH') is used.
     logger : StepLogger | None, optional
         Step logger used to record intermediate computation steps.
-
-    Attributes
+    
+    References
     ----------
-    gamma_a : np.ndarray
-        The anti-ideal point as a float array of shape (3,).
-    linguistic_scale : dict[str, tuple[float, float, float]]
-        The linguistic scale in effect (either the one passed in, or
-        `DEFAULT_SCALE`).
+    Božanić, D., Pamučar, D., Milić, A., Marinković, D., & Komazec, N. (2022). 
+    Modification of the logarithm methodology of additive weights (LMAW) 
+    by a triangular fuzzy number and its application in multi-criteria 
+    decision making. Axioms, 11(3), 89.
 
     Examples
     --------

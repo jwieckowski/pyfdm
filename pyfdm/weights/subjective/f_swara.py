@@ -22,12 +22,13 @@ class fSWARA(BaseSubjectiveFuzzyMethod):
     comparative importance judgments, they are aggregated (weighted mean,
     or plain mean if `expert_weights` is None) before computing q_j.
 
-    .. rubric:: Reference
-        
-        Mehdiabadi, A., Sadeghi, A., Karbassi Yazdi, A., & Tan, Y. (2025).
-        Sustainability Service Chain Capabilities in the Oil and Gas Industry:
-        A Fuzzy Hybrid Approach SWARA-MABAC.
-        Spectrum of Operational Research, 2(1), 114-134.
+    Attributes
+    ----------
+    scale : dict[str, tuple[float, float, float]]
+        The linguistic scale in effect (either the one passed in, or
+        `DEFAULT_SCALE`).
+    expert_weights : list[float] | np.ndarray | None
+        The expert weights in effect.
 
     Parameters
     ----------
@@ -43,13 +44,12 @@ class fSWARA(BaseSubjectiveFuzzyMethod):
     logger : StepLogger | None, optional
         Step logger used to record intermediate computation steps.
 
-    Attributes
+    References
     ----------
-    scale : dict[str, tuple[float, float, float]]
-        The linguistic scale in effect (either the one passed in, or
-        `DEFAULT_SCALE`).
-    expert_weights : list[float] | np.ndarray | None
-        The expert weights in effect.
+    Mehdiabadi, A., Sadeghi, A., Karbassi Yazdi, A., & Tan, Y. (2025).
+    Sustainability Service Chain Capabilities in the Oil and Gas Industry:
+    A Fuzzy Hybrid Approach SWARA-MABAC.
+    Spectrum of Operational Research, 2(1), 114-134.
 
     Examples
     --------

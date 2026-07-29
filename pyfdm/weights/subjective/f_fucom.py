@@ -12,7 +12,7 @@ class fFUCOM(BaseSubjectiveFuzzyMethod):
     """
     Fuzzy Full Consistency Method (FUCOM-F).
 
-    FUCOM-F extends the crisp Full Consistency Method to a fuzzy
+    Fuzzy FUCOM extends the crisp Full Consistency Method to a fuzzy
     environment: criteria are ranked from most to least important, and each
     ranked criterion is assigned a fuzzy significance (as a Triangular
     Fuzzy Number, TFN) relative to the top-ranked one, using a linguistic
@@ -25,12 +25,15 @@ class fFUCOM(BaseSubjectiveFuzzyMethod):
     deviation from consistency (chi), subject to TFN ordering
     (l <= m <= u) and GMIR-based normalization.
 
-    .. rubric:: Reference
-        
-        Pamucar, D., & Ecer, F. (2020). Prioritizing the weights
-        of the evaluation criteria under fuzziness: the fuzzy full
-        consistency method - FUCOM-F. Facta Universitatis, Series:
-        Mechanical Engineering, 18(3), 419-437.
+    Attributes
+    ----------
+    chi : float | None
+        The optimal consistency measure (deviation from maximum
+        consistency) found by the optimizer, populated after `_calculate`
+        runs.
+    consistency : float | None
+        Alias of `chi`, set via the inherited attribute for consistency
+        with other subjective methods (`BaseSubjectiveFuzzyMethod`).
 
     Parameters
     ----------
@@ -42,15 +45,12 @@ class fFUCOM(BaseSubjectiveFuzzyMethod):
     logger : StepLogger | None, optional
         Step logger used to record intermediate computation steps.
 
-    Attributes
+    References
     ----------
-    chi : float | None
-        The optimal consistency measure (deviation from maximum
-        consistency) found by the optimizer, populated after `_calculate`
-        runs.
-    consistency : float | None
-        Alias of `chi`, set via the inherited attribute for consistency
-        with other subjective methods (`BaseSubjectiveFuzzyMethod`).
+    Pamucar, D., & Ecer, F. (2020). Prioritizing the weights
+    of the evaluation criteria under fuzziness: the fuzzy full
+    consistency method - FUCOM-F. Facta Universitatis, Series:
+    Mechanical Engineering, 18(3), 419-437.
 
     Examples
     --------

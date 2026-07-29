@@ -24,12 +24,6 @@ class fMARCOS(BaseFuzzyMethod):
     alternative's closeness to both the ideal and the anti-ideal. Higher
     scores indicate better alternatives.
 
-    .. rubric:: Reference
-    
-        Stanković, M., Stević, Ž., Das, D. K., Subotić, M., &
-        Pamučar, D. (2020). A new fuzzy MARCOS method for road traffic risk
-        analysis. Mathematics, 8(3), 457.
-
     Parameters
     ----------
     defuzzify : callable, default=graded_mean_average_defuzzification
@@ -38,6 +32,11 @@ class fMARCOS(BaseFuzzyMethod):
     logger : StepLogger | None, optional
         Optional logger used for recording computation steps.
 
+    References
+    ----------
+    Stanković, M., Stević, Ž., Das, D. K., Subotić, M., &
+    Pamučar, D. (2020). A new fuzzy MARCOS method for road traffic risk
+    analysis. Mathematics, 8(3), 457.
     """
 
     def __init__(

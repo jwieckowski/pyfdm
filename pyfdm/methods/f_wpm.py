@@ -1,4 +1,5 @@
-# Copyright (c) 2022 - 2026 Jakub Więckowski
+
+# Copyright (c) 2023 - 2026 Jakub Więckowski
 
 import numpy as np
 from typing import Any
@@ -6,8 +7,6 @@ from typing import Any
 from ._base import BaseFuzzyMethod
 from ..step_logger import StepLogger
 from ..utils import mean_defuzzification
-
-# Copyright (c) 2023 - 2026 Jakub Więckowski
 class fWPM(BaseFuzzyMethod):
     """
     Fuzzy Weighted Product Model (WPM).
@@ -19,12 +18,6 @@ class fWPM(BaseFuzzyMethod):
     which is subsequently defuzzified into a crisp score. Higher scores
     indicate better alternatives.
 
-    .. rubric:: Reference
-
-        Triantaphyllou, E., & Lin, C. T. (1996). Development and evaluation
-        of five fuzzy multiattribute decision-making methods. International
-        Journal of Approximate reasoning, 14(4), 281-310.
-
     Parameters
     ----------
     defuzzify : callable, default=mean_defuzzification
@@ -35,6 +28,12 @@ class fWPM(BaseFuzzyMethod):
         the original decision matrix is used.
     logger : StepLogger | None, optional
         Optional logger used for recording intermediate computation steps.
+
+    References
+    ----------
+    Triantaphyllou, E., & Lin, C. T. (1996). Development and evaluation
+    of five fuzzy multiattribute decision-making methods. International
+    Journal of Approximate reasoning, 14(4), 281-310.
     """
 
     def __init__(
