@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pyfdm"
-version = "1.2.0"
+version = "1.2.1"
 description = "Python library for Fuzzy Decision Making based on Triangular Fuzzy Numbers"
 readme = "README.md"
 requires-python = ">=3.10"

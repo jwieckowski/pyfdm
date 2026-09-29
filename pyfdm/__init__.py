@@ -1,6 +1,6 @@
 # Copyright (c) 2022 - 2026 Jakub Więckowski
 
-__version__ = '1.2.0'
+__version__ = '1.2.1'
 
 from . import methods
 from . import correlations

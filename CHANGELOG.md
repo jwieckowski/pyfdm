@@ -6,6 +6,12 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [1.2.1] — 2026
+
+### Fixed
+
+- Inclusion of the `CHANGELOG.md` file in build
+
 ## [1.2.0] — 2026
 
 ### Added

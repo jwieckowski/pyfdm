@@ -2,7 +2,7 @@
 
 Python 3 package with Fuzzy Decision Making (PyFDM) methods based on Triangular Fuzzy Numbers (TFN).
 
-**Version 1.2.0** adds 6 new MCDA methods, 6 subjective weighting methods, an expert-data collection and export module, group aggregation, step-by-step intermediate result inspection, and a standalone ranking utility — on top of a refactored, more robust core architecture. See [What's new in 1.2.0](#whats-new-in-120) below.
+**Version 1.2.1** adds 6 new MCDA methods, 6 subjective weighting methods, an expert-data collection and export module, group aggregation, step-by-step intermediate result inspection, and a standalone ranking utility — on top of a refactored, more robust core architecture. See [What's new in 1.2.1](#whats-new-in-120) below.
 
 ---
 
@@ -11,7 +11,7 @@ Python 3 package with Fuzzy Decision Making (PyFDM) methods based on Triangular 
 - [Installation](#installation)
 - [Local development setup](#local-development-setup)
 - [Testing](#testing)
-- [What's new in 1.2.0](#whats-new-in-120)
+- [What's new in 1.2.1](#whats-new-in-120)
 - [Modules and functionalities](#modules-and-functionalities)
 - [Usage examples](#usage-examples)
 - [Citations](#citations)
@@ -118,7 +118,7 @@ All tests are expected to pass with zero `DeprecationWarning`s on a clean checko
 
 ---
 
-# What's new in 1.2.0
+# What's new in 1.2.1
 
 ### Architecture
 
