@@ -5,8 +5,10 @@ from typing import Any
 
 from ._base import BaseFuzzyMethod
 from ..step_logger import StepLogger
-from ..utils import max_normalization
-from ..utils import euclidean_distance, hamming_distance
+from ..utils import (
+    max_normalization, euclidean_distance, 
+    hamming_distance, is_type_aware_normalization
+)
 
 class fCODAS(BaseFuzzyMethod):
     """
@@ -203,7 +205,16 @@ class fCODAS(BaseFuzzyMethod):
         self._log_step(self.logger, 'Weighted normalized matrix', wmatrix, 'Element-wise product of normalized matrix and weights')
 
         try:
-            NS = np.min(wmatrix, axis=0)
+            if is_type_aware_normalization(self.normalization):
+                NS = np.min(wmatrix, axis=0)
+            else:
+                NS = np.empty((matrix.shape[1], 3), dtype=float)
+                for j in range(matrix.shape[1]):
+                    col = wmatrix[:, j]
+                    if types[j] == 1:      # benefit → worst = min
+                        NS[j] = np.min(col, axis=0)
+                    else:                  # cost → worst = max
+                        NS[j] = np.max(col, axis=0)
         except Exception as e:
             raise RuntimeError(f"Failed to compute the fuzzy negative solution: {e}") from e
 

@@ -5,7 +5,7 @@ from typing import Any
 
 from ._base import BaseFuzzyMethod
 from ..step_logger import StepLogger
-from ..utils import linear_normalization, vertex_distance
+from ..utils import linear_normalization, vertex_distance, is_type_aware_normalization
 
 class fTOPSIS(BaseFuzzyMethod):
     """
@@ -144,9 +144,7 @@ class fTOPSIS(BaseFuzzyMethod):
             If any computational stage fails.
         """
 
-        # -----------------------------
         # Normalization
-        # -----------------------------
         try:
             nmatrix = self.normalization(matrix, types)
 
@@ -178,9 +176,20 @@ class fTOPSIS(BaseFuzzyMethod):
 
         # Ideal solutions
         try:
-            ideal = np.ones((matrix.shape[1], matrix.shape[2]))
-            nideal = np.zeros((matrix.shape[1], matrix.shape[2]))
+            if is_type_aware_normalization(self.normalization):
+                ideal  = np.ones((matrix.shape[1], matrix.shape[2]))
+                nideal = np.zeros((matrix.shape[1], matrix.shape[2]))
+            else:
+                ideal  = np.empty((matrix.shape[1], 3))
+                nideal = np.empty((matrix.shape[1], 3))
 
+                for j in range(matrix.shape[1]):
+                    if types[j] == 1:          # benefit
+                        ideal[j]  = np.max(wmatrix[:, j], axis=0)
+                        nideal[j] = np.min(wmatrix[:, j], axis=0)
+                    else:                      # cost
+                        ideal[j]  = np.min(wmatrix[:, j], axis=0)
+                        nideal[j] = np.max(wmatrix[:, j], axis=0)
         except Exception as e:
             raise RuntimeError(f"Failed to create fuzzy ideal solutions: {e}") from e
 

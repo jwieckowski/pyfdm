@@ -5,9 +5,7 @@ from typing import Any
 
 from ._base import BaseFuzzyMethod
 from ..step_logger import StepLogger
-from ..utils import mean_defuzzification
-from ..utils import minmax_normalization
-
+from ..utils import mean_defuzzification, minmax_normalization, is_type_aware_normalization
 
 class fMABAC(BaseFuzzyMethod):
     """
@@ -169,6 +167,11 @@ class fMABAC(BaseFuzzyMethod):
             nmatrix = self.normalization(matrix, types)
         except Exception as e:
             raise RuntimeError(f"Normalization step failed: {e}") from e
+
+        if not is_type_aware_normalization(self.normalization):
+            for j in range(nmatrix.shape[1]):
+                if types[j] == -1:
+                    nmatrix[:, j] = 1 - nmatrix[:, j]
 
         self._log_step(
             self.logger,

@@ -2,10 +2,17 @@
 
 import numpy as np
 
+from .normalizations import (
+    vector_normalization,
+    saw_normalization,
+    sqrt_normalization,
+)
+
 __all__ = [
     'normalize_weights',
     'crisp_to_tfn_weights',
-    'generate_fuzzy_matrix'
+    'generate_fuzzy_matrix',
+    'is_type_aware_normalization'
 ]
 
 def normalize_weights(weights: np.ndarray) -> np.ndarray:
@@ -101,3 +108,20 @@ def generate_fuzzy_matrix(
         
     matrix = np.random.uniform(low=lower, high=upper, size=(m, n, 3))
     return np.array([np.sort(row, axis=1) for row in matrix])
+
+_TYPE_AGNOSTIC_NORMALIZATIONS = {
+    vector_normalization,
+    saw_normalization,
+    sqrt_normalization,
+}
+
+def is_type_aware_normalization(normalization) -> bool:
+    """
+    Return True if the given normalization function takes criterion types
+    into account (i.e. inverts cost criteria).
+
+    Type-agnostic normalizations (vector, saw, sqrt) ignore ``types``
+    and therefore require the calling method to handle benefit/cost
+    direction when constructing ideal solutions.
+    """
+    return normalization not in _TYPE_AGNOSTIC_NORMALIZATIONS

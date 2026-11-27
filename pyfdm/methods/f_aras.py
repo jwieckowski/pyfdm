@@ -3,9 +3,8 @@
 import numpy as np
 
 from ._base import BaseFuzzyMethod
-from ..validator import Validator
 from ..step_logger import StepLogger
-from ..utils.normalizations import sum_normalization
+from ..utils import sum_normalization, is_type_aware_normalization
 
 class fARAS(BaseFuzzyMethod):
     """
@@ -157,11 +156,17 @@ class fARAS(BaseFuzzyMethod):
                 (matrix.shape[0]+1, matrix.shape[1], matrix.shape[2]), dtype=object)
             exmatrix[1:] = matrix
 
-            exmatrix[0, :] = np.repeat(
-                np.max(np.max(matrix, axis=0), axis=1), 3
-                    ).reshape(
-                        matrix.shape[1], matrix.shape[2]
-                    )
+            if is_type_aware_normalization(self.normalization):
+                ideal_row = np.array([np.max(matrix[:, j], axis=0) for j in range(matrix.shape[1])])
+            else:
+                ideal_row = np.empty((matrix.shape[1], 3), dtype=float)
+                for j in range(matrix.shape[1]):
+                    if types[j] == 1:
+                        ideal_row[j] = np.max(matrix[:, j], axis=0)
+                    else:
+                        ideal_row[j] = np.min(matrix[:, j], axis=0)
+
+            exmatrix[0] = ideal_row
         except Exception as e:
             raise RuntimeError(f"Failed to build the extended matrix: {e}") from e
 
@@ -176,6 +181,12 @@ class fARAS(BaseFuzzyMethod):
             nmatrix = self.normalization(exmatrix, types)
         except Exception as e:
             raise RuntimeError(f"Normalization step failed: {e}") from e
+
+        if not is_type_aware_normalization(self.normalization):
+            for j in range(nmatrix.shape[1]):
+                if types[j] == -1:
+                    col_max = np.max(nmatrix[:, j], axis=0)
+                    nmatrix[:, j] = col_max - nmatrix[:, j]
 
         self._log_step(
             self.logger,
