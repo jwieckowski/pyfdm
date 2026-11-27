@@ -8,7 +8,7 @@ with open("CHANGELOG.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="pyfdm",
-    version="1.2.1",
+    version="1.2.2",
     author="Jakub Więckowski",
     author_email="j.wieckowski@il-pib.pl",
     description="Python library for Fuzzy Decision Making based on Triangular Fuzzy Numbers",

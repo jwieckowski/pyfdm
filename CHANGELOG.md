@@ -6,6 +6,15 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [1.2.2] — 2026
+
+### Fixed
+
+- **fTOPSIS**: Criterion types (`types`) were ignored when using type-agnostic normalizations (`vector_normalization`, `saw_normalization`, `sqrt_normalization`). Positive and negative ideal solutions are now constructed depending on criterion direction for these normalizations, while type-aware normalizations retain the classical ones/zeros reference points.
+- **fCODAS**: Negative solution (NS) was always computed as the column-wise minimum, which produced incorrect rankings for cost criteria under type-agnostic normalizations. NS is now type-dependent when the selected normalization does not invert cost criteria.
+- **fMABAC**: Cost criteria were treated as benefit criteria after type-agnostic normalization. Cost columns are now inverted after normalization when needed, so that higher values consistently represent better performance before computing the Border Approximation Area.
+- **fARAS**: The ideal alternative row was always built using maximum values, and cost criteria were not handled correctly with type-agnostic normalizations (leading to preference scores > 1 and unchanged rankings). The ideal row is now type-aware, and cost columns are inverted after normalization when required so that the ideal alternative has the highest utility.
+
 ## [1.2.1] — 2026
 
 ### Fixed
